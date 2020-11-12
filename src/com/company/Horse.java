@@ -4,7 +4,7 @@ public class Horse {
     final int TARGET =55;
     private int last;
     private int image;
-    private Point coord;
+    private Point coord;//????
     private int status;
     private int stepped;
     private int position;
@@ -24,10 +24,10 @@ public class Horse {
     }
 
 
-    public Horse(int image, Point coord,int position, int status) {
+    public Horse(int image, Point coord,int position) {
         this.image = image;
         this.coord = coord;
-        this.status = status;
+        this.status = 0;
         this.stepped = 0;
         this.last=6;
     }
