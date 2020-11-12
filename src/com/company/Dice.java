@@ -16,12 +16,11 @@ public class Dice {
         return numDice1+numDice2;
     }
 
-    public Dice(int imgDice1, int imgDice2, int numDice1, int numDice2) {
+    public Dice(int imgDice1, int imgDice2) {
         this.imgDice1 = imgDice1;
         this.imgDice2 = imgDice2;
-        this.numDice1 = numDice1;
-        this.numDice2 = numDice2;
     }
+
 
     public int getImgDice1() {
         return imgDice1;
