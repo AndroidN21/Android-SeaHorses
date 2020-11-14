@@ -19,8 +19,8 @@ public class Dice {
     public Dice(int imgDice1, int imgDice2) {
         this.imgDice1 = imgDice1;
         this.imgDice2 = imgDice2;
-    }
 
+    }
 
     public int getImgDice1() {
         return imgDice1;

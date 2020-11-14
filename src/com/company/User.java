@@ -6,15 +6,30 @@ public class User {
     final int NUM_HORSE=4;
     private ArrayList<Horse> listHorse;
     private int flag;//Cờ này báo User đến lượt chơi
-    private int id;
+    private int idUser;
 
-    public User(int id) {
+    public Horse getHorse(int idHorse){
+        return listHorse.get(idHorse);
+    }
+
+    public Horse XuatChuong(){
+        for(int i=0;i<NUM_HORSE;i++){
+            Horse horse=listHorse.get(i);
+            if(horse.getStatus()==0){
+                horse.initialCoord();
+                horse.setStatus(1);
+                return listHorse.get(i);
+            }
+        }
+        return null;
+    }
+    public User(int idUser) {
         this.listHorse = new ArrayList<Horse>(4);
         for(int i=0;i<NUM_HORSE;i++){
-            this.listHorse.add(i,new Horse(1,new Point(0,0),i*14));
+            this.listHorse.add(i,new Horse(1,new Point(0,0),i*14,idUser,i));
         }
         this.flag = 0;
-        this.id = id;
+        this.idUser = idUser;
     }
 
     public ArrayList<Horse> getListHorse() {
@@ -33,11 +48,11 @@ public class User {
         this.flag = flag;
     }
 
-    public int getId() {
-        return id;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 }
