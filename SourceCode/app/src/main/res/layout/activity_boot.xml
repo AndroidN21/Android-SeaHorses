@@ -19,27 +19,53 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgLogo"
         android:layout_width="215dp"
         android:layout_height="145dp"
         android:src="@drawable/ic_horse_24" />
 
-    <ProgressBar
-        android:id="@+id/proBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:max="100"
-        android:paddingLeft="80dp"
-        android:paddingRight="80dp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtPercent"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="0%"
-        android:textAlignment="center" />
+        <ImageView
+            android:id="@+id/imgIconHorse"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_chess_knight_solid" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+            <ProgressBar
+                android:id="@+id/proBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="6dp"
+                android:max="100" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="23dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/proBar"
+                android:src="@drawable/ic_baseline_emoji_flags_24" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtPercent"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0%"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </LinearLayout>

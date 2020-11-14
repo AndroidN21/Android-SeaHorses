@@ -1,6 +1,5 @@
 package hcmus.nhom21.demoparchessi;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +12,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.lang.String.valueOf;
+
 public class BootActivity extends Activity {
     private ProgressBar proBar;
     private TextView txtPercent;
-    private ImageView img;
+    private ImageView imgLogo;
+    private ImageView imgIconHorse;
     int progressStep = 1;
     int value = 0;
     int accum = 0;
-    int waitingTime = 10;
+    int waitingTime = 20;
+    float tmpPosition = 0;
+    int []locate = new int[2];
     Handler myHandler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -29,7 +33,9 @@ public class BootActivity extends Activity {
         setContentView(R.layout.activity_boot);
         proBar = (ProgressBar) findViewById(R.id.proBar);
         txtPercent = (TextView) findViewById(R.id.txtPercent);
-        img = findViewById(R.id.imageView);
+        imgLogo = findViewById(R.id.imgLogo);
+        imgIconHorse = (ImageView) findViewById(R.id.imgIconHorse);
+
     }
 
     @Override
@@ -45,6 +51,20 @@ public class BootActivity extends Activity {
         myBackgroundThread.start();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        //Lấy vị trí sau khi view được tạo xong.
+        imgIconHorse.post(new Runnable() {
+            @Override
+            public void run() {
+                proBar.getLocationOnScreen(locate);
+            }
+        });
+    }
+
     // FOREGROUND: this foreground Runnable works on behave of the background thread, its mission is to update the main UI which is unreachable to back worker
     private Runnable foregroundRunnable = new Runnable() {
         @Override
@@ -53,6 +73,8 @@ public class BootActivity extends Activity {
                 accum += progressStep;
                 proBar.setProgress(accum);
                 txtPercent.setText((int)accum * 100 / value + "%");
+                imgIconHorse.setX(locate[0] + (proBar.getWidth()/100) * accum);
+
 
                 if (accum >= value) {
                     //Khởi tạo Intent
