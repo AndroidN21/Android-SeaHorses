@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class ChessBoard {
     final int NUM_USER = 4;
     private ArrayList<User> listUser;
-    private ArrayList<Horse> listHorse;
+    private ArrayList<Tuple> listIdHorse;// Luu ngua voi status =1 dang duoc chay voi x la idUser va y là idHorse
 
     public ChessBoard() {
         listUser = new ArrayList<User>(4);
+        listIdHorse=new ArrayList<Tuple>();
+
         for (int i = 0; i < NUM_USER; i++) {
             listUser.add(i, new User(i + 1));
         }
@@ -26,9 +28,9 @@ public class ChessBoard {
         if (dice.getNumDice1() == dice.getNumDice2() || (step == 7 && (dice.getNumDice1() == 1 || dice.getNumDice1() == 6))) {
 
             //if() nguoi dung chon
-            horse = listUser.get(id).XuatChuong();
+            horse = user.XuatChuong();
             if (horse != null) {
-                listHorse.add(horse);
+                listIdHorse.add(new Tuple(id,horse.getIdHorse()));
             }
 
             isRepeat=true;
@@ -37,7 +39,7 @@ public class ChessBoard {
             //Khởi tạo mảng ngụa có thể chạy
             ArrayList<Horse> horseValid = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
-               horse = user.getListHorse().get(i);
+               horse = user.getHorse(i);
                 if (horse.getStatus() == 1 && checkConflict(horse, step)!=-1) {
                     horseValid.add(horse);
                 }
@@ -60,24 +62,31 @@ public class ChessBoard {
 
 
     public int checkConflict(Horse horse,int step){
-        for(int i=0; i<listHorse.size();i++){
-            if(horse.getPosition() + step == listHorse.get(i).getPosition()){
+        for(int i=0; i<listIdHorse.size();i++){
+            Horse otherHorse= getHorse(listIdHorse.get(i));
+            if(horse.getPosition() + step == otherHorse.getPosition()){
                 return i;
             }
-            if(horse.getPosition() < listHorse.get(i).getPosition() && horse.getPosition() + step > listHorse.get(i).getPosition())
+            if(horse.getPosition() < otherHorse.getPosition() && horse.getPosition() + step > otherHorse.getPosition())
                 return -1;
         }
         return -2;
     }
 
     public void Dangua(int index){
-        Horse horse=listHorse.get(index);
+        Horse horse= getHorse(listIdHorse.get(index));
         int idUser=horse.getIdUser();
         User user =listUser.get(idUser);
         int idHorse=horse.getIdHorse();
 
         user.getHorse(idHorse).Reset();
-        listHorse.remove(index);
+        listIdHorse.remove(index);
         //listHorse.remove(horse.getPosition() + 1);
+    }
+
+    public Horse getHorse(Tuple idHorse){
+        User user= listUser.get(idHorse.x);
+        Horse horse= user.getHorse(idHorse.y);
+        return horse;
     }
 }

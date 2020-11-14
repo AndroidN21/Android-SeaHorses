@@ -1,12 +1,10 @@
 package com.company;
 
-import java.lang.annotation.Target;
-
 public class Horse {
     final int TARGET =56;
     final int DISTANCE=5;
     private int image;
-    private Point coord;//????
+    private Tuple coord;//????
     private int status;
     private int stepped;
     private int position;
@@ -61,22 +59,22 @@ public class Horse {
         return true;
     }
 
-    public Point initialCoord(){
+    public Tuple initialCoord(){
 
-        return new Point(0,0);
+        return new Tuple(0,0);
     }
 
     public void Reset(){
         //this.position=position;
-        this.coord = new Point(0,0);
+        this.coord = new Tuple(0,0);
         this.status = 0;
         this.stepped = 0;
     }
 
-    public Horse(int image, Point coord,int position,int idUser,int idHorse) {
+    public Horse(int image, Tuple coord, int position, int idUser, int idHorse) {
         this.image = image;
         this.position=position;
-        this.coord = new Point(0,0);
+        this.coord = new Tuple(0,0);
         this.idUser=idUser;
         this.idHorse=idHorse;
         this.status = 0;
@@ -91,11 +89,11 @@ public class Horse {
         this.image = image;
     }
 
-    public Point getCoord() {
+    public Tuple getCoord() {
         return coord;
     }
 
-    public void setCoord(Point coord) {
+    public void setCoord(Tuple coord) {
         this.coord = coord;
     }
 

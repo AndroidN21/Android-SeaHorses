@@ -26,7 +26,7 @@ public class User {
     public User(int idUser) {
         this.listHorse = new ArrayList<Horse>(4);
         for(int i=0;i<NUM_HORSE;i++){
-            this.listHorse.add(i,new Horse(1,new Point(0,0),i*14,idUser,i));
+            this.listHorse.add(i,new Horse(1,new Tuple(0,0),i*14,idUser,i));
         }
         this.flag = 0;
         this.idUser = idUser;
