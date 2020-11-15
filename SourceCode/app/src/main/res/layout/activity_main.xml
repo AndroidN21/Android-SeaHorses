@@ -12,17 +12,6 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:id="@+id/frameRule"
-            android:layout_width="157dp"
-            android:layout_height="199dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        </FrameLayout>
-
         <Button
             android:id="@+id/btnRule"
             android:layout_width="0dp"
