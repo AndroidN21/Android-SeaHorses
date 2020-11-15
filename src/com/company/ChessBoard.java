@@ -37,7 +37,7 @@ public class ChessBoard {
             isRepeat=true;
         }
 
-        //Cần xem xét lại
+
         Tuple Id=new Tuple();
         int flagConflict=0;
         if (horse == null) {
@@ -46,15 +46,16 @@ public class ChessBoard {
             for (int i = 0; i < NUM_HORSE; i++) {
                 horse = user.getHorse(i);
                 flagConflict=checkConflict(Id,horse, step);
-                if (horse.getStatus() == 1 && flagConflict!=-1) {
+                if (horse.getStatus() == 1 && flagConflict!=-1 && Id.x!=idUser) {
                     horseValid.add(horse);
                 }
             }
 
+
             //Xu ly nguoi dung chon ngua trong mang ngua vua nay
             horse.Move(step - 1);
 
-            if(flagConflict==1 && idUser!=Id.x){
+            if(flagConflict==1){
                 Dangua(Id);
             }
             horse.Move(1);
