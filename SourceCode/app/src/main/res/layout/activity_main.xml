@@ -12,6 +12,17 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content">
 
+        <FrameLayout
+            android:id="@+id/frameRule"
+            android:layout_width="157dp"
+            android:layout_height="199dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </FrameLayout>
+
         <Button
             android:id="@+id/btnRule"
             android:layout_width="0dp"
@@ -30,16 +41,16 @@
             android:id="@+id/btnSetting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/btn"
             android:text="Cài đặt"
             android:textAllCaps="false"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.323" />
 
         <Button
             android:id="@+id/btnNewGame"
@@ -52,8 +63,25 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/btnSetting"
             app:layout_constraintEnd_toEndOf="@+id/btnSetting"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="@+id/btnSetting" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnSetting"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/btnInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/btn"
+            android:text="Thông tin"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btnRule"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btnSetting"
+            app:layout_constraintTop_toBottomOf="@+id/btnRule" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

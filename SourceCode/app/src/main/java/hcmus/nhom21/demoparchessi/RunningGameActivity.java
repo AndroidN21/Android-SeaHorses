@@ -1,6 +1,7 @@
 package hcmus.nhom21.demoparchessi;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,21 +16,26 @@ import androidx.fragment.app.FragmentTransaction;
 public class RunningGameActivity extends FragmentActivity{
     private Button btnTypePlayer;
     private ImageButton btnSetting;
+    private Image imgBoard;
+    private Button btnProfile;
     boolean flagTypePlayer = false;
-    boolean flagHide;
-    SettingFragment settingFragment;
+    boolean flagHide = false;
 
-    FragmentManager fm;
     FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_runninggame);
-        Intent intentMain = getIntent();
+        //Intent intentMain = getIntent();
 
         btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
         btnSetting = (ImageButton) findViewById(R.id.btnSetting);
+
+        //Dùng View Holder
+        //ViewHolder viewHolder = new ViewHolder();
+
+        //.setTag(viewHolder);
 
         //Bật tắt chế độ auto
         btnTypePlayer.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +53,6 @@ public class RunningGameActivity extends FragmentActivity{
                 }
             }
         });
-
-
 
         //Mở menu cài đặt
         btnSetting.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +81,7 @@ public class RunningGameActivity extends FragmentActivity{
         {
             //Toast.makeText(RunningGameActivity.this, "Kill running", Toast.LENGTH_SHORT).show();
             if (flagHide){
-                //flagHide = false;
+                flagHide = false;
                 findViewById(R.id.imgBoard).setVisibility(View.VISIBLE);
                 findViewById(R.id.txtProfile).setVisibility(View.VISIBLE);
                 findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
@@ -85,5 +89,12 @@ public class RunningGameActivity extends FragmentActivity{
             //finish();
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    static class ViewHolder{
+        Button btnTypePlayer;
+        ImageButton btnSetting;
+        Image imgBoard;
+        Button btnProfile;
     }
 }

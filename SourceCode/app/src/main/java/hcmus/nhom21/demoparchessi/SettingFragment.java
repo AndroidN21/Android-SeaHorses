@@ -20,26 +20,18 @@ import androidx.fragment.app.Fragment;
 import static java.lang.String.valueOf;
 
 public class SettingFragment extends Fragment{
-    // this fragment shows a ListView
     RunningGameActivity main;
     Context context = null;
-    String message = "";
-
-    private TextView txtMsg;
     private ListView listView;
     private Button btnExit;
-
-    private String [] arrNameTypeSetting = {"Âm thanh", "Rung", "Thông báo"};
-    private Integer [] arrImgIconTypeSettingOff = {R.drawable.ic_baseline_volume_off_24, R.drawable.ic_baseline_volume_off_24, R.drawable.ic_baseline_notifications_off_24};
-    private Integer [] arrImgIconTypeSetting = {R.drawable.ic_baseline_volume_up_24, R.drawable.ic_baseline_phonelink_ring_24, R.drawable.ic_baseline_notifications_24};
-    private int nowIndex=-1;
-    public Parcelable state;
+    private String [] arrNameTypeSetting = {"Âm thanh", "Rung"};
+    private Integer [] arrImgIconTypeSetting = {R.drawable.ic_baseline_volume_up_24, R.drawable.ic_vibrate_on};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            context = getActivity(); // use this reference to invoke main callbacks
+            context = getActivity();
             main = (RunningGameActivity) getActivity();
         }
         catch (IllegalStateException e) {
@@ -62,7 +54,7 @@ public class SettingFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //.getCheckedItemPosition().setImageResource(arrImgIconTypeSettingsOff[position]);
                 //listView.getChildAt(listView.getCheckedItemPosition()).setBackground;
-                Toast.makeText(main, valueOf(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(main, valueOf(position), Toast.LENGTH_SHORT).show();
             }
         });
 
