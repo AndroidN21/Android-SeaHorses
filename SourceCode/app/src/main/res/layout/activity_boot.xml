@@ -36,9 +36,11 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_chess_knight_solid" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="64dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
             <ProgressBar
                 android:id="@+id/proBar"
@@ -57,7 +59,7 @@
                 android:layout_toEndOf="@+id/proBar"
                 android:src="@drawable/ic_baseline_emoji_flags_24" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtPercent"
