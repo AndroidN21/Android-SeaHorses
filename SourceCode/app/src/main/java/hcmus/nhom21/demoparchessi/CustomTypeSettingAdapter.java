@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,14 @@ import static android.content.Context.VIBRATOR_SERVICE;
 public class CustomTypeSettingAdapter extends ArrayAdapter<String> {
     Context context;
     String[] arrNameTypeSettings;
-    Integer[] arrImgIconTypeSettings;
+    Integer[] arrImgIconTypeSettingOn;
     Boolean[] arrTurnOn = {true, true};
-    Integer [] arrImgIconTypeSettingOff = {R.drawable.ic_baseline_volume_off_24, R.drawable.ic_vibrate_off};
+    Integer [] arrImgIconTypeSettingOff = {R.drawable.ic_baseline_volume_off_24, R.drawable.ic_vibrate_off, R.drawable.ic_baseline_notes_24};
 
     public CustomTypeSettingAdapter( Context context, int layoutToBeInflated, Integer[] arrImgIconTypeSetting, String[] arrNameTypeSetting) {
         super(context, R.layout.item_listview_setting, arrNameTypeSetting);
         this.context = context;
-        this.arrImgIconTypeSettings = arrImgIconTypeSetting;
+        this.arrImgIconTypeSettingOn = arrImgIconTypeSetting;
         this.arrNameTypeSettings = arrNameTypeSetting;
     }
 
@@ -37,35 +38,66 @@ public class CustomTypeSettingAdapter extends ArrayAdapter<String> {
         View item = inflater.inflate(R.layout.item_listview_setting, null);
         TextView txtNameTypeSetting = (TextView) item.findViewById(R.id.txtNameTypeSetting);
         final ImageView imgIconTypeSetting = (ImageView) item.findViewById(R.id.imgIconTypeSetting);
-
-        imgIconTypeSetting.setImageResource(arrImgIconTypeSettings[position]);
+        //Log.e("run", txtNameTypeSetting.getText().toString());
+        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOn[position]);
         txtNameTypeSetting.setText(arrNameTypeSettings[position]);
+        Log.e("run", txtNameTypeSetting.getText().toString());
         //arrTurnOn[position] = true;
 
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(context, "Turn off", Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
-                if(arrTurnOn[position]){
-                    arrTurnOn[position] = false;
-                    imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOff[position]);
-
-                    if(position == 0) {
-                        turnOffSound();
+                    if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)){
+                        Log.e("audio", "tắt âm thanh");
+                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOff[position]);
+                        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
                     } else {
-                        turnOffVibrator();
+                        Log.e("audio", "bật âm thanh");
+                        audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_SHOW_UI);
+                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOn[position]);
                     }
-                } else{
-                    arrTurnOn[position] = true;
-                    imgIconTypeSetting.setImageResource(arrImgIconTypeSettings[position]);
+                }
 
-                    if(position == 0) {
-                        turnOnSound();
+                if (position == 1) {
+//                    if (arrTurnOn[position]) {
+//                        arrTurnOn[position] = false;
+//                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOff[position]);
+//
+//                        if (position == 0) {
+//                            turnOffSound();
+//                        } else {
+//                            turnOffVibrator();
+//                        }
+//                    } else {
+//                        arrTurnOn[position] = true;
+//                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOn[position]);
+//
+//                        if (position == 0) {
+//                            turnOnSound();
+//                        } else {
+//                            turnOnVibrator();
+//                        }
+//                    }
+                    if (arrTurnOn[position]) {
+                        arrTurnOn[position] = false;
+                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOff[position]);
+
+                        turnOffVibrator();
                     } else {
+                        arrTurnOn[position] = true;
+                        imgIconTypeSetting.setImageResource(arrImgIconTypeSettingOn[position]);
+
                         turnOnVibrator();
                     }
                 }
+
+                if (position == 2){
+                    Toast.makeText(context, "Mở luật chơi", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -74,15 +106,23 @@ public class CustomTypeSettingAdapter extends ArrayAdapter<String> {
 
     //Turn off sound
     private void turnOffSound() {
-        AudioManager amanager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
-        amanager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
+        AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
+
+        if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)){
+            Log.e("audio", "âm thanh tắt");
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, AudioManager.FLAG_SHOW_UI);
+        }
     }
 
     //Turn on sound
     public void turnOnSound() {
+        AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
-        AudioManager amanager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
-        amanager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_SHOW_UI);
+        if (audioManager.isStreamMute(AudioManager.STREAM_MUSIC)){
+            Log.e("audio", "âm thanh bật");
+            audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, AudioManager.FLAG_SHOW_UI);
+        }
+
     }
 
     //Turn off vibrator

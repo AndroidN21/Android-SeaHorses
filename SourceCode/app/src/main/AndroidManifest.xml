@@ -31,6 +31,10 @@
 
         </activity>
         <activity android:name=".SetUpNewGameActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".WinGameActivity" android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".CopyRightInfoActivity" android:screenOrientation="portrait"></activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -49,10 +49,12 @@
 
         <FrameLayout
             android:id="@+id/frameSetting"
-            android:layout_width="186dp"
-            android:layout_height="279dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-337dp"></FrameLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="-300dp"
+            android:layout_marginEnd="70dp"></FrameLayout>
     </LinearLayout>
 
     <LinearLayout
