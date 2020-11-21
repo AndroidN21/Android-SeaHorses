@@ -6,8 +6,9 @@ import java.util.ArrayList;
 
 public class User {
     final int NUM_HORSE = 4;
-    final float scaleStableBoardSize = (float) (140) / 390;
-
+    final float scaleStableInBoardSize = (float) (140) / 390;
+    final float scaleSmallJumpInBoardSize = (float)(24)/390;
+    final float scaleBigJumpInBoardSize = (float)(40)/390;
     private ArrayList<Horse> listHorse;
     private int flag;//Cờ này báo User đến lượt chơi
     private int idUser;
@@ -25,8 +26,8 @@ public class User {
         this.chessBoardSize = chessBoardSize;
 
         this.stableSize = new Tuple();
-        this.stableSize.x = (int) (this.chessBoardSize.x * scaleStableBoardSize);
-        this.stableSize.y = (int) (this.chessBoardSize.y * scaleStableBoardSize);
+        this.stableSize.x = (int) (this.chessBoardSize.x * scaleStableInBoardSize);
+        this.stableSize.y = (int) (this.chessBoardSize.y * scaleStableInBoardSize);
 
         //Xác định vị trí của mỗi user (nếu các có thêm -60 là do bị lệch sẽ tìm khắc phục sau)
         this.userCoord = new Tuple();
@@ -46,31 +47,63 @@ public class User {
         }
         System.out.println("User " + idUser + ":  " + stableSize.x + "&&&" + stableSize.y + "/n");
         System.out.println("User " + idUser + ":  " + userCoord.x + "&&&" + userCoord.y + "/n");
-        //Khởi tạo vị trí ban đầu cho ngựa (nằm trong chuồng)
     }
+
+    public void MoveHorse(int idHorse, int step){
+        int smallJump=(int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
+        int bigJump=(int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
+        listHorse.get(idHorse).Move(step,smallJump,bigJump);
+    }
+
 
     public Horse getHorse(int idHorse) {
         return listHorse.get(idHorse);
     }
 
-//    public void setHorseCoord(int idHorse,int position){
-//        Tuple coord=new Tuple();
-//        switch (idUser){
-//            case 0:
-//                //coord.x=userCoord.x
-//                break;
-//            case 1:
-//                break;
-//            case 2:
-//                break;
-//            case 3:
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    //Set tọa độ của Horse khi trong trang thái xuất chuồng status=1
+    public void setHorseCoord(int idHorse){
+        Horse horse=listHorse.get(idHorse);
+        int position=horse.getPosition();
+        int level=horse.getLevel();
+        int stepped=horse.getStepped();
+        //Tọa độ tại vị trí position=0
+        Tuple coord = new Tuple (chessBoardCoord.x+280,chessBoardCoord.y+2);
+        int smallJump=(int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
+        int bigJump=(int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
+        for (int i = 0; i < position; i++) {
+            if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25) ) {
+                if(position >= 12 && position <= 13) coord.y += bigJump;
+                else coord.y -= smallJump;
+            } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47) ) {
+                if(position >= 26 && position <= 27) coord.x -= bigJump;
+                else coord.x += smallJump;
+            } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
+                if(position >= 54 && position <= 55) coord.x += bigJump;
+                else coord.x -= smallJump;
+            } else {
+                if(position >= 40 && position <= 41) coord.y -=bigJump;
+                else coord.y +=smallJump;
+            }
+        }
+        if(stepped>=horse.TARGET) {
+            for (int i = 0; i < level; i++) {
+                if (position == 13) {
+                    coord.x += smallJump;
+                } else if (position == 27) {
+                    coord.y -= smallJump;
+                } else if (position == 41) {
+                    coord.x -= smallJump;
+                } else if (position == 55) {
+                    coord.y += smallJump;
+                }
+            }
+        }
+        listHorse.get(idHorse).setCoord(coord);
+        listHorse.get(idHorse).resetImgHorse();
+        listHorse.get(idHorse).setStatus(1);
+    }
 
-    public void resetHorseCoord(int idHorse) {//Reset toa do ngua trong chuong
+    public void setInitialHorseCoord(int idHorse) {//Reset toa do ngua trong chuong
         //Tính điểm giữa của mỗi ô(nếu các có thêm hằng số bất kỳ là do bị lệch sẽ tìm khắc phục sau)
         Tuple middle = new Tuple(); //Đây là điểm tọa độ ở giữa ô user
         middle.x = (2 * userCoord.x + this.stableSize.x) / 2-20;

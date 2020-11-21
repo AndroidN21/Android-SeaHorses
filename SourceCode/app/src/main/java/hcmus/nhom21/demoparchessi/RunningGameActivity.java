@@ -117,7 +117,7 @@ public class RunningGameActivity extends FragmentActivity{
 
             for(int idHorse=0; idHorse<NUM_HORSE;idHorse++){
                 user.getListHorse().add(idHorse,new Horse(imgHorse.get(idUser*NUM_HORSE+idHorse), idUser * 14, idUser, idHorse));
-                user.resetHorseCoord(idHorse);
+                user.setInitialHorseCoord(idHorse);
             }
         }
         listUser.get(0).setFlag(1);
@@ -200,14 +200,13 @@ public class RunningGameActivity extends FragmentActivity{
 
 
             //Xu ly nguoi dung chon ngua trong mang ngua vua nay
-            horse.Move(step - 1);
+            int idHorse=0;//Ngựa được chọn để chạy
+            user.MoveHorse(idHorse,step-1);
 
             if(flagConflict==1){
                 Dangua(Id);
             }
-            horse.Move(1);
-
-
+            user.MoveHorse(idHorse,1);
         }
 
 
@@ -247,8 +246,8 @@ public class RunningGameActivity extends FragmentActivity{
         User user=listUser.get(idUser);
         Tuple Id=new Tuple();
         int flag=0;
-        for(int i=0;i<NUM_HORSE;i++){
-            Horse horse=user.getHorse(i);
+        for(int idHorse=0;idHorse<NUM_HORSE;idHorse++){
+            Horse horse=user.getHorse(idHorse);
             if(horse.getStatus()==0){
                 flag=checkConflict(Id,horse,0);
 
@@ -256,8 +255,8 @@ public class RunningGameActivity extends FragmentActivity{
                     if(Id.x!=idUser) Dangua(Id);
                     else break;
                 }
-                horse.initialCoord();
-                horse.setStatus(1);
+
+                user.setHorseCoord(idHorse);
                 return horse;
             }
         }
