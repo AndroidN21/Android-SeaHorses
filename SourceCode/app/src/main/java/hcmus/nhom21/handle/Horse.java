@@ -111,6 +111,7 @@ public class Horse {
         //System.out.println("Horse "+idHorse+": "+coord.x +"&&&"+coord.y +"/n");
         this.imgHorse.setX(coord.x);
         this.imgHorse.setY(coord.y);
+
     }
 
     public Tuple getCoord() {
