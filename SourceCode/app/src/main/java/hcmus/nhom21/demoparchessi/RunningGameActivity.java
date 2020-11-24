@@ -31,7 +31,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
-public class RunningGameActivity extends FragmentActivity{
+public class RunningGameActivity extends FragmentActivity {
     private int[] LOCATE_BOARD = new int[2];
     private int[] SIZE_BOARD = new int[2];
     private int[] SIZE_HORSE = new int[2];
@@ -62,7 +62,7 @@ public class RunningGameActivity extends FragmentActivity{
         initView();
 
         //Tạo database trò chơi
-        database=new Database(this,"parchessi.sqlite",null,1);
+        database = new Database(this, "parchessi.sqlite", null, 1);
 
         //Toast.makeText(this, imgBoard.getLocationOnScreen().toString(), Toast.LENGTH_SHORT).show();
         //Bật tắt chế độ auto
@@ -104,8 +104,6 @@ public class RunningGameActivity extends FragmentActivity{
     }
 
 
-
-
     @Override
     protected void onPause() {
         saveGame();
@@ -138,13 +136,13 @@ public class RunningGameActivity extends FragmentActivity{
         try {
             loadGame();//Lựa chọn  load game nhận intent từ activity trước
             Toast.makeText(this, "Load game", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "init game", Toast.LENGTH_SHORT).show();
-        };
+        }
+        ;
     }
 
-    public void initGame(){
+    public void initGame() {
         //int[] horseInitialCoord=new int[2];
         //imgHorse.get(0).getLocationOnScreen(horseInitialCoord);
         //System.out.println("IMGHORSE:   " + horseInitialCoord[0] + "&&&&" +horseInitialCoord[1] + "\n");
@@ -163,30 +161,30 @@ public class RunningGameActivity extends FragmentActivity{
         listUser.get(0).setFlag(1);
     }
 
-    public void loadGame(){
-        Cursor dataHorse=database.getData("SELECT * FROM Horse");
-        Cursor dataUser=database.getData("SELECT * FROM User");
+    public void loadGame() {
+        Cursor dataHorse = database.getData("SELECT * FROM Horse");
+        Cursor dataUser = database.getData("SELECT * FROM User");
 
-        int idHorse,idUser,position,level,stepped;
-        while(dataHorse.moveToNext()){
-            int idLogic=dataHorse.getInt(0);
-            idHorse=idLogic%4;
-            idUser=idLogic/4;
-            position=dataHorse.getInt(1);
-            level=dataHorse.getInt(2);
-            stepped=dataHorse.getInt(3);
+        int idHorse, idUser, position, level, stepped;
+        while (dataHorse.moveToNext()) {
+            int idLogic = dataHorse.getInt(0);
+            idHorse = idLogic % 4;
+            idUser = idLogic / 4;
+            position = dataHorse.getInt(1);
+            level = dataHorse.getInt(2);
+            stepped = dataHorse.getInt(3);
 
             //System.out.println(idHorse+" "+idUser+" "+id+" "+" "+" ");
-            listIdHorse.add(new Tuple(idUser,idHorse));
-            Horse horse = getHorse(new Tuple(idUser,idHorse));
+            listIdHorse.add(new Tuple(idUser, idHorse));
+            Horse horse = getHorse(new Tuple(idUser, idHorse));
             horse.setPosition(position);
             horse.setStatus(1);
             horse.setLevel(level);
             horse.setStatus(stepped);
         }
 
-        while(dataUser.moveToNext()){
-            idUser=dataUser.getInt(0);
+        while (dataUser.moveToNext()) {
+            idUser = dataUser.getInt(0);
             int step = dataUser.getInt(1);
             User user = listUser.get(idUser);
             user.setStep(step);
@@ -196,25 +194,25 @@ public class RunningGameActivity extends FragmentActivity{
         database.queryData("DROP TABLE User");
     }
 
-    public void saveGame(){
+    public void saveGame() {
         //Tạo bảng
         database.queryData("CREATE TABLE IF NOT EXISTS Horse(id INTEGER PRIMARY KEY, position INTEGER, level INTEGER, stepped INTEGER)");
         database.queryData("CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, step INTEGER)");
         //Insert data horse đang di chuyển
         Horse horse;
         int idLogic;
-        for(int i=0;i<listIdHorse.size();i++){
-            horse=getHorse(listIdHorse.get(i));
-            idLogic=horse.getIdUser()*4+horse.getIdHorse();
-            database.queryData("INSERT INTO Horse VALUES ("+idLogic+","+horse.getPosition()+","+horse.getLevel()+","+horse.getStepped()+")");
+        for (int i = 0; i < listIdHorse.size(); i++) {
+            horse = getHorse(listIdHorse.get(i));
+            idLogic = horse.getIdUser() * 4 + horse.getIdHorse();
+            database.queryData("INSERT INTO Horse VALUES (" + idLogic + "," + horse.getPosition() + "," + horse.getLevel() + "," + horse.getStepped() + ")");
         }
 
         //Insert data user
         User user;
-        for(int idUser=0;idUser<listUser.size();idUser++){
-            user=listUser.get(idUser);
-            if(user.getFlag()==1){
-                database.queryData("INSERT INTO User VALUES ("+idUser+","+user.getStep()+")");
+        for (int idUser = 0; idUser < listUser.size(); idUser++) {
+            user = listUser.get(idUser);
+            if (user.getFlag() == 1) {
+                database.queryData("INSERT INTO User VALUES (" + idUser + "," + user.getStep() + ")");
                 break;
             }
         }
@@ -241,7 +239,7 @@ public class RunningGameActivity extends FragmentActivity{
         btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
         btnSetting = (ImageButton) findViewById(R.id.btnSetting);
         imgBoard = (ImageView) findViewById(R.id.imgBoard);
-        imgDice =(ImageView) findViewById(R.id.imgDice);
+        imgDice = (ImageView) findViewById(R.id.imgDice);
         imgHorse = new ArrayList<ImageView>(16);
 
         imgHorse.add((ImageView) findViewById(R.id.imgHorse00));
@@ -263,74 +261,68 @@ public class RunningGameActivity extends FragmentActivity{
 
     }
 
-    public void Turn() {
-        Thread thread= new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for(int idUser=0;idUser<NUM_USER;idUser++) {
-                    Tuple idPair = new Tuple();
-                    int flagConflict = 0;
-                    Dice dice = new Dice(1, 1);
-                    Horse horse = null;
-                    int step = dice.rollDice();
+    public boolean Turn(int idUser) {
+        Tuple idPair = new Tuple();
+        int flagConflict = 0;
+        Dice dice = new Dice(1, 1);
+        Horse horse = null;
+        int step = dice.rollDice();
 
-                    User user = listUser.get(idUser);
-                    boolean isRepeat = false;
+        User user = listUser.get(idUser);
+        boolean isRepeat = false;
 
-                    if (dice.getNumDice1() == dice.getNumDice2() || (step == 7 && (dice.getNumDice1() == 1 || dice.getNumDice1() == 6)))
-                        isRepeat = true;
+        if (dice.getNumDice1() == dice.getNumDice2() || (step == 7 && (dice.getNumDice1() == 1 || dice.getNumDice1() == 6)))
+            isRepeat = true;
 
-                    //Khởi tạo mảng ngụa có thể chạy
-                    ArrayList<Horse> horseValid = new ArrayList<>();
-                    for (int i = 0; i < NUM_HORSE; i++) {
-                        horse = user.getHorse(i);
-                        flagConflict = checkConflict(idPair, horse, step);
-                        if (horse.getStatus() == 1 && flagConflict != -1 && idPair.x != idUser) {
-                            horseValid.add(horse);
-                        }
-                        if (isRepeat && horse.getStatus() == 0) {
-                            horseValid.add(horse);
-                        }
-                    }
-
-                    boolean isSelected = false;
-                    int idHorse = 0;//Ngựa được chọn để chạy
-                    while (!isSelected) {
-                        for (int i = 0; i < horseValid.size(); i++) {
-                            horse = horseValid.get(i);
-                            //Đợi lắng nghe để chọn ngựa chạy
-                            imgHorse.get(horse.getIdUser() * 4 + horse.getIdHorse()).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                        }
-                        isSelected = false;
-                    }
-
-                    if (horse.getStatus() == 0) {
-                        XuatChuong(idUser, idHorse);
-                        listIdHorse.add(new Tuple(idUser, horse.getIdHorse()));
-
-                    } else {
-                        //Xu ly nguoi dung chon ngua trong mang ngua vua nay
-
-                        user.MoveHorse(idHorse, step - 1);
-
-                        if (flagConflict == 1) {
-                            Dangua(idPair);
-                        }
-                        user.MoveHorse(idHorse, 1);
-                    }
-
-                    //return isRepeat;
-                }
+        //Khởi tạo mảng ngụa có thể chạy
+        ArrayList<Horse> horseValid = new ArrayList<>();
+        for (int i = 0; i < NUM_HORSE; i++) {
+            horse = user.getHorse(i);
+            flagConflict = checkConflict(idPair, horse, step);
+            if (horse.getStatus() == 1 && flagConflict != -1 && idPair.x != idUser) {
+                horseValid.add(horse);
             }
-        });
-        thread.start();
+            if (isRepeat && horse.getStatus() == 0) {
+                horseValid.add(horse);
+            }
+        }
+
+        boolean isSelected = false;
+        int idHorse = 0;//Ngựa được chọn để chạy
+        while (!isSelected) {
+            for (int i = 0; i < horseValid.size(); i++) {
+                horse = horseValid.get(i);
+                //Đợi lắng nghe để chọn ngựa chạy
+                imgHorse.get(horse.getIdUser() * 4 + horse.getIdHorse()).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+                //Nếu được chon isSelected=true;
+            }
+
+        }
+
+        if (horse.getStatus() == 0) {
+            XuatChuong(idUser, idHorse);
+            listIdHorse.add(new Tuple(idUser, horse.getIdHorse()));
+
+        } else {
+            //Xu ly nguoi dung chon ngua trong mang ngua vua nay
+
+            user.MoveHorse(idHorse, step - 1);
+
+            if (flagConflict == 1) {
+                Dangua(idPair);
+            }
+            user.MoveHorse(idHorse, 1);
+        }
+
+        return isRepeat;
 
     }
+
 
     public int checkConflict(Tuple idPair, Horse horse, int step) {
         for (int i = 0; i < listIdHorse.size(); i++) {
@@ -360,7 +352,7 @@ public class RunningGameActivity extends FragmentActivity{
         //listHorse.remove(horse.getPosition() + 1);
     }
 
-    public void XuatChuong(int idUser,int idHorse) {
+    public void XuatChuong(int idUser, int idHorse) {
         User user = listUser.get(idUser);
         Tuple idPair = new Tuple();
         int flag = 0;
