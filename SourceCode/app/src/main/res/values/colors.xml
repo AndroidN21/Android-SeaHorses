@@ -5,4 +5,12 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorBackground">#FFECBB</color>
     <color name="colorBackgroundBtn">#6EF6D5</color>
+    <color name="yellowTeamBackground">#FFEF5E</color>
+    <color name="blueTeamBackground">#7CA0FB</color>
+    <color name="greenTeamBackground">#BAFCA3</color>
+    <color name="redTeamBackground">#FCA3A3</color>
+    <color name="yellowTeam">#FFE000</color>
+    <color name="blueTeam">#002BFF</color>
+    <color name="greenTeam">#00D02E</color>
+    <color name="redTeam">#DD0B0B</color>
 </resources>

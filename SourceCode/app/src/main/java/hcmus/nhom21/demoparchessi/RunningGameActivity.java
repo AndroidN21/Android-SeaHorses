@@ -1,6 +1,7 @@
 package hcmus.nhom21.demoparchessi;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -27,12 +29,21 @@ public class RunningGameActivity extends FragmentActivity  {
     boolean flagHide = false;
 
     FragmentTransaction ft;
+
+    //-------------------------------------1712275-----------------------------------
     FragmentDice fragYDice = new FragmentDice();
     FragmentDice fragRDice = new FragmentDice();
     FragmentDice fragBDice = new FragmentDice();
     FragmentDice fragGDice = new FragmentDice();
 
-    int turn = 1;
+    private int turn = 1;
+    //1 yellow
+    //2 blue
+    //3 green
+    //4 red
+
+    //public ArrayList<User> listUser;       // gỡ cmt khi merge
+
     static private int speed = 2000;
     Handler myHandler = new Handler(Looper.getMainLooper());
     private int resRollDiceOne = 3;
@@ -40,7 +51,7 @@ public class RunningGameActivity extends FragmentActivity  {
 
     private Button btnRoll;
 
-
+    private LinearLayout viewProfile;
 
     public void setResRollDiceOne(int resRollDiceOne) {
         this.resRollDiceOne = resRollDiceOne;
@@ -58,6 +69,26 @@ public class RunningGameActivity extends FragmentActivity  {
         return resRollDiceTwo;
     }
 
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int turn) {
+        this.turn = turn;
+
+//        if(listUser[turn].isPlayer) btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_person_24);
+//        else btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_android_24);
+        // gỡ cmt sau khi merge
+
+        switch (turn){
+            case 1: viewProfile.setBackgroundResource(R.drawable.ic_profile_yellow);break;
+            case 2: viewProfile.setBackgroundResource(R.drawable.ic_profile_blue);break;
+            case 3: viewProfile.setBackgroundResource(R.drawable.ic_profile_green);break;
+            case 4: viewProfile.setBackgroundResource(R.drawable.ic_profile_red);break;
+        }
+    }
+
+    //-------------------------------------1712275-----------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +109,12 @@ public class RunningGameActivity extends FragmentActivity  {
             public void onClick(View v) {
                 if (!flagTypePlayer){
                     flagTypePlayer = true;
-                    btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_android_24);
+                    //btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_android_24);
                     Toast.makeText(RunningGameActivity.this, "Bật tự động chơi", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     flagTypePlayer = false;
-                    btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_person_24);
+                    //btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_person_24);
                     Toast.makeText(RunningGameActivity.this, "Tắt tự động chơi", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -107,6 +138,7 @@ public class RunningGameActivity extends FragmentActivity  {
                 flagHide = true;
             }
         });
+        //-------------------------------------1712275-----------------------------------
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frg_dice_yellow, fragYDice);
         ft.replace(R.id.frg_dice_blue, fragBDice);
@@ -114,22 +146,18 @@ public class RunningGameActivity extends FragmentActivity  {
         ft.replace(R.id.frg_dice_red, fragRDice);
         ft.addToBackStack(null);
         ft.commit();
-        btnRoll = findViewById(R.id.btn_roll);
+        btnRoll = findViewById(R.id.btn_roll); //btn để test
         btnRoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Random generator = new Random();
-                turn = generator.nextInt(4)+1;
-                switch (turn){
-                    case 1: findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);break;
-                    case 2: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
-                    case 3: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
-                    case 4: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
-                }
-                Thread myBackgroundThread = new Thread(backgroundRollDice, "rollDice");
-                myBackgroundThread.start();
+                setTurn(generator.nextInt(4)+1);
+                rollDice(getTurn());
             }
         });
+
+        viewProfile = findViewById(R.id.txtProfile);
+        //-------------------------------------1712275-----------------------------------
     }
 
     @Override
@@ -155,12 +183,25 @@ public class RunningGameActivity extends FragmentActivity  {
         Image imgBoard;
         Button btnProfile;
     }
+    //--------------------------------------------------------------------------1712275
+
+    private void rollDice(int turn){
+        switch (turn){
+            case 1: findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);break;
+            case 2: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
+            case 3: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
+            case 4: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
+        }
+        Thread myBackgroundThread = new Thread(backgroundRollDice, "rollDice");
+        myBackgroundThread.start();
+    }
+
     private Runnable foregroundRollDice = new Runnable() {
         @Override
         public void run() {
             try {
                 Random generator = new Random();
-                switch (turn){
+                switch (getTurn()){
                     case 1: fragYDice.setImgDice1(generator.nextInt(18)+1);
                         fragYDice.setImgDice2(generator.nextInt(18)+1);
                         break;
@@ -183,7 +224,7 @@ public class RunningGameActivity extends FragmentActivity  {
         @Override
         public void run() {
             try {
-                switch (turn){
+                switch (getTurn()){
                     case 1: fragYDice.setImgDice1(resRollDiceOne); fragYDice.setImgDice2(resRollDiceTwo); break;
                     case 2: fragBDice.setImgDice1(resRollDiceOne); fragBDice.setImgDice2(resRollDiceTwo); break;
                     case 3: fragGDice.setImgDice1(resRollDiceOne); fragGDice.setImgDice2(resRollDiceTwo); break;
@@ -224,4 +265,6 @@ public class RunningGameActivity extends FragmentActivity  {
             catch (InterruptedException e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
     };
+
+    //--------------------------------------------------------------------------------1712275
 }
