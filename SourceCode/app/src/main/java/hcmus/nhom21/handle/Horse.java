@@ -7,8 +7,8 @@ import static java.lang.Thread.sleep;
 
 
 public class Horse {
-    final int TARGET =56;
-    final int NUM_LEVEL=6;
+    final int TARGET = 56;
+    final int NUM_LEVEL = 6;
     private Tuple coord;//????
     private int status;
     private int stepped;
@@ -17,28 +17,32 @@ public class Horse {
     private int idUser;
     private int idHorse;
     ImageView imgHorse;
-    public boolean Move(int step, int smallJump, int bigJump){
+
+    public boolean Move(int step, int smallJump, int bigJump) {
         //do something
 
-        int i=0;
-        if(stepped<TARGET) {
+        int i = 0;
+        if (stepped < TARGET) {
             //Xu ly di tren ban co
-            while(i < step) {
-                stepped+=1;
-                position=(position+i)%TARGET;
-                if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25) ) {
-                    if(position >= 12 && position <= 13) coord.y += bigJump;
-                    else coord.y += smallJump;
-                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47) ) {
-                    if(position >= 26 && position <= 27) coord.x -= bigJump;
-                    else coord.x -= smallJump;
+            while (i < step) {
+                stepped += 1;
+                position = (position + i) % TARGET;
+                if (position >= 12 && position <= 13) coord.y += bigJump;
+                else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
+                    coord.y += smallJump;
+                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47)) {
+                    coord.x -= smallJump;
+                } else if (position >= 54 && position <= 55) {
+                    coord.x -= bigJump;
                 } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
-                    if(position >= 54 && position <= 55) coord.x += bigJump;
-                    else coord.x += smallJump;
-                } else {
-                    if(position >= 40 && position <= 41) coord.y -=bigJump;
-                    else coord.y -=smallJump;
+                    coord.x += smallJump;
+                } else if (position >= 26 && position <= 27) {
+                    coord.x += bigJump;
+                } else if (position >= 40 && position <= 41) {
+                    coord.y -= bigJump;
                 }
+                else coord.y -= smallJump;
+
 
                 try {
                     Thread.sleep(100);
@@ -47,15 +51,15 @@ public class Horse {
                 }
                 this.resetImgHorse();
 
-                if(stepped>=TARGET)
+                if (stepped >= TARGET)
                     break;
                 i++;
             }
         }
 
         //Xu ly di tren buc
-        if(stepped>=TARGET) {
-            while(i<step) {
+        if (stepped >= TARGET) {
+            while (i < step) {
                 if (position == 13) {
                     coord.x += smallJump;
                 } else if (position == 27) {
@@ -65,7 +69,7 @@ public class Horse {
                 } else if (position == 55) {
                     coord.y += smallJump;
                 }
-                if(level >=NUM_LEVEL){
+                if (level >= NUM_LEVEL) {
                     break;
                 }
 
@@ -86,23 +90,23 @@ public class Horse {
     }
 
 
-    public void resetInitial(){
+    public void resetInitial() {
         //this.position=position;
-        this.coord = new Tuple(0,0);
+        this.coord = new Tuple(0, 0);
         this.imgHorse.setX(coord.x);
         this.imgHorse.setY(coord.y);
-        this.position=idUser*14;
-        this.level=0;
+        this.position = idUser * 14;
+        this.level = 0;
         this.status = 0;
         this.stepped = 0;
     }
 
     public Horse(ImageView view, int position, int idUser, int idHorse) {
-        imgHorse=view;
-        this.position=position;
-        this.idUser=idUser;
-        this.idHorse=idHorse;
-        this.level=0;
+        imgHorse = view;
+        this.position = position;
+        this.idUser = idUser;
+        this.idHorse = idHorse;
+        this.level = 0;
         this.status = 0;
         this.stepped = 0;
     }

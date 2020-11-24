@@ -155,149 +155,158 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
     <ImageView
         android:id="@+id/imgHorse00"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_yellow_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse01"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_yellow_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse02"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_yellow_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse03"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_yellow_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse10"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_red_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse11"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_red_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse12"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_red_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse13"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_red_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse20"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_blue_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse21"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_blue_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse22"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_blue_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse23"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_blue_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse30"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_green_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse31"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_green_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse32"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_green_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
         android:id="@+id/imgHorse33"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/greenhorse1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_green_chessman"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
-
+    <ImageView
+        android:id="@+id/imgDice"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_green_chessman"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
