@@ -60,8 +60,8 @@
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="10"
-                android:text="Đội Lam"
-                android:textColor="@color/colorBlue"
+                android:text="Đội Vàng"
+                android:textColor="@color/colorYellow"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/txtWin"
@@ -96,7 +96,7 @@
                 android:id="@+id/imgHorse0"
                 android:layout_width="140dp"
                 android:layout_height="190dp"
-                android:src="@drawable/winhorse"
+                android:src="@drawable/yellow_winhorse"
                 android:scaleX="-1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -106,7 +106,7 @@
                 android:layout_width="140dp"
                 android:layout_height="190dp"
                 android:layout_marginStart="32dp"
-                android:src="@drawable/winhorse"
+                android:src="@drawable/yellow_winhorse"
                 android:scaleX="-1"
                 app:layout_constraintStart_toStartOf="@+id/imgHorse0"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,7 @@
                 android:id="@+id/imgHorse3"
                 android:layout_width="140dp"
                 android:layout_height="190dp"
-                android:src="@drawable/winhorse"
+                android:src="@drawable/yellow_winhorse"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,7 +126,7 @@
                 android:layout_alignStart="@+id/imgHorse3"
                 android:layout_alignEnd="@+id/imgHorse3"
                 android:layout_marginEnd="32dp"
-                android:src="@drawable/winhorse"
+                android:src="@drawable/yellow_winhorse"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

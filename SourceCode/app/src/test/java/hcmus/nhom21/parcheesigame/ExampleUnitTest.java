@@ -1,4 +1,4 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
 import org.junit.Test;
 

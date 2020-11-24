@@ -1,16 +1,11 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
     private Button btnNewGame;

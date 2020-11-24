@@ -1,4 +1,4 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static java.lang.String.valueOf;
 

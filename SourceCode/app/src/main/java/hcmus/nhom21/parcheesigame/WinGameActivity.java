@@ -1,4 +1,4 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,6 +19,12 @@ public class WinGameActivity extends Activity {
     private ImageView imgFireworkAnim0;
     private ImageView imgFireworkAnim1;
     private ImageView imgFireworkAnim2;
+
+    private ImageView imgHorse0;
+    private ImageView imgHorse1;
+    private ImageView imgHorse2;
+    private ImageView imgHorse3;
+
     private Button btnExit;
     private Button btnPlayAgain;
     private TextView txtTeamName;
@@ -32,6 +38,10 @@ public class WinGameActivity extends Activity {
         imgFireworkAnim0 = (ImageView) findViewById(R.id.imgFireworkAnim0);
         imgFireworkAnim1 = (ImageView) findViewById(R.id.imgFireworkAnim1);
         imgFireworkAnim2 = (ImageView) findViewById(R.id.imgFireworkAnim2);
+        imgHorse0 = (ImageView) findViewById(R.id.imgHorse0);
+        imgHorse1 = (ImageView) findViewById(R.id.imgHorse1);
+        imgHorse2 = (ImageView) findViewById(R.id.imgHorse2);
+        imgHorse3 = (ImageView) findViewById(R.id.imgHorse3);
         btnExit = (Button) findViewById(R.id.btnExit);
         btnPlayAgain = (Button) findViewById(R.id.btnPlayAgain);
         txtTeamName = (TextView) findViewById(R.id.txtTeamName);
@@ -43,18 +53,34 @@ public class WinGameActivity extends Activity {
 //            case "redTeam":
 //                txtTeamName.setText(R.string.redTeam);
 //                txtTeamName.setTextColor(R.color.colorRed);
+//                imgHorse0.setImageResource(R.drawable.red_winhorse);
+//                imgHorse1.setImageResource(R.drawable.red_winhorse);
+//                imgHorse2.setImageResource(R.drawable.red_winhorse);
+//                imgHorse3.setImageResource(R.drawable.red_winhorse);
 //                break;
 //            case "yellowTeam":
 //                txtTeamName.setText(R.string.yellowTeam);
 //                txtTeamName.setTextColor(R.color.colorYellow);
+//                imgHorse0.setImageResource(R.drawable.yellow_winhorse);
+//                imgHorse1.setImageResource(R.drawable.yellow_winhorse);
+//                imgHorse2.setImageResource(R.drawable.yellow_winhorse);
+//                imgHorse3.setImageResource(R.drawable.yellow_winhorse);
 //                break;
 //            case "blueTeam":
 //                txtTeamName.setText(R.string.blueTeam);
 //                txtTeamName.setTextColor(R.color.colorBlue);
+//                imgHorse0.setImageResource(R.drawable.blue_winhorse);
+//                imgHorse1.setImageResource(R.drawable.blue_winhorse);
+//                imgHorse2.setImageResource(R.drawable.blue_winhorse);
+//                imgHorse3.setImageResource(R.drawable.blue_winhorse);
 //                break;
 //            case "greenTeam":
 //                txtTeamName.setText(R.string.greenTeam);
 //                txtTeamName.setTextColor(R.color.colorGreen);
+//                imgHorse0.setImageResource(R.drawable.green_winhorse);
+//                imgHorse1.setImageResource(R.drawable.green_winhorse);
+//                imgHorse2.setImageResource(R.drawable.green_winhorse);
+//                imgHorse3.setImageResource(R.drawable.green_winhorse);
 //            default:
 //        }
 

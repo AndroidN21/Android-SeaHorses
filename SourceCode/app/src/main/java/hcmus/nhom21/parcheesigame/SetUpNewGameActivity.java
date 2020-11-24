@@ -1,13 +1,11 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;

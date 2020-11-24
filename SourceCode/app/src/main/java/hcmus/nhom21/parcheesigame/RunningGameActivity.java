@@ -1,36 +1,20 @@
-package hcmus.nhom21.demoparchessi;
+package hcmus.nhom21.parcheesigame;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Icon;
 import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
-
-import java.lang.reflect.Field;
 
 import static java.lang.String.valueOf;
 
@@ -40,7 +24,12 @@ public class RunningGameActivity extends FragmentActivity {
     private Image imgBoard;
     private Button btnProfile;
     private boolean flagTypePlayer = false;
-
+    private ImageView imgChatAnim0;
+    private ImageView imgChatAnim1;
+    private ImageView imgChatAnim2;
+    Animation chatAnim0;
+    Animation chatAnim1;
+    Animation chatAnim2;
     MediaPlayer song;
     private SettingFragment newSettingFragment;
 
@@ -55,6 +44,9 @@ public class RunningGameActivity extends FragmentActivity {
 
         btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
         btnSetting = (ImageButton) findViewById(R.id.btnSetting);
+        imgChatAnim0 = (ImageView) findViewById(R.id.imgChat0);
+        imgChatAnim1 = (ImageView) findViewById(R.id.imgChat1);
+        imgChatAnim2 = (ImageView) findViewById(R.id.imgChat2);
 
         //Dùng View Holder
         //ViewHolder viewHolder = new ViewHolder();
@@ -109,8 +101,31 @@ public class RunningGameActivity extends FragmentActivity {
 
                 }
 
+                //Test
+                imgChatAnim0.setVisibility(View.VISIBLE);
+                imgChatAnim1.setVisibility(View.VISIBLE);
+                imgChatAnim2.setVisibility(View.VISIBLE);
+
+                imgChatAnim0.startAnimation(chatAnim0);
+                imgChatAnim1.startAnimation(chatAnim1);
+                imgChatAnim2.startAnimation(chatAnim2);
+
+                imgChatAnim0.setVisibility(View.INVISIBLE);
+                imgChatAnim1.setVisibility(View.INVISIBLE);
+                imgChatAnim2.setVisibility(View.INVISIBLE);
             }
         });
+
+        //Khi đổ xúc sắc xong sẽ hiện chat.
+        //Test
+        imgChatAnim0.setImageAlpha(R.drawable.ic_yes);
+        imgChatAnim0.setVisibility(View.INVISIBLE);
+        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
+        imgChatAnim1.setVisibility(View.INVISIBLE);
+        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
+        imgChatAnim2.setVisibility(View.INVISIBLE);
+        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
+
     }
 
 
