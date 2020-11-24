@@ -144,19 +144,18 @@ public class SetUpNewGameActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 String setupPlayer="";
-                 if(radYPlayer.isChecked()==true)setupPlayer+="#radYPlayer";
-                 if(radYBoot.isChecked()==true)setupPlayer+="#radYBoot";
-                 if(radYNone.isChecked()==true)setupPlayer+="#radYNone";
-                 if(radBPlayer.isChecked()==true)setupPlayer+="#radBPlayer";
-                 if(radBBoot.isChecked()==true)setupPlayer+="#radBBoot";
-                 if(radBNone.isChecked()==true)setupPlayer+="#radBNone";
-                 if(radGPlayer.isChecked()==true)setupPlayer+="#radGPlayer";
-                 if(radGBoot.isChecked()==true)setupPlayer+="#radGBoot";
-                 if(radGNone.isChecked()==true)setupPlayer+="#radGNone";
-                 if(radRPlayer.isChecked()==true)setupPlayer+="#radRPlayer";
-                 if(radRBoot.isChecked()==true)setupPlayer+="#radRBoot";
-                 if(radRNone.isChecked()==true)setupPlayer+="#radRNone";
-                 Log.e("mylog",setupPlayer);
+                 if(radYPlayer.isChecked())setupPlayer+="#radYPlayer";
+                 if(radYBoot.isChecked())setupPlayer+="#radYBoot";
+                 if(radYNone.isChecked())setupPlayer+="#radYNone";
+                 if(radBPlayer.isChecked())setupPlayer+="#radBPlayer";
+                 if(radBBoot.isChecked())setupPlayer+="#radBBoot";
+                 if(radBNone.isChecked())setupPlayer+="#radBNone";
+                 if(radGPlayer.isChecked())setupPlayer+="#radGPlayer";
+                 if(radGBoot.isChecked())setupPlayer+="#radGBoot";
+                 if(radGNone.isChecked())setupPlayer+="#radGNone";
+                 if(radRPlayer.isChecked())setupPlayer+="#radRPlayer";
+                 if(radRBoot.isChecked())setupPlayer+="#radRBoot";
+                 if(radRNone.isChecked())setupPlayer+="#radRNone";
                 Intent intentRunningGame = new Intent();
                 intentRunningGame.setClass(v.getContext(), RunningGameActivity.class);
                 intentRunningGame.putExtra("setupPlayer",setupPlayer);

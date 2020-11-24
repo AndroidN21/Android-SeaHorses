@@ -3,6 +3,9 @@ package hcmus.nhom21.demoparchessi;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +16,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class RunningGameActivity extends FragmentActivity{
+import java.util.Random;
+
+public class RunningGameActivity extends FragmentActivity  {
     private Button btnTypePlayer;
     private ImageButton btnSetting;
     private Image imgBoard;
@@ -22,6 +27,36 @@ public class RunningGameActivity extends FragmentActivity{
     boolean flagHide = false;
 
     FragmentTransaction ft;
+    FragmentDice fragYDice = new FragmentDice();
+    FragmentDice fragRDice = new FragmentDice();
+    FragmentDice fragBDice = new FragmentDice();
+    FragmentDice fragGDice = new FragmentDice();
+
+    int turn = 1;
+    static private int speed = 2000;
+    Handler myHandler = new Handler(Looper.getMainLooper());
+    private int resRollDiceOne = 3;
+    private int resRollDiceTwo = 6;
+
+    private Button btnRoll;
+
+
+
+    public void setResRollDiceOne(int resRollDiceOne) {
+        this.resRollDiceOne = resRollDiceOne;
+    }
+
+    public void setResRollDiceTwo(int resRollDiceTwo) {
+        this.resRollDiceTwo = resRollDiceTwo;
+    }
+
+    public int getResRollDiceOne() {
+        return resRollDiceOne;
+    }
+
+    public int getResRollDiceTwo() {
+        return resRollDiceTwo;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +107,29 @@ public class RunningGameActivity extends FragmentActivity{
                 flagHide = true;
             }
         });
+        ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frg_dice_yellow, fragYDice);
+        ft.replace(R.id.frg_dice_blue, fragBDice);
+        ft.replace(R.id.frg_dice_green, fragGDice);
+        ft.replace(R.id.frg_dice_red, fragRDice);
+        ft.addToBackStack(null);
+        ft.commit();
+        btnRoll = findViewById(R.id.btn_roll);
+        btnRoll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random generator = new Random();
+                turn = generator.nextInt(4)+1;
+                switch (turn){
+                    case 1: findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);break;
+                    case 2: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
+                    case 3: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
+                    case 4: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
+                }
+                Thread myBackgroundThread = new Thread(backgroundRollDice, "rollDice");
+                myBackgroundThread.start();
+            }
+        });
     }
 
     @Override
@@ -97,4 +155,73 @@ public class RunningGameActivity extends FragmentActivity{
         Image imgBoard;
         Button btnProfile;
     }
+    private Runnable foregroundRollDice = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Random generator = new Random();
+                switch (turn){
+                    case 1: fragYDice.setImgDice1(generator.nextInt(18)+1);
+                        fragYDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+                    case 2: fragBDice.setImgDice1(generator.nextInt(18)+1);
+                        fragBDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+                    case 3: fragGDice.setImgDice1(generator.nextInt(18)+1);
+                        fragGDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+                    case 4: fragRDice.setImgDice1(generator.nextInt(18)+1);
+                        fragRDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+                    default:
+                }
+            }
+            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+        }
+    };
+    private Runnable resultRollDice = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                switch (turn){
+                    case 1: fragYDice.setImgDice1(resRollDiceOne); fragYDice.setImgDice2(resRollDiceTwo); break;
+                    case 2: fragBDice.setImgDice1(resRollDiceOne); fragBDice.setImgDice2(resRollDiceTwo); break;
+                    case 3: fragGDice.setImgDice1(resRollDiceOne); fragGDice.setImgDice2(resRollDiceTwo); break;
+                    case 4: fragRDice.setImgDice1(resRollDiceOne); fragRDice.setImgDice2(resRollDiceTwo); break;
+                }
+                //đi quân
+
+
+
+                //
+
+                findViewById(R.id.frg_dice_yellow).setVisibility(View.INVISIBLE);
+                findViewById(R.id.frg_dice_blue).setVisibility(View.INVISIBLE);
+                findViewById(R.id.frg_dice_green).setVisibility(View.INVISIBLE);
+                findViewById(R.id.frg_dice_red).setVisibility(View.INVISIBLE);
+            }
+            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+        }
+    };
+    private Runnable backgroundRollDice = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                int loop = 0;
+                int jumb = 300;
+                while (loop<=speed){
+                    Thread.sleep(jumb);
+                    if(loop<=speed/2){
+                        jumb = Math.max((jumb / 2), speed / 100);
+                    }else {
+                        jumb = (jumb*2);
+                    }
+                    loop += jumb;
+                    myHandler.post(foregroundRollDice);
+                }
+                myHandler.post(resultRollDice);
+            }
+            catch (InterruptedException e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+        }
+    };
 }
