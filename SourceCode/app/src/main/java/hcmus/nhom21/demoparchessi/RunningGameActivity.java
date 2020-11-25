@@ -1,0 +1,417 @@
+package hcmus.nhom21.demoparchessi;
+
+
+import hcmus.nhom21.handle.Database;
+import hcmus.nhom21.handle.Dice;
+import hcmus.nhom21.handle.Horse;
+import hcmus.nhom21.handle.Tuple;
+import hcmus.nhom21.handle.User;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import android.os.*;
+
+import java.util.ArrayList;
+
+public class RunningGameActivity extends FragmentActivity {
+    private int[] LOCATE_BOARD = new int[2];
+    private int[] SIZE_BOARD = new int[2];
+    private int[] SIZE_HORSE = new int[2];
+    final int NUM_USER = 4;
+    final int NUM_HORSE = 4;
+    private ArrayList<User> listUser;
+    private ArrayList<Tuple> listIdHorse;// Luu ngua voi status =1 dang duoc chay voi x la idUser va y là idHorse
+    Database database;
+
+    private Button btnTypePlayer;
+    private ImageButton btnSetting;
+    private ImageView imgBoard;
+    private ArrayList<ImageView> imgHorse;
+    boolean flagTypePlayer = false;
+    boolean flagHide;
+    SettingFragment settingFragment;
+
+    FragmentManager fm;
+    FragmentTransaction ft;
+
+    Handler mhandler;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_runninggame);
+        Intent intentMain = getIntent();
+
+        AnhXa();
+
+        //Tạo database trò chơi
+        database=new Database(this,"parchessi.sqlite",null,1);
+
+        //Toast.makeText(this, imgBoard.getLocationOnScreen().toString(), Toast.LENGTH_SHORT).show();
+        //Bật tắt chế độ auto
+        btnTypePlayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!flagTypePlayer) {
+                    flagTypePlayer = true;
+                    btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_android_24);
+                    Toast.makeText(RunningGameActivity.this, "Bật tự động chơi", Toast.LENGTH_SHORT).show();
+                } else {
+                    flagTypePlayer = false;
+                    btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_person_24);
+                    Toast.makeText(RunningGameActivity.this, "Tắt tự động chơi", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        //Mở menu cài đặt
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ft = getSupportFragmentManager().beginTransaction();
+                btnSetting.setVisibility(View.INVISIBLE);
+
+                SettingFragment settingFragment = new SettingFragment();
+                ft.replace(R.id.frameSetting, settingFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                //Ẩn/Vô hiệu hóa/Chèn fragment lên trên cùng của activiy hiện tại
+                findViewById(R.id.imgBoard).setVisibility(View.INVISIBLE);
+                findViewById(R.id.txtProfile).setVisibility(View.INVISIBLE);
+                flagHide = true;
+            }
+        });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        listUser = new ArrayList<User>(4);
+        listIdHorse = new ArrayList<Tuple>();
+
+
+        //Lấy tọa độ bàn cờ
+
+        imgBoard.getLocationOnScreen(LOCATE_BOARD);
+
+        //System.out.println("Tọa độ:   " + LOCATE_BOARD[0] + "&&&&" +LOCATE_BOARD[1] + "/n");
+
+        //Lấy kích thước bàn cờ
+        SIZE_BOARD[0] = imgBoard.getDrawable().getIntrinsicWidth();
+        SIZE_BOARD[1] = imgBoard.getDrawable().getIntrinsicHeight();
+
+        //Lấy kích thước ngựa
+        SIZE_HORSE[0] = imgHorse.get(0).getMeasuredWidth();
+        SIZE_HORSE[1] = imgHorse.get(0).getMeasuredHeight();
+        //System.out.println("SIZEHORSE:   " + SIZE_HORSE[0] + "&&&&" +SIZE_HORSE[1] + "\n");
+
+        //Lựa chọn new game hoặc load game
+        initHandler();
+        newGame();
+        Turn(0);
+
+    }
+
+    private void initHandler() {
+        mhandler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what)
+                {
+                    case 1001:
+                        Toast.makeText(RunningGameActivity.this, "XUẤT CHUỒNG", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1002:
+                        Toast.makeText(RunningGameActivity.this, "TẠO MẢNG", Toast.LENGTH_SHORT).show();
+                        break;
+
+
+                }
+            }
+        };
+    }
+
+    public void newGame(){
+        //int[] horseInitialCoord=new int[2];
+        //imgHorse.get(0).getLocationOnScreen(horseInitialCoord);
+        //System.out.println("IMGHORSE:   " + horseInitialCoord[0] + "&&&&" +horseInitialCoord[1] + "\n");
+        //Khởi tạo User và những con ngựa nó quản lý
+        for (int idUser = 0; idUser < NUM_USER; idUser++) {
+            User user = new User(idUser, new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]),
+                    new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]), new Tuple(SIZE_HORSE[0], SIZE_HORSE[1]));
+            listUser.add(idUser, user);
+
+            for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
+                user.setInitialHorseCoord(idHorse);
+            }
+        }
+        listUser.get(0).setFlag(1);
+    }
+
+    public void Loadgame(){
+        Cursor dataHorse=database.getData("SELECT * FROM Horse");
+        Cursor dataUser=database.getData("SELECT * FROM User");
+
+        int idHorse,idUser,position,level,stepped;
+        while(dataHorse.moveToNext()){
+            int id=dataHorse.getInt(0);
+            idHorse=id%4;
+            idUser=id/4;
+            position=dataHorse.getInt(1);
+            level=dataHorse.getInt(2);
+            stepped=dataHorse.getInt(3);
+
+            listIdHorse.add(new Tuple(idHorse,idUser));
+            Horse horse = getHorse(new Tuple(idHorse,idUser));
+            horse.setPosition(position);
+            horse.setStatus(1);
+            horse.setLevel(level);
+            horse.setStatus(stepped);
+        }
+
+        while(dataUser.moveToNext()){
+            idUser=dataUser.getInt(0);
+            int step = dataUser.getInt(1);
+            User user = listUser.get(idUser);
+            user.setStep(step);
+        }
+    }
+
+    public void saveGame(){
+        //Tạo bảng
+        database.queryData("CREATE TABLE IF NOT EXISTS Horse(id INTEGER PRIMARY KEY, position INTEGER, level INTEGER, stepped INTEGER)");
+        database.queryData("CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, step INTEGER)");
+        //Insert data horse đang di chuyển
+        Horse horse;
+        int id;
+        for(int i=0;i<listIdHorse.size();i++){
+            horse=getHorse(listIdHorse.get(i));
+            id=horse.getIdUser()*4+horse.getIdHorse();
+            database.queryData("INSERT INTO Horse VALUES ("+id+","+horse.getPosition()+","+horse.getLevel()+","+horse.getStepped()+")");
+        }
+
+        //Insert data user
+        User user;
+        for(int idUser=0;idUser<listUser.size();idUser++){
+            user=listUser.get(idUser);
+            if(user.getFlag()==1){
+                database.queryData("INSERT INTO User VALUES ("+idUser+","+user.getStep()+")");
+                break;
+            }
+        }
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            //Toast.makeText(RunningGameActivity.this, "Kill running", Toast.LENGTH_SHORT).show();
+            if (flagHide) {
+                //flagHide = false;
+                findViewById(R.id.imgBoard).setVisibility(View.VISIBLE);
+                findViewById(R.id.txtProfile).setVisibility(View.VISIBLE);
+                findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
+            }
+            //finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    public void AnhXa() {
+        btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
+        btnSetting = (ImageButton) findViewById(R.id.btnSetting);
+        imgBoard = (ImageView) findViewById(R.id.imgBoard);
+        imgHorse = new ArrayList<ImageView>(16);
+
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse00));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse01));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse02));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse03));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse10));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse11));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse12));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse13));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse20));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse21));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse22));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse23));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse30));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse31));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse32));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse33));
+
+    }
+
+    public boolean Turn(final int idUser) {
+
+        Dice dice;
+        dice = new Dice(1, 1);// Khoi tao load image
+        final int step = dice.rollDice();
+        Toast.makeText(this, idUser + " có số xúc xắc là " + dice.getNumDice1() + ", " + dice.getNumDice2(), Toast.LENGTH_SHORT).show();
+        final Horse[] horse = {null};
+        final User user = listUser.get(idUser);
+        boolean isRepeat = false;
+        //Đk đi kèm với select xuat chuong cua nguoi dung
+        if (dice.getNumDice1() == dice.getNumDice2() || (step == 7 && (dice.getNumDice1() == 1 || dice.getNumDice1() == 6))) {
+
+            Thread thread1 = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //if() nguoi dung chon
+                    Message msg = new Message();
+                    msg.what = 1001;
+                    mhandler.sendMessage(msg);
+
+                    horse[0] = XuatChuong(idUser);
+                    if (horse[0] != null) {
+                        listIdHorse.add(new Tuple(idUser, horse[0].getIdHorse()));
+                    }
+                }
+            });
+
+
+            try {
+                thread1.start();
+                thread1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            isRepeat = true;
+        }
+
+
+        final Tuple Id = new Tuple();
+        final int[] flagConflict = {0};
+
+        Thread thread2 = new Thread(new Runnable() {
+            ArrayList<Horse> horseValid = new ArrayList<>();
+            @Override
+            public void run() {
+
+                Message msg1 = new Message();
+                msg1.what = 1002;
+                mhandler.sendMessage(msg1);
+                for (int i = 0; i < NUM_HORSE; i++) {
+                    horse[0] = user.getHorse(i);
+                    flagConflict[0] = checkConflict(Id, horse[0], step);
+                    if (horse[0].getStatus() == 1 && flagConflict[0] != -1 && Id.x != idUser) {
+                        horseValid.add(horse[0]);
+                    }
+                }
+            }
+        });
+
+        try {
+            thread2.start();
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (horse[0] == null) {
+            //Khởi tạo mảng ngụa có thể chạy
+
+            try {
+                thread2.start();
+                thread2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            //Xu ly nguoi dung chon ngua trong mang ngua vua nay
+            int idHorse = 0;//Ngựa được chọn để chạy
+            user.MoveHorse(idHorse, step - 1);
+
+            if (flagConflict[0] == 1) {
+                Dangua(Id);
+            }
+            user.MoveHorse(idHorse, 1);
+        }
+
+
+        return isRepeat;
+    }
+
+
+    public int checkConflict(Tuple Id, Horse horse, int step) {
+        for (int i = 0; i < listIdHorse.size(); i++) {
+            Horse otherHorse = getHorse(listIdHorse.get(i));
+            if (horse.getPosition() + step == otherHorse.getPosition()) {
+                Id = listIdHorse.get(i);
+                return 1;
+            }
+            if (horse.getPosition() < otherHorse.getPosition() && horse.getPosition() + step > otherHorse.getPosition()) {
+                Id = listIdHorse.get(i);
+                return -1;
+            }
+        }
+        return 0;
+    }
+
+    public void Dangua(Tuple Id) {
+        Horse horse = getHorse(Id);
+
+        horse.resetInitial();
+        for (int i = 0; i < listIdHorse.size(); i++) {
+            if (listIdHorse.get(i).x == Id.x && listIdHorse.get(i).y == Id.y) {
+                listIdHorse.remove(i);
+                break;
+            }
+        }
+        //listHorse.remove(horse.getPosition() + 1);
+    }
+
+    public Horse XuatChuong(int idUser) {
+        User user = listUser.get(idUser);
+        Tuple Id = new Tuple();
+        int flag = 0;
+        for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+            Horse horse = user.getHorse(idHorse);
+            if (horse.getStatus() == 0) {
+                flag = checkConflict(Id, horse, 0);
+
+                if (flag != 0) {
+                    if (Id.x != idUser) Dangua(Id);
+                    else break;
+                }
+
+                user.setHorseCoord(idHorse);
+                return horse;
+            }
+        }
+        return null;
+    }
+
+    public Horse getHorse(Tuple Id) {
+        User user = listUser.get(Id.x);
+        Horse horse = user.getHorse(Id.y);
+        return horse;
+    }
+}
