@@ -19,6 +19,9 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         //Intent intentMain = getIntent();
 
+        MusicThread.PlaySong("a1",getApplicationContext());
+        //SFXThread.PlaySound("a2",getApplicationContext());
+
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
         btnRule = (Button) findViewById(R.id.btnRule);
         btnInfo = (Button) findViewById(R.id.btnInfo);
