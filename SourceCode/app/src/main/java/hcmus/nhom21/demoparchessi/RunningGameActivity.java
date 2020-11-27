@@ -57,7 +57,7 @@ public class RunningGameActivity extends FragmentActivity {
 
     Handler mhandle;
 
-
+    int x = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +150,7 @@ public class RunningGameActivity extends FragmentActivity {
         }
 
         initHandler();
-        for(int i =0;i<3;i++) {
+        for(int i =0;i<x;i++) {
             Turn(0);
         }
     }
@@ -178,19 +178,35 @@ public class RunningGameActivity extends FragmentActivity {
         //imgHorse.get(0).getLocationOnScreen(horseInitialCoord);
         //System.out.println("IMGHORSE:   " + horseInitialCoord[0] + "&&&&" +horseInitialCoord[1] + "\n");
         //Khởi tạo User và những con ngựa nó quản lý
-        for (int idUser = 0; idUser < NUM_USER; idUser++) {
-            User user = new User(idUser, new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]),
-                    new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]), new Tuple(SIZE_HORSE[0], SIZE_HORSE[1]));
-            listUser.add(idUser, user);
+        Thread init = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int idUser = 0; idUser < NUM_USER; idUser++) {
+                    User user = new User(idUser, new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]),
+                            new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]), new Tuple(SIZE_HORSE[0], SIZE_HORSE[1]));
+                    listUser.add(idUser, user);
 
-            for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
-                user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
-                user.setInitialHorseCoord(idHorse);
-                //user.setHorseCoord(idHorse);
+                    for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                        user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
+                        user.setInitialHorseCoord(idHorse);
+                        //user.setHorseCoord(idHorse);
+                    }
+                }
+
+                listUser.get(0).setFlag(1);
+
+
+                System.out.println("Giaodien");
             }
+        });
+
+
+        try {
+            init.start();
+            init.join(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        System.out.println("Giaodien");
-        listUser.get(0).setFlag(1);
     }
 
     public void loadGame() {
@@ -364,51 +380,40 @@ public class RunningGameActivity extends FragmentActivity {
 //
 //        }
 
-        step = 5;
+        step = 8;
         final Horse Horse = horse[0];
         final int FlagConflict = flagConflict;
-        System.out.println(Horse.getStatus());
-                if (Horse.getStatus() == 0) {
-                    XuatChuong(idUser,idHorse);
-
-                } else {
-                    //Xu ly nguoi dung chon ngua trong mang ngua vua nay
-
-                    Toast.makeText(this, "Chọn ngựa", Toast.LENGTH_SHORT).show();
-                    final int finalStep = step;
-                    final Thread thread2 = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Thread thread3 = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    user.MoveHorse(idHorse, 1);
-                                }
-                            });
-                            System.out.println("Chạy");
-
-                            for(int i = 0; i< finalStep - 1; i++){
+        Toast.makeText(this, "Chọn ngựa", Toast.LENGTH_SHORT).show();
+        final int finalStep = step;
+        final Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                for(int i = 0; i< finalStep - 1; i++){
 //                                Message msg = new Message();
 //                                msg.arg1 = idUser;
 //                                msg.arg2 = idHorse;
 //                                msg.what = 1002;
 //                                mhandle.sendMessage(msg);
 
-                                System.out.println("Chạy");
-                                thread3.start();
-                                try {
-                                    System.out.println("Thoi gian: " + System.currentTimeMillis());
-                                    thread3.sleep(1000);
-                                    System.out.println("Thoi gian: " + System.currentTimeMillis());
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                    user.MoveHorse(idHorse, 1);
+                    try {
+                        Thread.sleep(900);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("CHẠY");
+
+                }
 
 
-                            if (FlagConflict == 1) {
-                                Dangua(idPair);
-                            }
+                if (FlagConflict == 1) {
+                    Dangua(idPair);
+                }
 
 //                            Message msg = new Message();
 //                            msg.arg1 = idUser;
@@ -417,16 +422,39 @@ public class RunningGameActivity extends FragmentActivity {
 //                            mhandle.sendMessage(msg);
 
 
-                            thread3.start();
-                            try {
-                                thread3.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
 
-                        }
-                    });
-                    thread2.start();
+                user.MoveHorse(idHorse, 1);
+
+            }
+        });
+        Thread threadxc = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                XuatChuong(idUser,idHorse);
+                System.out.println("XUATCHUONG");
+            }
+        });
+
+        System.out.println(Horse.getStatus());
+                if (Horse.getStatus() == 0) {
+                    try {
+                        threadxc.start();
+                        threadxc.join(100);
+                        System.out.println("DOI 1");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    //Xu ly nguoi dung chon ngua trong mang ngua vua nay
+                    try {
+                        thread2.start();
+                        thread2.join(400);
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
 
                 }

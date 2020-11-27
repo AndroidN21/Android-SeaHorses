@@ -1,7 +1,15 @@
 package hcmus.nhom21.handle;
 
 
+import android.os.Handler;
+import android.os.Message;
+import android.renderscript.AllocationAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import hcmus.nhom21.demoparchessi.RunningGameActivity;
 
 import static java.lang.Thread.sleep;
 
@@ -17,6 +25,24 @@ public class Horse {
     private int idUser;
     private int idHorse;
     ImageView imgHorse;
+
+   Handler UI;
+
+    private void initHandler() {
+        UI = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what)
+                {
+                    case 1003:
+                        imgHorse.setX(coord.x);
+                        imgHorse.setY(coord.y);
+                        break;
+
+                }
+            }
+        };
+    }
 
     public boolean Move(int step, int smallJump, int bigJump) {
         //do something
@@ -109,8 +135,22 @@ public class Horse {
 
     public void resetImgHorse() {
         //System.out.println("Horse "+idHorse+": "+coord.x +"&&&"+coord.y +"/n");
-        this.imgHorse.setX(coord.x);
-        this.imgHorse.setY(coord.y);
+        Thread threadreset = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                imgHorse.setX(coord.x);
+                imgHorse.setY(coord.y);
+            }
+        });
+
+
+
+        try {
+            threadreset.start();
+            threadreset.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
