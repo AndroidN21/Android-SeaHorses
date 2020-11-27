@@ -304,7 +304,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="vertical">
 
         <LinearLayout
@@ -319,10 +319,9 @@
                 android:layout_marginStart="100dp"
                 android:layout_marginEnd="100dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn"
-                android:text="Bắt đầu"
+                android:background="@drawable/btn_start"
                 android:textAllCaps="false"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
     </LinearLayout>

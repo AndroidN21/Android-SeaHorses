@@ -22,7 +22,12 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/ic_info" android:top="3dp" android:bottom="3dp"></item>
+            <item android:drawable="@drawable/text_rule"
+                android:height="@dimen/btnHeight"
+                android:width="@dimen/btnRuleWidth"
+                android:gravity="center"
+                android:top="3dp"
+                android:bottom="3dp"></item>
         </layer-list>
     </item>
     <item>
@@ -47,7 +52,11 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/ic_info" android:bottom="5dp">
+            <item android:drawable="@drawable/text_rule"
+                android:height="@dimen/btnHeight"
+                android:width="@dimen/btnRuleWidth"
+                android:gravity="center"
+                android:bottom="5dp">
                 <padding
                     android:bottom="10dp"
                     android:left="20dp"

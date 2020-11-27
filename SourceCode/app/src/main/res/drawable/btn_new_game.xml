@@ -22,11 +22,14 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/text_info"
+            <item
+                android:drawable="@drawable/text_new_game"
                 android:height="@dimen/btnHeight"
-                android:width="@dimen/btnInfoWidth"
+                android:width="@dimen/btnNewGameWidth"
                 android:gravity="center"
-                android:top="3dp" android:bottom="3dp"></item>
+                android:top="3dp" android:bottom="3dp"
+                >
+            </item>
         </layer-list>
     </item>
     <item>
@@ -51,11 +54,12 @@
                 </shape>
             </item>
 
-            <item android:drawable="@drawable/text_info"
+            <item
+                android:drawable="@drawable/text_new_game"
+                android:width="@dimen/btnNewGameWidth"
                 android:height="@dimen/btnHeight"
-                android:width="@dimen/btnInfoWidth"
-                android:gravity="center"
-                android:bottom="5dp">
+                android:bottom="5dp"
+                android:gravity="center">
                 <padding
                     android:bottom="10dp"
                     android:left="20dp"

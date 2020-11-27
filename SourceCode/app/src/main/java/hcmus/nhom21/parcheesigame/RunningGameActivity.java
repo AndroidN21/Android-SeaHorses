@@ -4,11 +4,13 @@ import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,24 +18,27 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Random;
+
 import static java.lang.String.valueOf;
 
 public class RunningGameActivity extends FragmentActivity {
     private Button btnTypePlayer;
-    private ImageButton btnSetting;
+    private Button btnSetting;
     private Image imgBoard;
     private Button btnProfile;
     private boolean flagTypePlayer = false;
-    private ImageView imgChatAnim0;
-    private ImageView imgChatAnim1;
-    private ImageView imgChatAnim2;
+    private ImageView imgChat0;
+    private ImageView imgChat1;
+    private ImageView imgChat2;
     Animation chatAnim0;
     Animation chatAnim1;
     Animation chatAnim2;
     MediaPlayer song;
     private SettingFragment newSettingFragment;
-
     FragmentTransaction ft;
+    Integer arrChatImgs[] = {R.drawable.ic_wow, R.drawable.ic_haha, R.drawable.ic_why_so_serious, R.drawable.ic_oh, R.drawable.ic_like, R.drawable.ic_nope};
+    private int lengthArr = arrChatImgs.length;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +48,10 @@ public class RunningGameActivity extends FragmentActivity {
         //song = MediaPlayer.create(RunningGameActivity.this, R.raw.a1);
 
         btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
-        btnSetting = (ImageButton) findViewById(R.id.btnSetting);
-        imgChatAnim0 = (ImageView) findViewById(R.id.imgChat0);
-        imgChatAnim1 = (ImageView) findViewById(R.id.imgChat1);
-        imgChatAnim2 = (ImageView) findViewById(R.id.imgChat2);
+        btnSetting = (Button) findViewById(R.id.btnSetting);
+        imgChat0 = (ImageView) findViewById(R.id.imgChat0);
+        imgChat1 = (ImageView) findViewById(R.id.imgChat1);
+        imgChat2 = (ImageView) findViewById(R.id.imgChat2);
 
         //Dùng View Holder
         //ViewHolder viewHolder = new ViewHolder();
@@ -72,7 +77,7 @@ public class RunningGameActivity extends FragmentActivity {
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //song.start();
+                //song.text_start();
                 ft = getSupportFragmentManager().beginTransaction();
                 btnSetting.setVisibility(View.INVISIBLE);
 
@@ -81,7 +86,7 @@ public class RunningGameActivity extends FragmentActivity {
                 ft.addToBackStack(null);
                 ft.commit();
 
-                getSupportFragmentManager().executePendingTransactions();
+                 getSupportFragmentManager().executePendingTransactions();
                 final SettingFragment settingFragment = (SettingFragment) getSupportFragmentManager().findFragmentByTag("settingFragment");
 
                 //Volume
@@ -102,29 +107,25 @@ public class RunningGameActivity extends FragmentActivity {
                 }
 
                 //Test
-                imgChatAnim0.setVisibility(View.VISIBLE);
-                imgChatAnim1.setVisibility(View.VISIBLE);
-                imgChatAnim2.setVisibility(View.VISIBLE);
+                int index = new Random().nextInt(lengthArr);
+                imgChat0.setImageResource(arrChatImgs[index]);
+                index = new Random().nextInt(lengthArr);
+                imgChat1.setImageResource(arrChatImgs[index]);
+                index = new Random().nextInt(lengthArr);
+                imgChat2.setImageResource(arrChatImgs[index]);
 
-                imgChatAnim0.startAnimation(chatAnim0);
-                imgChatAnim1.startAnimation(chatAnim1);
-                imgChatAnim2.startAnimation(chatAnim2);
+                imgChat0.startAnimation(chatAnim0);
+                imgChat1.startAnimation(chatAnim1);
+                imgChat2.startAnimation(chatAnim2);
 
-                imgChatAnim0.setVisibility(View.INVISIBLE);
-                imgChatAnim1.setVisibility(View.INVISIBLE);
-                imgChatAnim2.setVisibility(View.INVISIBLE);
             }
         });
 
         //Khi đổ xúc sắc xong sẽ hiện chat.
         //Test
-        imgChatAnim0.setImageAlpha(R.drawable.ic_yes);
-        imgChatAnim0.setVisibility(View.INVISIBLE);
-        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
-        imgChatAnim1.setVisibility(View.INVISIBLE);
-        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
-        imgChatAnim2.setVisibility(View.INVISIBLE);
-        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat);
+        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
+        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
+        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat1);
 
     }
 

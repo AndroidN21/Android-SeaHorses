@@ -9,6 +9,7 @@ import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +25,7 @@ public class SettingFragment extends Fragment{
     RunningGameActivity main;
     Context context = null;
     public View view;
-    private ImageButton btnExit;
+    private Button btnSaveSetting;
     private Integer [] arrImgIconTypeSettingOn = {R.drawable.ic_baseline_volume_up_24, R.drawable.ic_vibrate_on, R.drawable.ic_baseline_notes_24};
     private ImageView imgVolume;
     private ImageView imgVibrate;
@@ -32,6 +33,9 @@ public class SettingFragment extends Fragment{
     private LinearLayout item2;
     private LinearLayout item3;
     private boolean flagVibrate = true;
+    private LinearLayout bkd_setting;
+    private LinearLayout menu_setting;
+    private Fragment fragmentSetting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,16 +53,16 @@ public class SettingFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (View) inflater.inflate(R.layout.fragment_setting, null);
 
-        btnExit = (ImageButton) view.findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(new View.OnClickListener() {
+        btnSaveSetting = (Button) view.findViewById(R.id.btnSaveSetting);
+        btnSaveSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 main.findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
 
                 //Delete fragment
-                Fragment fragment = getFragmentManager().findFragmentById(R.id.frameSetting);
-                if (fragment != null) {
-                    main.getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                fragmentSetting = getFragmentManager().findFragmentById(R.id.frameSetting);
+                if (fragmentSetting != null) {
+                    main.getSupportFragmentManager().beginTransaction().remove(fragmentSetting).commit();
                     main.getSupportFragmentManager().popBackStack();
                 }
             }
@@ -76,6 +80,8 @@ public class SettingFragment extends Fragment{
         item3 = (LinearLayout) v.findViewById(R.id.item3);
         imgVolume = (ImageView) v.findViewById(R.id.imgVolume);
         imgVibrate = (ImageView) v.findViewById(R.id.imgVibrate);
+        bkd_setting = (LinearLayout) v.findViewById(R.id.bkd_frag_setting);
+        menu_setting = (LinearLayout) v.findViewById(R.id.menu_setting);
 
         item1.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("ResourceAsColor")
@@ -115,6 +121,27 @@ public class SettingFragment extends Fragment{
                 Intent ruleIntent = new Intent();
                 ruleIntent.setClass(v.getContext(), RuleActivity.class);
                 startActivity(ruleIntent);
+            }
+        });
+
+        bkd_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                main.findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
+                fragmentSetting = getFragmentManager().findFragmentById(R.id.frameSetting);
+
+                if (fragmentSetting != null) {
+                    main.getSupportFragmentManager().beginTransaction().remove(fragmentSetting).commit();
+                    main.getSupportFragmentManager().popBackStack();
+                }
+
+            }
+        });
+
+        menu_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setEnabled(false);
             }
         });
     }

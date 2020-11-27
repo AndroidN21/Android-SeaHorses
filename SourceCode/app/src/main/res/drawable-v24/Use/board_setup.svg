@@ -1,0 +1,107 @@
+<svg width="390" height="390" viewBox="0 0 390 390" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10C0 4.47715 4.47715 0 10 0H380C385.523 0 390 4.47715 390 10V380C390 385.523 385.523 390 380 390H10C4.47715 390 0 385.523 0 380V10Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M136 315.5C136 280.982 108.018 253 73.5 253C38.9822 253 11 280.982 11 315.5C11 350.018 38.9822 378 73.5 378C108.018 378 136 350.018 136 315.5ZM137 315.5C137 280.43 108.57 252 73.5 252C38.4299 252 10 280.43 10 315.5C10 350.57 38.4299 379 73.5 379C108.57 379 137 350.57 137 315.5Z" fill="black" stroke="#DD0B0B"/>
+<rect x="5" y="385" width="138" height="138" rx="18" transform="rotate(-90 5 385)" stroke="#DD0B0B" stroke-width="2"/>
+<circle cx="14" cy="232" r="9.5" transform="rotate(-90 14 232)" stroke="black"/>
+<circle cx="14" cy="232" r="7.5" transform="rotate(-90 14 232)" stroke="#DD0B0B"/>
+<circle cx="134" cy="232" r="9.5" transform="rotate(-90 134 232)" stroke="black"/>
+<circle cx="158" cy="376" r="9.5" transform="rotate(-90 158 376)" stroke="black"/>
+<circle cx="158" cy="352" r="9.5" transform="rotate(-90 158 352)" stroke="black"/>
+<circle cx="158" cy="280" r="9.5" transform="rotate(-90 158 280)" stroke="black"/>
+<circle cx="158" cy="328" r="9.5" transform="rotate(-90 158 328)" stroke="black"/>
+<circle cx="158" cy="256" r="9.5" transform="rotate(-90 158 256)" stroke="black"/>
+<circle cx="110" cy="232" r="9.5" transform="rotate(-90 110 232)" stroke="black"/>
+<circle cx="158" cy="304" r="9.5" transform="rotate(-90 158 304)" stroke="black"/>
+<circle cx="14" cy="195" r="9.5" transform="rotate(-90 14 195)" stroke="black"/>
+<circle cx="86" cy="232" r="9.5" transform="rotate(-90 86 232)" stroke="black"/>
+<circle cx="158" cy="232" r="9.5" transform="rotate(-90 158 232)" stroke="black"/>
+<circle cx="38" cy="232" r="9.5" transform="rotate(-90 38 232)" stroke="black"/>
+<circle cx="62" cy="232" r="9.5" transform="rotate(-90 62 232)" stroke="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M74.5 136C109.018 136 137 108.018 137 73.5C137 38.9822 109.018 11 74.5 11C39.9822 11 12 38.9822 12 73.5C12 108.018 39.9822 136 74.5 136ZM74.5 137C109.57 137 138 108.57 138 73.5C138 38.4299 109.57 10 74.5 10C39.4299 10 11 38.4299 11 73.5C11 108.57 39.4299 137 74.5 137Z" fill="#FFE000" stroke="#FFE000"/>
+<rect x="5" y="5" width="138" height="138" rx="18" stroke="#FFE000" stroke-width="2"/>
+<circle cx="158" cy="14" r="9.5" stroke="black"/>
+<circle cx="158" cy="14" r="7.5" stroke="#FFE000"/>
+<circle cx="158" cy="134" r="9.5" stroke="black"/>
+<circle cx="14" cy="158" r="9.5" stroke="black"/>
+<circle cx="38" cy="158" r="9.5" stroke="black"/>
+<circle cx="110" cy="158" r="9.5" stroke="black"/>
+<circle cx="62" cy="158" r="9.5" stroke="black"/>
+<circle cx="134" cy="158" r="9.5" stroke="black"/>
+<circle cx="158" cy="110" r="9.5" stroke="black"/>
+<circle cx="86" cy="158" r="9.5" stroke="black"/>
+<circle cx="195" cy="14" r="9.5" stroke="black"/>
+<circle cx="158" cy="86" r="9.5" stroke="black"/>
+<circle cx="158" cy="158" r="9.5" stroke="black"/>
+<circle cx="158" cy="38" r="9.5" stroke="black"/>
+<circle cx="158" cy="62" r="9.5" stroke="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M254 74.5C254 109.018 281.982 137 316.5 137C351.018 137 379 109.018 379 74.5C379 39.9822 351.018 12 316.5 12C281.982 12 254 39.9822 254 74.5ZM253 74.5C253 109.57 281.43 138 316.5 138C351.57 138 380 109.57 380 74.5C380 39.4299 351.57 11 316.5 11C281.43 11 253 39.4299 253 74.5Z" fill="black" stroke="#00D02E"/>
+<rect x="385" y="5" width="138" height="138" rx="18" transform="rotate(90 385 5)" stroke="#00D02E" stroke-width="2"/>
+<circle cx="376" cy="158" r="9.5" transform="rotate(90 376 158)" stroke="black"/>
+<circle cx="376" cy="158" r="7.5" transform="rotate(90 376 158)" stroke="#00D02E"/>
+<circle cx="256" cy="158" r="9.5" transform="rotate(90 256 158)" stroke="black"/>
+<circle cx="232" cy="14" r="9.5" transform="rotate(90 232 14)" stroke="black"/>
+<circle cx="232" cy="38" r="9.5" transform="rotate(90 232 38)" stroke="black"/>
+<circle cx="232" cy="110" r="9.5" transform="rotate(90 232 110)" stroke="black"/>
+<circle cx="232" cy="62" r="9.5" transform="rotate(90 232 62)" stroke="black"/>
+<circle cx="232" cy="134" r="9.5" transform="rotate(90 232 134)" stroke="black"/>
+<circle cx="280" cy="158" r="9.5" transform="rotate(90 280 158)" stroke="black"/>
+<circle cx="232" cy="86" r="9.5" transform="rotate(90 232 86)" stroke="black"/>
+<circle cx="376" cy="195" r="9.5" transform="rotate(90 376 195)" stroke="black"/>
+<circle cx="304" cy="158" r="9.5" transform="rotate(90 304 158)" stroke="black"/>
+<circle cx="232" cy="158" r="9.5" transform="rotate(90 232 158)" stroke="black"/>
+<circle cx="352" cy="158" r="9.5" transform="rotate(90 352 158)" stroke="black"/>
+<circle cx="328" cy="158" r="9.5" transform="rotate(90 328 158)" stroke="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M315.5 254C280.982 254 253 281.982 253 316.5C253 351.018 280.982 379 315.5 379C350.018 379 378 351.018 378 316.5C378 281.982 350.018 254 315.5 254ZM315.5 253C280.43 253 252 281.43 252 316.5C252 351.57 280.43 380 315.5 380C350.57 380 379 351.57 379 316.5C379 281.43 350.57 253 315.5 253Z" fill="black" stroke="#002BFF"/>
+<rect x="385" y="385" width="138" height="138" rx="18" transform="rotate(180 385 385)" stroke="#002BFF" stroke-width="2"/>
+<circle cx="232" cy="376" r="9.5" transform="rotate(180 232 376)" stroke="black"/>
+<circle cx="232" cy="376" r="7.5" transform="rotate(180 232 376)" stroke="#002BFF"/>
+<circle cx="232" cy="256" r="9.5" transform="rotate(180 232 256)" stroke="black"/>
+<circle cx="376" cy="232" r="9.5" transform="rotate(180 376 232)" stroke="black"/>
+<circle cx="352" cy="232" r="9.5" transform="rotate(180 352 232)" stroke="black"/>
+<circle cx="280" cy="232" r="9.5" transform="rotate(180 280 232)" stroke="black"/>
+<circle cx="328" cy="232" r="9.5" transform="rotate(180 328 232)" stroke="black"/>
+<circle cx="256" cy="232" r="9.5" transform="rotate(180 256 232)" stroke="black"/>
+<circle cx="232" cy="280" r="9.5" transform="rotate(180 232 280)" stroke="black"/>
+<circle cx="304" cy="232" r="9.5" transform="rotate(180 304 232)" stroke="black"/>
+<circle cx="195" cy="376" r="9.5" transform="rotate(180 195 376)" stroke="black"/>
+<circle cx="232" cy="304" r="9.5" transform="rotate(180 232 304)" stroke="black"/>
+<circle cx="232" cy="232" r="9.5" transform="rotate(180 232 232)" stroke="black"/>
+<circle cx="232" cy="352" r="9.5" transform="rotate(180 232 352)" stroke="black"/>
+<circle cx="232" cy="328" r="9.5" transform="rotate(180 232 328)" stroke="black"/>
+<rect x="215" y="215" width="145" height="40" transform="rotate(90 215 215)" fill="#7CA0FB"/>
+<path d="M195 195L215 215H175L195 195Z" fill="#7CA0FB"/>
+<rect x="178.5" y="242.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="178.5" y="338.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="178.5" y="314.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="178.5" y="290.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="178.5" y="266.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="178.5" y="218.5" width="33" height="17" fill="#4D7CF3" stroke="black"/>
+<rect x="175" y="215" width="145" height="40" transform="rotate(180 175 215)" fill="#FCA3A3"/>
+<path d="M195 195L175 215V175L195 195Z" fill="#FCA3A3"/>
+<rect x="147.5" y="178.5" width="33" height="17" transform="rotate(90 147.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="123.5" y="178.5" width="33" height="17" transform="rotate(90 123.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="75.5" y="178.5" width="33" height="17" transform="rotate(90 75.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="99.5" y="178.5" width="33" height="17" transform="rotate(90 99.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="51.5" y="178.5" width="33" height="17" transform="rotate(90 51.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="171.5" y="178.5" width="33" height="17" transform="rotate(90 171.5 178.5)" fill="#F34D4D" stroke="black"/>
+<rect x="175" y="175" width="145" height="40" transform="rotate(-90 175 175)" fill="#FFEF5E"/>
+<path d="M195 195L175 175H215L195 195Z" fill="#FFEF5E"/>
+<rect x="211.5" y="171.5" width="33" height="17" transform="rotate(180 211.5 171.5)" fill="#FFE000" stroke="black"/>
+<rect x="211.5" y="123.5" width="33" height="17" transform="rotate(180 211.5 123.5)" fill="#FFE000" stroke="black"/>
+<rect x="211.5" y="147.5" width="33" height="17" transform="rotate(180 211.5 147.5)" fill="#FFE000" stroke="black"/>
+<rect x="211.5" y="99.5" width="33" height="17" transform="rotate(180 211.5 99.5)" fill="#FFE000" stroke="black"/>
+<rect x="211.5" y="75.5" width="33" height="17" transform="rotate(180 211.5 75.5)" fill="#FFE000" stroke="black"/>
+<rect x="211.5" y="51.5" width="33" height="17" transform="rotate(180 211.5 51.5)" fill="#FFE000" stroke="black"/>
+<rect x="214" y="175" width="145" height="40" fill="#BAFCA3"/>
+<path d="M194 195L214 175V215L194 195Z" fill="#BAFCA3"/>
+<rect x="241.5" y="211.5" width="33" height="17" transform="rotate(-90 241.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="265.5" y="211.5" width="33" height="17" transform="rotate(-90 265.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="337.5" y="211.5" width="33" height="17" transform="rotate(-90 337.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="313.5" y="211.5" width="33" height="17" transform="rotate(-90 313.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="289.5" y="211.5" width="33" height="17" transform="rotate(-90 289.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="217.5" y="211.5" width="33" height="17" transform="rotate(-90 217.5 211.5)" fill="#9AE41F" stroke="black"/>
+<rect x="246.5" y="246.5" width="139" height="139" rx="18.5" fill="#7CA0FB" stroke="#002BFF"/>
+<rect x="246.5" y="4.5" width="139" height="139" rx="18.5" fill="#BAFCA3" stroke="#00D02E"/>
+<rect x="4.5" y="4.5" width="139" height="139" rx="18.5" fill="#FFEF5E" stroke="#FFE000"/>
+<rect x="4.5" y="246.5" width="139" height="139" rx="18.5" fill="#FCA3A3" stroke="#DD0B0B"/>
+</svg>
