@@ -9,12 +9,14 @@ public class SFXThread {
     static private String filename;
     static private Context context;
     static private SFXThread sfxThread;
+    static int volume;
 
     private SFXThread(Context context, String filename) {
         SFXThread.filename = filename;
         SFXThread.context = context;
         Uri uri = GetUri2(filename);
         mediaPlayer = MediaPlayer.create(context, uri);
+        volume = 50;
     }
 
     public SFXThread GetSFXThread(Context context, String filename) {
@@ -29,6 +31,28 @@ public class SFXThread {
         return Uri.parse("android.resource://hcmus.nhom21.parcheesigame/" + resID);
     }
 
+    static public void Stop() {
+        if (mediaPlayer == null) {
+            return;
+        }
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+    }
+
+    static public void SetVolume(int k) {
+        volume = k;
+        if (mediaPlayer == null) {
+            return;
+        }
+        float v = (float) volume / 100;
+        mediaPlayer.setVolume(v, v);
+    }
+
+    static public int GetVolume() {
+        return volume;
+    }
+
     static public void PlaySound(String filename, Context context) {
         SFXThread.context = context;
         if (mediaPlayer != null) {
@@ -36,9 +60,13 @@ public class SFXThread {
                 mediaPlayer.stop();
             }
             mediaPlayer.release();
+        } else {
+            volume = 50;
         }
+
         Uri uri = GetUri2(filename);
         mediaPlayer = MediaPlayer.create(context, uri);
+        SetVolume(volume);
         mediaPlayer.start();
     }
 }

@@ -1,33 +1,54 @@
 package hcmus.nhom21.parcheesigame;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 
-public class SettingMenuActivity extends FragmentActivity {
+
+public class SettingMenuActivity extends Activity {
     SeekBar volumeBar;
-    Button btnSFX;
-    Button btnVibrate;
+    SeekBar sfxBar;
+    CheckBox btnVibrate;
+    ImageView imgVolumeUp;
+    ImageView imgVolumeDown;
+    ImageView imgSFXUp;
+    ImageView imgSFXDown;
+    Button btnExit;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
         volumeBar = findViewById(R.id.volumeBar);
-        btnSFX = (Button) findViewById(R.id.btnSFX);
-        btnVibrate = (Button) findViewById(R.id.btnVibrate);
+        sfxBar = findViewById(R.id.sfxBar);
+        btnVibrate = (CheckBox) findViewById(R.id.btnVibrate);
+        btnExit = (Button) findViewById(R.id.btn_exit);
+
+        imgVolumeUp =  findViewById(R.id.imgVolumeUp);
+        imgVolumeDown =  findViewById(R.id.imgVolumeDown);
+        imgSFXUp =  findViewById(R.id.imgSFXup);
+        imgSFXDown =  findViewById(R.id.imgSFXdown);
+
+        volumeBar.setProgress(MusicThread.GetVolume());
+        sfxBar.setProgress(SFXThread.GetVolume());
+
+        if (!VibrateThread.State()){
+            btnVibrate.setChecked(true);
+        }
+
+        volumeBar.setProgress(MusicThread.GetVolume());
+        sfxBar.setProgress(SFXThread.GetVolume());
 
         volumeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // no no
+                MusicThread.SetVolume(progress);
             }
 
             @Override
@@ -41,20 +62,70 @@ public class SettingMenuActivity extends FragmentActivity {
             }
         });
 
+        sfxBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                SFXThread.SetVolume(progress);
+            }
 
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // no no
+            }
 
-        btnSFX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // no no
+            }
+        });
+
+        imgVolumeDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MusicThread.SetVolume(0);
+                volumeBar.setProgress(0);
+            }
+        });
 
+        imgVolumeUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MusicThread.SetVolume(100);
+                volumeBar.setProgress(100);
+            }
+        });
 
+        imgSFXDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SFXThread.SetVolume(0);
+                sfxBar.setProgress(0);
+            }
+        });
+
+        imgSFXUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SFXThread.SetVolume(100);
+                sfxBar.setProgress(100);
             }
         });
 
         btnVibrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (btnVibrate.isChecked()){
+                    VibrateThread.Off();
+                }else {
+                    VibrateThread.On();
+                }
+            }
+        });
 
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

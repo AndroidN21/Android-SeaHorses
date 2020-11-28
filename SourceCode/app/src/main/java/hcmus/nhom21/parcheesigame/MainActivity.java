@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -57,9 +58,9 @@ public class MainActivity extends FragmentActivity {
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent infoIntent = new Intent();
-                infoIntent.setClass(v.getContext(), SettingMenuActivity.class);
-                startActivity(infoIntent);
+                Intent intentSetting = new Intent();
+                intentSetting.setClass(v.getContext(), SettingMenuActivity.class);
+                startActivity(intentSetting);
             }
         });
     }

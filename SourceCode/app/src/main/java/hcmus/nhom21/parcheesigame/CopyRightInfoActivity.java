@@ -17,10 +17,10 @@ public class CopyRightInfoActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rule);
-        btnBack = (Button) findViewById(R.id.btnBack);
-        txtTitle = (TextView) findViewById(R.id.txtTitle);
-        txtLine0 = (TextView) findViewById(R.id.txtLine0);
-        txtLine1 = (TextView) findViewById(R.id.txtLine1);
+//        btnBack = (Button) findViewById(R.id.btnBack);
+//        txtTitle = (TextView) findViewById(R.id.txtTitle);
+//        txtLine0 = (TextView) findViewById(R.id.txtLine0);
+//        txtLine1 = (TextView) findViewById(R.id.txtLine1);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

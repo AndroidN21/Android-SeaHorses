@@ -1,19 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cờ Cá Ngựa</string>
 
-
     <string name="title_rule">Luật chơi</string>
-    <string name="rule0_ra_quan"> - RA QUÂN (XUẤT CHUỒNG): Tung được 2 xúc sắc giống nhau hoặc cặp số 1 và 6; đồng thời bạn sẽ có thêm 1 lượt tung xúc sắc.</string>
-    <string name="rule1_chien_thang"> - CÁCH THẮNG: Người nào có đủ bốn quân cờ về đến đích (chuồng) đầu tiên và đã xếp đúng vào các ô số 6, 5, 4 và 3
-        trong chuồng là người chiến thắng.</string>
-    <string name="rule2_da"> - ĐÁ: </string>
-    <string name="rule3_vao_chuong"> - VÀO CHUỒNG: </string>
-    <string name="rule4_bi_can"> - BỊ CẢN: </string>
+
+    <string name="rule_intro">Trò chơi cờ cá ngựa có 2-4 đội và người chơi sẽ chỉ huy 4 con ngựa đội mình cùng đến đích sớm nhất có thể.\nTrò chơi tuần tự theo lượt theo chiều ngược kim đồng hồ.\nMỗi lượt người chơi phải tung xúc xắc nhận điểm.\nNgười chơi có thể cho ngựa chạy với số bước bằng số điểm vừa nhận được theo chiều kim đồng hồ.</string>
+    <string name="rule0_ra_quan">- XUẤT CHUỒNG: Tung được 2 xúc xắc giống nhau hoặc cặp điểm 1và6; đồng thời bạn sẽ có thêm 1 lượt tung xúc sắc.</string>
+    <string name="rule1_bi_can">- BỊ CẢN: Với điểm xúc xắc lớn hơn khoảng cách đến con ngựa phía trước nó, co ngựa này không thể di chuyển, nếu tất cả con ngựa không thể di chuyển hay xuất chuồng thì đội đó mất lượt.</string>
+    <string name="rule2_da">- ĐÁ: Nếu số bước đi của ngựa bằng đúng đến vị trí đứng của ngựa đối thủ, nó “đá” đối thủ “bay” về chuồng họ.</string>
+    <string name="rule3_vao_chuong">- VÀO CHUỒNG: Sau 1 vòng chạy quanh sân đấu ngựa bước lên cầu thang có màu sắc đội mình để đến những nấc thang cuối(đích). Để đến đúng bậc thang muốn đến, phải tung được số điểm tương ứng.</string>
+    <string name="rule4_chien_thang">- CHIẾN THẮNG: Người nào có đủ bốn quân cờ về đến đích (chuồng) trước tiên và đã xếp đúng vào các ô số 6, 5, 4 và 3 trong chuồng là người chiến thắng.</string>
+
     <string name="blueTeam">Đội Lam</string>
     <string name="redTeam">Đội Đỏ</string>
     <string name="yellowTeam">Đội vàng</string>
     <string name="greenTeam">Đội Lục</string>
-
 
     <string name="title_copyright_info">Thông tin bản quyền</string>
     <string name="info0"> - Hình ảnh trong game được cung cấp bởi các trang web sau:\n
