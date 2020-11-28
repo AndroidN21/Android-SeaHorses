@@ -66,8 +66,11 @@ public class User {
         return listHorse.get(idHorse);
     }
 
-    //Set tọa độ của Horse khi trong trang thái xuất chuồng status=1
-    public void setHorseCoord(int idHorse) {
+    public void setImgHorse(int idHorse) {
+        listHorse.get(idHorse).resetImgHorse();
+    }
+    //Set tọa độ của Horse dựa vào position đc sử dụng khi chỉ có position
+    public void setHorseCoordByPosition(int idHorse) {
         Horse horse = listHorse.get(idHorse);
         int position = horse.getPosition();
         int level = horse.getLevel();

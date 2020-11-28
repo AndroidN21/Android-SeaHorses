@@ -16,9 +16,9 @@ public class Horse {
     private int level;
     private int idUser;
     private int idHorse;
-    ImageView imgHorse;
+    private ImageView imgHorse;
 
-    public boolean Move(int step, int smallJump, int bigJump) {
+    public boolean Move(int step,int smallJump,int bigJump) {
         //do something
 
         int i = 0;
@@ -26,33 +26,34 @@ public class Horse {
             //Xu ly di tren ban co
             while (i < step) {
                 stepped += 1;
-                position = (position + i) % TARGET;
-                if (position >= 12 && position <= 13) coord.y += bigJump;
-                else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
+
+                if (position >= 12 && position <= 13) {
+                    coord.y += bigJump;
+                }else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
                     coord.y += smallJump;
-                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47)) {
-                    coord.x -= smallJump;
                 } else if (position >= 54 && position <= 55) {
                     coord.x -= bigJump;
-                } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
-                    coord.x += smallJump;
+                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47)) {
+                    coord.x -= smallJump;
                 } else if (position >= 26 && position <= 27) {
                     coord.x += bigJump;
+                } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
+                    coord.x += smallJump;
                 } else if (position >= 40 && position <= 41) {
                     coord.y -= bigJump;
-                }
-                else coord.y -= smallJump;
+                } else coord.y -= smallJump;
 
+                //this.resetImgHorse();
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                this.resetImgHorse();
 
                 if (stepped >= TARGET)
                     break;
+                position = (position + 1) % TARGET;
                 i++;
             }
         }
@@ -73,13 +74,12 @@ public class Horse {
                     break;
                 }
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                this.resetImgHorse();
+//                this.resetImgHorse();
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 level++;
                 stepped++;
                 i++;
@@ -88,6 +88,10 @@ public class Horse {
         }
         return true;
     }
+
+
+
+
 
 
     public void resetInitial() {

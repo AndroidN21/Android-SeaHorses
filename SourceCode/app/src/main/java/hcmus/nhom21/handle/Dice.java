@@ -3,7 +3,7 @@ package hcmus.nhom21.handle;
 public class Dice {
     //private  int image;
     final int MAX=6;
-    final int MIN=6;
+    final int MIN=1;
     private int imgDice1;
     private int imgDice2;
     private int numDice1;
