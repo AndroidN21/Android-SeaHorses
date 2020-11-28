@@ -27,8 +27,8 @@ public class SettingMenuActivity extends Activity {
 
         volumeBar = findViewById(R.id.volumeBar);
         sfxBar = findViewById(R.id.sfxBar);
-        btnVibrate = (CheckBox) findViewById(R.id.btnVibrate);
-        btnExit = (Button) findViewById(R.id.btn_exit);
+        btnVibrate = findViewById(R.id.btnVibrate);
+        btnExit = findViewById(R.id.btn_exit);
 
         imgVolumeUp =  findViewById(R.id.imgVolumeUp);
         imgVolumeDown =  findViewById(R.id.imgVolumeDown);
