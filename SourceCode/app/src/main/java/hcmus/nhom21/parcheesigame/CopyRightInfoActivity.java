@@ -16,7 +16,7 @@ public class CopyRightInfoActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rule);
+        setContentView(R.layout.activity_copyright_info);
         btnBack = (Button) findViewById(R.id.btnBack);
         txtTitle = (TextView) findViewById(R.id.txtTitle);
         txtLine0 = (TextView) findViewById(R.id.txtLine0);

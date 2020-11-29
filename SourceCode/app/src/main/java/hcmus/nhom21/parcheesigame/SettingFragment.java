@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import static android.content.Context.AUDIO_SERVICE;
@@ -33,7 +34,7 @@ public class SettingFragment extends Fragment{
     private LinearLayout item2;
     private LinearLayout item3;
     private boolean flagVibrate = true;
-    private LinearLayout bkd_setting;
+    private ConstraintLayout bkd_setting;
     private LinearLayout menu_setting;
     private Fragment fragmentSetting;
 
@@ -80,7 +81,7 @@ public class SettingFragment extends Fragment{
         item3 = (LinearLayout) v.findViewById(R.id.item3);
         imgVolume = (ImageView) v.findViewById(R.id.imgVolume);
         imgVibrate = (ImageView) v.findViewById(R.id.imgVibrate);
-        bkd_setting = (LinearLayout) v.findViewById(R.id.bkd_frag_setting);
+        bkd_setting = (ConstraintLayout) v.findViewById(R.id.bkd_frag_setting);
         menu_setting = (LinearLayout) v.findViewById(R.id.menu_setting);
 
         item1.setOnClickListener(new View.OnClickListener() {
