@@ -3,6 +3,7 @@
 ##############################################################################
 ##
 ##  Gradle text_start up script for UN*X
+##  Gradle start up script for UN*X
 ##
 ##############################################################################
 
@@ -42,6 +43,7 @@ die () {
     echo "$*"
     echo
     text_exit 1
+    exit 1
 }
 
 # OS specific support (must be 'true' or 'false').
@@ -67,6 +69,7 @@ esac
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 # Determine the Java command to use to text_start the JVM.
+# Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
         # IBM's JDK on AIX uses strange locations for the executables

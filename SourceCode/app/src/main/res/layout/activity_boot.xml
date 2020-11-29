@@ -32,7 +32,6 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_chess_knight_solid" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/proBar"
                 android:src="@drawable/ic_baseline_emoji_flags_24" />
-
         </LinearLayout>
 
         <TextView
