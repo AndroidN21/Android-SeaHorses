@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 
 public class RuleActivity extends Activity {
-    Button btnExit;
     Button btn_GGvoice;
     private TextView txtTitle;
     private TextView txtLine0;
@@ -25,7 +24,6 @@ public class RuleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rule);
 
-        btnExit = (Button) findViewById(R.id.btn_exit);
         btn_GGvoice = (Button) findViewById(R.id.btn_GGvoice);
         txtTitle = (TextView) findViewById(R.id.txt_title);
         txtLine0 = (TextView) findViewById(R.id.txtRule_intro);
@@ -42,15 +40,6 @@ public class RuleActivity extends Activity {
         txtLine3.setText(R.string.rule2_da);
         txtLine4.setText(R.string.rule3_vao_chuong);
         txtLine5.setText(R.string.rule4_chien_thang);
-
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                SFXThread.Stop();
-                MusicThread.PlaySong("a1",getApplicationContext());
-            }
-        });
 
         btn_GGvoice.setOnClickListener(new View.OnClickListener() {
             @Override

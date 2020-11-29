@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     tools:ignore="MissingPrefix">
 
     <LinearLayout
@@ -209,17 +209,5 @@
             />
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/btn_exit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/ic_exit">
-
-    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

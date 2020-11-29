@@ -18,7 +18,6 @@ public class SettingMenuActivity extends Activity {
     ImageView imgVolumeDown;
     ImageView imgSFXUp;
     ImageView imgSFXDown;
-    Button btnExit;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class SettingMenuActivity extends Activity {
         volumeBar = findViewById(R.id.volumeBar);
         sfxBar = findViewById(R.id.sfxBar);
         btnVibrate = findViewById(R.id.btnVibrate);
-        btnExit = findViewById(R.id.btn_exit);
 
         imgVolumeUp =  findViewById(R.id.imgVolumeUp);
         imgVolumeDown =  findViewById(R.id.imgVolumeDown);
@@ -119,13 +117,6 @@ public class SettingMenuActivity extends Activity {
                 }else {
                     VibrateThread.On();
                 }
-            }
-        });
-
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
     }
