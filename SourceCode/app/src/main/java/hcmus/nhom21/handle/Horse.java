@@ -2,6 +2,7 @@ package hcmus.nhom21.handle;
 
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import static java.lang.Thread.sleep;
 
@@ -26,6 +27,8 @@ public class Horse {
             //Xu ly di tren ban co
             while (i < step) {
                 stepped += 1;
+                if (stepped >= TARGET)
+                    break;
 
                 if (position >= 12 && position <= 13) {
                     coord.y += bigJump;
@@ -43,16 +46,6 @@ public class Horse {
                     coord.y -= bigJump;
                 } else coord.y -= smallJump;
 
-                //this.resetImgHorse();
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-
-
-                if (stepped >= TARGET)
-                    break;
                 position = (position + 1) % TARGET;
                 i++;
             }
@@ -73,13 +66,6 @@ public class Horse {
                 if (level >= NUM_LEVEL) {
                     break;
                 }
-
-//                this.resetImgHorse();
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
                 level++;
                 stepped++;
                 i++;
@@ -117,6 +103,12 @@ public class Horse {
         this.imgHorse.setY(coord.y);
 
     }
+
+    public void setSizeHorse(int width, int height){
+        this.imgHorse.setMaxWidth(width);
+        this.imgHorse.setMaxHeight(height);
+    }
+
 
     public Tuple getCoord() {
         return coord;

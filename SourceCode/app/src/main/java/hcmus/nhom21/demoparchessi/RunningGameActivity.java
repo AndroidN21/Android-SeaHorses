@@ -227,7 +227,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     if (horseValid.size()<=0) {
                         System.out.println("---------------------------------------------------------- \n");
                         System.out.println("Turn: "+chessBoard.getUserTurn()+"\n");
-                        horseValid = chessBoard.Turn();
+                        Tuple dice=chessBoard.rollDice();
+                        horseValid = chessBoard.generateHorseValid();
                     }
                 }
             }
@@ -301,10 +302,10 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 if (horse.getStatus() == 0) {
                     System.out.println("Xuat chuong " + chessBoard.getUserTurn() +"---"+chessBoard.getHorseTurn()+"\n");
                     chessBoard.XuatChuong();
-                    chessBoard.getListIdHorse().add(new Tuple(chessBoard.getUserTurn(), horse.getIdHorse()));
 
                     horseValid.clear();
-                    chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
+                    if(!chessBoard.isRepeat())
+                        chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                 } else {
                     System.out.println("Di chuyen " + chessBoard.getUserTurn() + "---" + chessBoard.getHorseTurn() + "\n");
                     final Tuple finalErrorConflict = errorConflict;
@@ -331,7 +332,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                             }
 
                             horseValid.clear();
-                            chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
+                            if(!chessBoard.isRepeat())
+                                chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                         }
                     });
                     thread.start();

@@ -9,10 +9,12 @@ public class User {
     final float scaleStableInBoardSize = (float) (140) / 390;
     final float scaleSmallJumpInBoardSize = (float) (22) / 390;
     final float scaleBigJumpInBoardSize = (float) (33) / 390;
+    final float scaleWidthHorseInBoardSize = (float) (23) / 390;
+    final float scaleHeightHorseInBoardSize = (float) (35) / 390;
     private ArrayList<Horse> listHorse;
     private int flag;//Cờ này báo User đến lượt chơi
     private int idUser;
-    private int step;
+
 
 
     private Tuple chessBoardCoord;//Toa đo cua bàn cờ với x,y
@@ -30,6 +32,8 @@ public class User {
 
         this.chessBoardSize = chessBoardSize;
         this.horseSize = horseSize;
+        this.horseSize.x = (int) (this.chessBoardSize.x * scaleWidthHorseInBoardSize);
+        this.horseSize.y = (int) (this.chessBoardSize.x * scaleHeightHorseInBoardSize);
 
         this.stableSize = new Tuple();
         this.stableSize.x = (int) (this.chessBoardSize.x * scaleStableInBoardSize);
@@ -151,6 +155,7 @@ public class User {
                 break;
         }
 
+        listHorse.get(idHorse).setSizeHorse(horseSize.x, horseSize.y);
         listHorse.get(idHorse).setCoord(initialCoord);
         listHorse.get(idHorse).setPosition(idUser*14);
         listHorse.get(idHorse).resetImgHorse();
@@ -181,11 +186,4 @@ public class User {
         this.idUser = idUser;
     }
 
-    public int getStep() {
-        return step;
-    }
-
-    public void setStep(int step) {
-        this.step = step;
-    }
 }
