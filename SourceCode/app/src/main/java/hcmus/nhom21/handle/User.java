@@ -75,6 +75,7 @@ public class User {
         int position = horse.getPosition();
         int level = horse.getLevel();
         int stepped = horse.getStepped();
+
         //Tọa độ tại vị trí position=0
         Tuple coord = new Tuple(chessBoardCoord.x + stableSize.x-20, chessBoardCoord.y-horseSize.y+18);
         int smallJump = (int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
@@ -98,21 +99,26 @@ public class User {
             } else coord.y -= smallJump;
         }
 
-        if (stepped >= horse.TARGET) {
+        if (stepped >= Horse.TARGET) {
             for (int i = 0; i < level; i++) {
-                if (i == 13) {
+                if (position == 13) {
                     coord.x += smallJump;
-                } else if (i == 27) {
+                } else if (position == 27) {
                     coord.y -= smallJump;
-                } else if (i == 41) {
+                } else if (position == 41) {
                     coord.x -= smallJump;
-                } else if (i == 55) {
+                } else if (position == 55) {
                     coord.y += smallJump;
                 }
+                if (level >= Horse.NUM_LEVEL) {
+                    break;
+                }
+                System.out.println("User jump " + idUser + ":  " + coord.x+ "&&&" + coord.y + "\n");
             }
         }
 
         listHorse.get(idHorse).setCoord(coord);
+        listHorse.get(idHorse).setPosition(idUser*14);
         listHorse.get(idHorse).resetImgHorse();
         listHorse.get(idHorse).setStatus(1);
     }
@@ -146,7 +152,9 @@ public class User {
         }
 
         listHorse.get(idHorse).setCoord(initialCoord);
+        listHorse.get(idHorse).setPosition(idUser*14);
         listHorse.get(idHorse).resetImgHorse();
+        listHorse.get(idHorse).setStatus(0);
     }
 
     public ArrayList<Horse> getListHorse() {

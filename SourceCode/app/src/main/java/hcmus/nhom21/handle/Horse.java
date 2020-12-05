@@ -7,8 +7,8 @@ import static java.lang.Thread.sleep;
 
 
 public class Horse {
-    final int TARGET = 56;
-    final int NUM_LEVEL = 6;
+    final static int TARGET = 56;
+    final static int NUM_LEVEL = 6;
     private Tuple coord;//????
     private int status;
     private int stepped;
@@ -88,10 +88,6 @@ public class Horse {
         }
         return true;
     }
-
-
-
-
 
 
     public void resetInitial() {

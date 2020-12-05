@@ -297,7 +297,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             default:
                 break;
         }
-        System.out.println("Horse (idLogic): "+idLogic+"\n");
+        //System.out.println("Horse (idLogic): "+idLogic+"\n");
         if(idLogic!=-1) {
             int userTurn=chessBoard.getUserTurn();
             for (int idHorse = 0; idHorse < horseValid.size(); idHorse++) {
@@ -326,7 +326,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case MESSAGE_POSITION_HORSE:
-                        System.out.println("OK DI CHUYEN THANH CONG \n");
+                        //System.out.println("OK DI CHUYEN THANH CONG \n");
                         chessBoard.updateChessBoard();
                         break;
                     default:
@@ -422,11 +422,11 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             public void run() {
 
                 final Tuple idPair=new Tuple();
-                final int flagConflict;
+                Tuple errorConflict = new Tuple(0,0);
                 final int step=chessBoard.getStep();
                 final User user=chessBoard.getUser();
                 final Horse horse = user.getHorse(chessBoard.getHorseTurn());
-                flagConflict=chessBoard.checkConflict(idPair, horse, step);
+                errorConflict=chessBoard.checkConflict( horse, step);
                 if (horse.getStatus() == 0) {
                     System.out.println("Xuat chuong " + chessBoard.getUserTurn() +"---"+chessBoard.getHorseTurn()+"\n");
                     chessBoard.XuatChuong();
@@ -436,14 +436,15 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                 } else {
                     System.out.println("Di chuyen " + chessBoard.getUserTurn() + "---" + chessBoard.getHorseTurn() + "\n");
+                    final Tuple finalErrorConflict = errorConflict;
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             //Xu ly nguoi dung chon ngua trong mang ngua vua nay
                             for (int i = step - 1; i >= 0; i--) {
                                 //.MoveHorse(horse.getIdHorse(), 1);
-                                if (flagConflict == 1 && i==0) {
-                                    chessBoard.Dangua(idPair);
+                                if (finalErrorConflict.y == 1 && i==0) {
+                                    chessBoard.Dangua(finalErrorConflict.x);
                                 }
                                 chessBoard.moveHorse(1);
                                 //
@@ -463,12 +464,6 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                         }
                     });
                     thread.start();
-//                    try {
-//                        thread.join();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-
                 }
 
             }

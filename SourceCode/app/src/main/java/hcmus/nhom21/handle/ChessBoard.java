@@ -15,6 +15,7 @@ public class ChessBoard {
     //Hằng số
     final int NUM_USER = 4;
     final int NUM_HORSE=4;
+    final int TARGET = 56;
 
     private ArrayList<User> listUser;
     private ArrayList<Tuple> listIdHorse;// Luu ngua voi status =1 dang duoc chay voi x la idUser va y là idHorse
@@ -47,7 +48,7 @@ public class ChessBoard {
             for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
                 user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
                 user.setInitialHorseCoord(idHorse);
-                //user.setHorseCoord(idHorse);
+                //user.setHorseCoordByPosition(idHorse);
             }
         }
 
@@ -112,8 +113,7 @@ public class ChessBoard {
     }
 
     public ArrayList<Integer> Turn() {
-        Tuple idPair = new Tuple();
-        int flagConflict = 0;
+        Tuple errorConflict = new Tuple(0,0);
         Dice dice = new Dice(1, 1);
         Horse horse = null;
         step = dice.rollDice();
@@ -129,12 +129,24 @@ public class ChessBoard {
         ArrayList<Integer> horseValid = new ArrayList<Integer>();
         for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
             horse = user.getHorse(idHorse);
-            flagConflict = checkConflict(idPair, horse, step);
-            if (horse.getStatus() == 1 && flagConflict != -1 && idPair.x != userTurn) {
+            errorConflict = checkConflict(horse, step);
+
+            Tuple idPair = new Tuple();
+            try {
+                idPair = listIdHorse.get(errorConflict.x);
+            }catch (Exception e){};
+
+            int conflictCode=errorConflict.y;
+            if (horse.getStatus() == 1 && errorConflict.y != -1 && idPair.x != userTurn) {
                 horseValid.add(idHorse);
             }
-            if (isRepeat && horse.getStatus() == 0) {
-                horseValid.add(idHorse);
+            else if (isRepeat && horse.getStatus() == 0) {
+                errorConflict = checkConflict(horse, 0);
+                try {
+                    idPair = listIdHorse.get(errorConflict.x);
+                }catch (Exception e){};
+                if(errorConflict.y != -1 && idPair.x != userTurn)
+                    horseValid.add(idHorse);
             }
         }
         if(horseValid.size()<=0) {
@@ -146,52 +158,52 @@ public class ChessBoard {
         User user=listUser.get(userTurn);
         Horse horse=user.getHorse(horseTurn);
         user.MoveHorse(horseTurn,step);
-        System.out.println("DI CHUYEN HORSE: " +horse.getPosition()+"---("+horse.getCoord().x + "," +horse.getCoord().y+") \n");
+        //System.out.println("DI CHUYEN HORSE: " +horse.getPosition()+"---("+horse.getCoord().x + "," +horse.getCoord().y+") \n");
     }
     public void updateChessBoard(){
         User user=listUser.get(userTurn);
         user.setImgHorse(horseTurn);
     }
 
-    public int checkConflict(Tuple idPair, Horse horse, int step) {
-        idPair=new Tuple();
+    public Tuple checkConflict(Horse horse, int step) { //Trả về 1 cặp biến lỗi vs biến đầu là vị trí ngựa trong listIdHorse và biến sau là mã lỗi
+        //idPair=;
         for (int i = 0; i < listIdHorse.size(); i++) {
             Horse otherHorse = getHorse(listIdHorse.get(i));
-            if (horse.getPosition() + step == otherHorse.getPosition()) {
-                idPair = listIdHorse.get(i);
-                return 1;
+            int newPosition = (horse.getPosition() + step)%TARGET;
+            if ( newPosition == otherHorse.getPosition()) {
+                //System.out.println("CONFLICT  1 "+ idPair.x + "|||||" +idPair.y +"\n");
+                return new Tuple(i,1);
             }
-            if (horse.getPosition() < otherHorse.getPosition() && horse.getPosition() + step > otherHorse.getPosition()) {
-                idPair = listIdHorse.get(i);
-                return -1;
+            if (horse.getPosition() < otherHorse.getPosition() && newPosition > otherHorse.getPosition()) {
+                //System.out.println("CONFLICT  -1 "+ idPair.x + "|||||" +idPair.y +"\n");
+                return new Tuple(i,-1);
             }
         }
-        return 0;
+        return new Tuple(-1,0);
     }
 
-    public void Dangua(Tuple idPair) {
-        Horse horse = getHorse(idPair);
-
-        horse.resetInitial();
-        for (int i = 0; i < listIdHorse.size(); i++) {
-            if (listIdHorse.get(i).x == idPair.x && listIdHorse.get(i).y == idPair.y) {
-                listIdHorse.remove(i);
-                break;
-            }
-        }
+    public void Dangua(int id) {
+        //System.out.println("CONFLICT "+ idPair.x + "|||||" +idPair.y +"\n");
+        Tuple idPair = listIdHorse.get(id);
+        User user = listUser.get(idPair.x);
+        user.setInitialHorseCoord(idPair.y);
+        listIdHorse.remove(id);
         //listHorse.remove(horse.getPosition() + 1);
     }
 
     public void XuatChuong() {
         User user = listUser.get(userTurn);
-        Tuple idPair = new Tuple();
-        int flag = 0;
+
+        Tuple errorConflict = new Tuple(-1,0);
 
         Horse horse = user.getHorse(horseTurn);
-        flag = checkConflict(idPair, horse, 0);
-
-        if (flag != 0 && idPair.x != userTurn) {
-            Dangua(idPair);
+        errorConflict = checkConflict(horse, 0);
+        int conflictCode = errorConflict.y;
+        Tuple idPair =new Tuple();
+        if (conflictCode != 0) {
+            idPair=listIdHorse.get(errorConflict.x);
+            if(idPair.x != userTurn)
+                Dangua(errorConflict.x);
         }
         user.setHorseCoordByPosition(horseTurn);
         System.out.println("Xuat chuong thanh cong "+ user.getHorse(horseTurn).getStatus());
