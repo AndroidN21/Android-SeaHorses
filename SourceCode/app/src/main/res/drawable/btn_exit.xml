@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <!--Shadow-->
+            <item android:top="3dp" >
+                <shape>
+                    <corners android:radius="10dp" />
+                    <solid android:color="#00C5A1" />
+                </shape>
+            </item>
+
+            <item android:bottom="3dp" android:top="3dp">
+                <shape>
+                    <solid android:color="@color/colorBackgroundBtn" />
+                    <corners android:radius="10dp" />
+                    <padding
+                        android:bottom="10dp"
+                        android:left="20dp"
+                        android:right="20dp"
+                        android:top="15dp" />
+                </shape>
+            </item>
+
+            <item android:drawable="@drawable/text_exit"
+                android:height="@dimen/btnHeight"
+                android:width="@dimen/btnExitWidth"
+                android:gravity="center"
+                android:top="3dp" android:bottom="3dp"></item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <!--Shadow-->
+            <item>
+                <shape>
+                    <corners android:radius="10dp" />
+                    <solid android:color="#00C5A1" />
+                </shape>
+            </item>
+
+            <item android:bottom="5dp">
+                <shape>
+                    <solid android:color="#6EF6D5" />
+                    <corners android:radius="10dp" />
+                    <padding
+                        android:bottom="10dp"
+                        android:left="20dp"
+                        android:right="20dp"
+                        android:top="15dp" />
+                </shape>
+            </item>
+
+            <item android:drawable="@drawable/text_exit"
+                android:height="@dimen/btnHeight"
+                android:width="@dimen/btnExitWidth"
+                android:gravity="center"
+                android:bottom="5dp">
+                <padding
+                    android:bottom="10dp"
+                    android:left="20dp"
+                    android:right="20dp"
+                    android:top="15dp" />
+            </item>
+        </layer-list>
+    </item>
+</selector>

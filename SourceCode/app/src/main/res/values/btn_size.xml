@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btnInfoWidth">85dp</dimen>
+    <dimen name="btnHeight">24dp</dimen>
+    <dimen name="btnSettingWidth">65dp</dimen>
+    <dimen name="btnNewGameWidth">75dp</dimen>
+    <dimen name="btnRuleWidth">85dp</dimen>
+    <dimen name="btnStartWidth">70dp</dimen>
+    <dimen name="btnExitWidth">50dp</dimen>
+    <dimen name="btnPlayAgainWidth">70dp</dimen>
+</resources>

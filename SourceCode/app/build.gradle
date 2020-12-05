@@ -5,8 +5,8 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "hcmus.nhom21.demoparchessi"
-        minSdkVersion 23
+        applicationId "hcmus.nhom21.parcheesigame"
+        minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

@@ -21,8 +21,7 @@
                         android:top="10dp" />
                 </shape>
             </item>
-
-            <item android:drawable="@drawable/ic_baseline_settings_24"></item>
+            <item android:drawable="@drawable/ic_baseline_settings_24" android:top="3dp" android:bottom="3dp"></item>
         </layer-list>
     </item>
     <item>
@@ -46,8 +45,7 @@
                         android:top="10dp" />
                 </shape>
             </item>
-
-            <item android:drawable="@drawable/ic_baseline_settings_24">
+            <item android:drawable="@drawable/ic_baseline_settings_24" android:bottom="5dp">
                 <padding
                     android:bottom="10dp"
                     android:left="10dp"
