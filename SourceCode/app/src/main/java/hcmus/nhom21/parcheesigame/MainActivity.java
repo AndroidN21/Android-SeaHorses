@@ -1,9 +1,9 @@
 package hcmus.nhom21.parcheesigame;
 
 import androidx.fragment.app.FragmentActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,9 +19,13 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         //Intent intentMain = getIntent();
 
+        MusicThread.PlaySong("a1",getApplicationContext());
+        //SFXThread.PlaySound("a2",getApplicationContext());
+
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
         btnRule = (Button) findViewById(R.id.btnRule);
         btnInfo = (Button) findViewById(R.id.btnInfo);
+        btnSetting = (Button) findViewById(R.id.btnSetting);
 
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +51,15 @@ public class MainActivity extends FragmentActivity {
                 Intent infoIntent = new Intent();
                 infoIntent.setClass(v.getContext(), CopyRightInfoActivity.class);
                 startActivity(infoIntent);
+            }
+        });
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSetting = new Intent();
+                intentSetting.setClass(v.getContext(), SettingMenuActivity.class);
+                startActivity(intentSetting);
             }
         });
     }

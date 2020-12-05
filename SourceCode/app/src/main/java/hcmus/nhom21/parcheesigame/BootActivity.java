@@ -34,6 +34,7 @@ public class BootActivity extends Activity {
         txtPercent = (TextView) findViewById(R.id.txtPercent);
         imgLogo = findViewById(R.id.imgLogo);
         imgIconHorse = (ImageView) findViewById(R.id.imgIconHorse);
+        VibrateThread.On();
 
     }
 

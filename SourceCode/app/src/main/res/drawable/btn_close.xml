@@ -32,6 +32,7 @@
             </item>
             <item android:drawable="@drawable/ic_baseline_close_24">
             </item>
+
         </layer-list>
     </item>
 </selector>

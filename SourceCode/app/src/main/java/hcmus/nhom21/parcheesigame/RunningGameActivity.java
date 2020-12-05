@@ -17,15 +17,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import hcmus.nhom21.handle.ChessBoard;
 import hcmus.nhom21.handle.Database;
 import hcmus.nhom21.handle.Horse;
@@ -108,59 +105,41 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 //                }
 //            }
 //        });
-//
-//        btnSetting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //song.text_start();
-//                ft = getSupportFragmentManager().beginTransaction();
-//                btnSetting.setVisibility(View.INVISIBLE);
-//
-//                newSettingFragment = new SettingFragment();
-//                ft.replace(R.id.frameSetting, newSettingFragment, "settingFragment");
-//                ft.addToBackStack(null);
-//                ft.commit();
-//
-//                 getSupportFragmentManager().executePendingTransactions();
-//                final SettingFragment settingFragment = (SettingFragment) getSupportFragmentManager().findFragmentByTag("settingFragment");
-//
-//                //Volume
-//                if (settingFragment != null) {
-//
-//                    if (settingFragment.view.findViewById(R.id.item1) != null) {
-//                        final AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
-//                        final ImageView imgVolume = (ImageView) settingFragment.view.findViewById(R.id.imgVolume);
-//
-//                        if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
-//                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_up_24);
-//                        } else {
-//                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_off_24);
-//                        }
-//
-//                    }
-//
-//                }
-//
-//                //Test
-//                int index = new Random().nextInt(lengthArr);
-//                imgChat0.setImageResource(arrChatImgs[index]);
-//                index = new Random().nextInt(lengthArr);
-//                imgChat1.setImageResource(arrChatImgs[index]);
-//                index = new Random().nextInt(lengthArr);
-//                imgChat2.setImageResource(arrChatImgs[index]);
-//
-//                imgChat0.startAnimation(chatAnim0);
-//                imgChat1.startAnimation(chatAnim1);
-//                imgChat2.startAnimation(chatAnim2);
-//
-//            }
-//        });
-//
-//        //Khi đổ xúc sắc xong sẽ hiện chat.
-//        //Test
-//        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
-//        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
-//        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat1);
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //song.start();
+                ft = getSupportFragmentManager().beginTransaction();
+                btnSetting.setVisibility(View.INVISIBLE);
+
+                newSettingFragment = new SettingFragment();
+                ft.replace(R.id.frameSetting, newSettingFragment, "settingFragment");
+                ft.addToBackStack(null);
+                ft.commit();
+
+                getSupportFragmentManager().executePendingTransactions();
+                final SettingFragment settingFragment = (SettingFragment) getSupportFragmentManager().findFragmentByTag("settingFragment");
+
+                //Volume
+                if (settingFragment != null) {
+
+                    if (settingFragment.view.findViewById(R.id.item1) != null) {
+                        final AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+                        final ImageView imgVolume = (ImageView) settingFragment.view.findViewById(R.id.imgVolume);
+
+                        if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
+                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_up_24);
+                        } else {
+                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_off_24);
+                        }
+
+                    }
+
+                }
+
+            }
+        });
 
     }
 

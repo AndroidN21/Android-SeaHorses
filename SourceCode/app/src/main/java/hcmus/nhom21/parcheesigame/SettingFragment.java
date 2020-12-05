@@ -13,11 +13,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import static android.content.Context.AUDIO_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 import static java.lang.String.valueOf;
@@ -26,8 +24,6 @@ public class SettingFragment extends Fragment{
     RunningGameActivity main;
     Context context = null;
     public View view;
-    private Button btnSaveSetting;
-    private Integer [] arrImgIconTypeSettingOn = {R.drawable.ic_baseline_volume_up_24, R.drawable.ic_vibrate_on, R.drawable.ic_baseline_notes_24};
     private ImageView imgVolume;
     private ImageView imgVibrate;
     private LinearLayout item1;
@@ -37,6 +33,7 @@ public class SettingFragment extends Fragment{
     private ConstraintLayout bkd_setting;
     private LinearLayout menu_setting;
     private Fragment fragmentSetting;
+    private Button btnClose;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +51,8 @@ public class SettingFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = (View) inflater.inflate(R.layout.fragment_setting, null);
 
-        btnSaveSetting = (Button) view.findViewById(R.id.btnSaveSetting);
-        btnSaveSetting.setOnClickListener(new View.OnClickListener() {
+        btnClose = (Button) view.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 main.findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
