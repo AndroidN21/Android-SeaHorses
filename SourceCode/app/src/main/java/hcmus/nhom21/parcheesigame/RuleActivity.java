@@ -32,7 +32,6 @@ public class RuleActivity extends Activity {
         txtLine4 = (TextView) findViewById(R.id.txtRule3);
         txtLine5 = (TextView) findViewById(R.id.txtRule4);
 
-        txtTitle.setText(R.string.title_rule);
         txtLine0.setText(R.string.rule_intro);
         txtLine1.setText(R.string.rule0_ra_quan);
         txtLine2.setText(R.string.rule1_bi_can);

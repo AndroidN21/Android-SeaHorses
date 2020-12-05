@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cờ Cá Ngựa</string>
-
     <string name="title_rule">Luật chơi</string>
-
     <string name="rule_intro">Trò chơi cờ cá ngựa có 2-4 đội và người chơi sẽ chỉ huy 4 con ngựa đội mình cùng đến đích sớm nhất có thể.\nTrò chơi tuần tự theo lượt theo chiều ngược kim đồng hồ.\nMỗi lượt người chơi phải tung xúc xắc nhận điểm.\nNgười chơi có thể cho ngựa chạy với số bước bằng số điểm vừa nhận được theo chiều kim đồng hồ.</string>
     <string name="rule0_ra_quan">- XUẤT CHUỒNG: Tung được 2 xúc xắc giống nhau hoặc cặp điểm 1và6; đồng thời bạn sẽ có thêm 1 lượt tung xúc sắc.</string>
     <string name="rule1_bi_can">- BỊ CẢN: Với điểm xúc xắc lớn hơn khoảng cách đến con ngựa phía trước nó, co ngựa này không thể di chuyển, nếu tất cả con ngựa không thể di chuyển hay xuất chuồng thì đội đó mất lượt.</string>
@@ -22,4 +20,6 @@
         \t\t\t+ Freepik
     </string>
     <string name="info1"> - Nhóm có thực hiện việc chỉnh sửa trên một số hình ảnh để phù hợp với đồ án.</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
