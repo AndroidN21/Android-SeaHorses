@@ -156,24 +156,27 @@ public class ChessBoard {
             }catch (Exception e){};
 
             int conflictCode=errorConflict.y;
-            if (horse.getStatus() == 1 && conflictCode != -1 && idPair.x != userTurn) {
-                horseValid.add(idHorse);
+            if (horse.getStatus() == 1 && horse.getStepped()+step <= Horse.TARGET + Horse.NUM_LEVEL - user.getHorseWinNum()) {
+                if(conflictCode==0 || (conflictCode==1 && idPair.x != userTurn)){
+                    horseValid.add(idHorse);
+                }
             }
             else if (isRepeat && horse.getStatus() == 0) {
                 errorConflict = checkConflict(horse, 0);
                 try {
                     idPair = listIdHorse.get(errorConflict.x);
                 }catch (Exception e){};
-                if(errorConflict.y != -1 && idPair.x != userTurn)
+
+                if(errorConflict.y==0 || (errorConflict.y == 1 && idPair.x != userTurn))
                     horseValid.add(idHorse);
             }
         }
-        if(horseValid.size()<=0) {
+        if(horseValid.size()<=0 && isRepeat==false) {
             userTurn= (userTurn+1)%4;
         }
-        //System.out.println("HORSE VALID: "+horseValid.size()+"\n");
         return horseValid;
     }
+
     public void moveHorse(int step){
         User user=listUser.get(userTurn);
         Horse horse=user.getHorse(horseTurn);
@@ -192,15 +195,25 @@ public class ChessBoard {
             Horse otherHorse = getHorse(listIdHorse.get(i));
             int newPosition = (horse.getPosition() + step)%TARGET;
             int newRound = (horse.getPosition() + step)/TARGET;
+
             if ( newPosition == otherHorse.getPosition()) {
-                //System.out.println("CONFLICT  1 "+ idPair.x + "|||||" +idPair.y +"\n");
                 errorConflict = new Tuple(i,1);
             }
-            if ((newRound>=1 || horse.getPosition() < otherHorse.getPosition() ) && newPosition > otherHorse.getPosition()) {
-                errorConflict = new Tuple(i,-1);
+
+            if(horse.getPosition() < otherHorse.getPosition() && newPosition > otherHorse.getPosition()) {
+                errorConflict = new Tuple(i, -1);
                 break;
             }
-
+            if(newRound>=1) {
+                if (horse.getPosition() < otherHorse.getPosition()){
+                    errorConflict = new Tuple(i, -1);
+                break;
+                }
+                else if(otherHorse.getPosition()<newPosition) {
+                    errorConflict = new Tuple(i, -1);
+                    break;
+                }
+            }
         }
         return errorConflict;
     }
@@ -230,7 +243,7 @@ public class ChessBoard {
         }
         listIdHorse.add(new Tuple(userTurn,horseTurn));
         user.setHorseCoordByPosition(horseTurn);
-        System.out.println("Xuat chuong thanh cong "+ user.getHorse(horseTurn).getStatus());
+        //System.out.println("Xuat chuong thanh cong "+ user.getHorse(horseTurn).getStatus());
         //System.out.println("CONFLICT: "+ listIdHorse.size() +"\n");
     }
 

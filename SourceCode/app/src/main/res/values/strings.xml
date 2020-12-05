@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">DemoParchessi</string>
+    <string name="app_name">Cờ Cá Ngựa</string>
+
+
+    <string name="title_rule">Luật chơi</string>
+    <string name="rule0_ra_quan"> - RA QUÂN (XUẤT CHUỒNG): Tung được 2 xúc sắc giống nhau hoặc cặp số 1 và 6; đồng thời bạn sẽ có thêm 1 lượt tung xúc sắc.</string>
+    <string name="rule1_chien_thang"> - CÁCH THẮNG: Người nào có đủ bốn quân cờ về đến đích (chuồng) đầu tiên và đã xếp đúng vào các ô số 6, 5, 4 và 3
+        trong chuồng là người chiến thắng.</string>
+    <string name="rule2_da"> - ĐÁ: </string>
+    <string name="rule3_vao_chuong"> - VÀO CHUỒNG: </string>
+    <string name="rule4_bi_can"> - BỊ CẢN: </string>
+    <string name="blueTeam">Đội Lam</string>
+    <string name="redTeam">Đội Đỏ</string>
+    <string name="yellowTeam">Đội vàng</string>
+    <string name="greenTeam">Đội Lục</string>
+
+
+    <string name="title_copyright_info">Thông tin bản quyền</string>
+    <string name="info0"> - Hình ảnh trong game được cung cấp bởi các trang web sau:\n
+        \t\t+ Vecteezy (Link: <i><u>www.vecteezy.com</u></i>)\n
+        \t\t+ Freepik (Link: <i><u>www.freepik.com</u></i>)
+    </string>
+    <string name="info1"> - Nhóm có thực hiện việc chỉnh sửa trên một số hình ảnh để phù hợp với đồ án.</string>
 </resources>
