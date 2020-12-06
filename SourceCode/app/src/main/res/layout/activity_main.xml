@@ -42,6 +42,7 @@
             android:background="@drawable/btn_new_game"
             android:textAllCaps="false" />
 
+
         <Button
             android:id="@+id/btnSetting"
             android:layout_width="match_parent"

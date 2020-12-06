@@ -32,6 +32,7 @@
             android:layout_height="15dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_chess_knight_solid" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

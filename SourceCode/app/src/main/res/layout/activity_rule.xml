@@ -1,80 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="20">
-
-    <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:background="@color/colorBackgroundBtn"
-        android:gravity="center"
-        android:text="Luật chơi"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="18sp" />
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:ignore="MissingPrefix">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="18">
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:background="@drawable/rounded_dialog">
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtLine0"
+                android:id="@+id/txtRule_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:textSize="18sp" />
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_weight="1"
+                android:text="_intro_"
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/txtLine1"
+                android:id="@+id/txtRule0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:textSize="18sp" />
+                android:layout_marginBottom="40dp"
+                android:text="_rule0_"
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/txtLine2"
+                android:id="@+id/txtRule1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:textSize="18sp" />
+                android:layout_marginBottom="40dp"
+                android:text="_rule1_"
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/txtLine3"
+                android:id="@+id/txtRule2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:textSize="18sp" />
+                android:layout_marginBottom="40dp"
+                android:text="_rule2_"
+                android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/txtLine4"
+                android:id="@+id/txtRule3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:textSize="18sp" />
+                android:layout_marginBottom="40dp"
+                android:text="_rule3_"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtRule4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:text="_rule4_"
+                android:textSize="20dp" />
+
+
         </LinearLayout>
     </ScrollView>
 
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_rule"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </RelativeLayout>
+
     <Button
-        android:id="@+id/btnBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textColor="#000000"
-        android:background="@drawable/btn_back"
-        android:text="Quay lại"
-        android:textAllCaps="false"
-        android:textSize="18sp" />
-</LinearLayout>
+        android:id="@+id/btn_GGvoice"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btn_volume"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
