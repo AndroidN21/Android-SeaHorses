@@ -65,7 +65,7 @@ public class SetUpNewGameActivity extends Activity  {
         radYNone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((countPlayer()>1||!radYPlayer.isChecked())&&countNone()<2){
+                if((countPlayer()>1||!radYPlayer.isChecked())&&countNone()<3){
                     radYPlayer.setChecked(false);
                     radYBoot.setChecked(false);
                     radYNone.setChecked(true);
@@ -95,7 +95,7 @@ public class SetUpNewGameActivity extends Activity  {
         radBNone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((countPlayer()>1||!radBPlayer.isChecked())&&countNone()<2){
+                if((countPlayer()>1||!radBPlayer.isChecked())&&countNone()<3){
                     radBPlayer.setChecked(false);
                     radBBoot.setChecked(false);
                     radBNone.setChecked(true);
@@ -125,7 +125,7 @@ public class SetUpNewGameActivity extends Activity  {
         radGNone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((countPlayer()>1||!radGPlayer.isChecked())&&countNone()<2){
+                if((countPlayer()>1||!radGPlayer.isChecked())&&countNone()<3){
                     radGPlayer.setChecked(false);
                     radGBoot.setChecked(false);
                     radGNone.setChecked(true);
@@ -155,7 +155,7 @@ public class SetUpNewGameActivity extends Activity  {
         radRNone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((countPlayer()>1||!radRPlayer.isChecked())&&countNone()<2){
+                if((countPlayer()>1||!radRPlayer.isChecked())&&countNone()<3){
                     radRPlayer.setChecked(false);
                     radRBoot.setChecked(false);
                     radRNone.setChecked(true);
@@ -168,23 +168,23 @@ public class SetUpNewGameActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 String setupPlayer="";
-                 if(radYPlayer.isChecked())setupPlayer+="#radYPlayer";
-                 if(radYBoot.isChecked())setupPlayer+="#radYBoot";
-                 if(radYNone.isChecked())setupPlayer+="#radYNone";
-                 if(radBPlayer.isChecked())setupPlayer+="#radBPlayer";
-                 if(radBBoot.isChecked())setupPlayer+="#radBBoot";
-                 if(radBNone.isChecked())setupPlayer+="#radBNone";
-                 if(radGPlayer.isChecked())setupPlayer+="#radGPlayer";
-                 if(radGBoot.isChecked())setupPlayer+="#radGBoot";
-                 if(radGNone.isChecked())setupPlayer+="#radGNone";
-                 if(radRPlayer.isChecked())setupPlayer+="#radRPlayer";
-                 if(radRBoot.isChecked())setupPlayer+="#radRBoot";
-                 if(radRNone.isChecked())setupPlayer+="#radRNone";
-                 Log.e("mylog",setupPlayer);
+                 if(radYPlayer.isChecked())setupPlayer+="Player";
+                 if(radYBoot.isChecked())setupPlayer+="Boot";
+                 if(radYNone.isChecked())setupPlayer+="None";
+                 if(radBPlayer.isChecked())setupPlayer+="#Player";
+                 if(radBBoot.isChecked())setupPlayer+="#Boot";
+                 if(radBNone.isChecked())setupPlayer+="#None";
+                 if(radGPlayer.isChecked())setupPlayer+="#Player";
+                 if(radGBoot.isChecked())setupPlayer+="#Boot";
+                 if(radGNone.isChecked())setupPlayer+="#None";
+                 if(radRPlayer.isChecked())setupPlayer+="#Player";
+                 if(radRBoot.isChecked())setupPlayer+="#Boot";
+                 if(radRNone.isChecked())setupPlayer+="#None";
                  Intent intentRunningGame = new Intent();
                  intentRunningGame.setClass(v.getContext(), RunningGameActivity.class);
                  intentRunningGame.putExtra("setupPlayer",setupPlayer);
                  startActivity(intentRunningGame);
+                 finish();
             }
         });
     }
