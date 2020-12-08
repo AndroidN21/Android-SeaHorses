@@ -39,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_new_game"
             android:textAllCaps="false" />
 
 
@@ -48,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_text_setting"
             android:textAllCaps="false"
             android:textSize="18sp" />
 
@@ -57,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/btn_rule"
             android:textAllCaps="false"
             android:textSize="18sp" />
 
@@ -65,7 +62,6 @@
             android:id="@+id/btnInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_info"
             android:textAllCaps="false"
             android:textSize="18sp" />
     </LinearLayout>

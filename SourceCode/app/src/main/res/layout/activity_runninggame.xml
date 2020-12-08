@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        android:weightSum="10"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,7 +26,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="horizontal">
 
             <Button
@@ -43,9 +43,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_weight="2"
+            android:layout_weight="8"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,26 +101,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="5"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="20"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/btn_roll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="roll"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <ImageView
                     android:id="@+id/imgBoard"
                     android:layout_width="0dp"
@@ -132,138 +122,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="1"
-                    app:layout_constraintEnd_toEndOf="@+id/imgBoard"
-                    app:layout_constraintStart_toStartOf="@+id/imgBoard"
-                    app:layout_constraintTop_toTopOf="@+id/imgBoard">
-
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5">
-
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="140"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="4">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frg_dice_yellow"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="140"
-                            android:background="@drawable/ic_background_yellow_team"
-                            android:visibility="invisible">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="102" />
-
-                        <FrameLayout
-                            android:id="@+id/frg_dice_red"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="140"
-                            android:background="@drawable/ic_background_red_team"
-                            android:visibility="invisible">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="4">
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="102">
-
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="140"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="4">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:id="@+id/frg_dice_green"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="140"
-                            android:background="@drawable/ic_background_green_team"
-                            android:visibility="invisible">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="102" />
-
-                        <FrameLayout
-                            android:id="@+id/frg_dice_blue"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="140"
-                            android:background="@drawable/ic_background_blue_team"
-                            android:visibility="invisible">
-
-                        </FrameLayout>
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="4">
-
-                        </FrameLayout>
-
-                    </LinearLayout>
-
-                    <FrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="4">
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
-
 
 
         <LinearLayout
@@ -272,7 +133,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
-            android:layout_weight="2"
+            android:layout_weight="5"
             android:gravity="bottom"
             android:orientation="vertical">
 
@@ -313,6 +174,7 @@
                             android:gravity="center"
                             android:text="Số ngựa bị đá:"
                             android:textColor="#000000" />
+
                         <TextView
                             android:id="@+id/textView5"
                             android:layout_width="wrap_content"
@@ -359,7 +221,23 @@
 
         </LinearLayout>
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/imgHorse00"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_yellow_chessman"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+    <ImageView
+        android:id="@+id/imgHorseDie00"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse01"
         android:layout_width="32dp"
@@ -370,6 +248,16 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
     <ImageView
+        android:id="@+id/imgHorseDie01"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
+
+    <ImageView
         android:id="@+id/imgHorse02"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -377,7 +265,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie02"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse03"
         android:layout_width="32dp"
@@ -386,7 +282,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie03"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse10"
         android:layout_width="32dp"
@@ -395,7 +299,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie10"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse11"
         android:layout_width="32dp"
@@ -404,15 +316,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
     <ImageView
-        android:id="@+id/imgHorse00"
+        android:id="@+id/imgHorseDie11"
+        android:rotation="90"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_yellow_chessman"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/imgHorse12"
@@ -422,7 +334,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie12"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse13"
         android:layout_width="32dp"
@@ -431,7 +351,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie13"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse20"
         android:layout_width="32dp"
@@ -440,7 +368,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie20"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse21"
         android:layout_width="32dp"
@@ -449,7 +385,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie21"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse22"
         android:layout_width="32dp"
@@ -458,7 +402,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie22"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse23"
         android:layout_width="32dp"
@@ -467,7 +419,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie23"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse30"
         android:layout_width="32dp"
@@ -476,7 +436,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie30"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse31"
         android:layout_width="32dp"
@@ -485,7 +453,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie31"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse32"
         android:layout_width="32dp"
@@ -494,7 +470,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie32"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgHorse33"
         android:layout_width="32dp"
@@ -503,7 +487,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
-
+    <ImageView
+        android:id="@+id/imgHorseDie33"
+        android:rotation="90"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_gray_chessman"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        android:visibility="invisible"/>
     <ImageView
         android:id="@+id/imgDice"
         android:layout_width="32dp"
@@ -513,6 +505,494 @@
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="3"
+            android:visibility="invisible">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="8"
+            android:visibility="invisible">
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="20"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/imgBoard2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/ic_board"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toEndOf="@+id/imgBoard2"
+                    app:layout_constraintStart_toStartOf="@+id/imgBoard2"
+                    app:layout_constraintTop_toTopOf="@+id/imgBoard2">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5">
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="140"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4">
+
+                        </FrameLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="140">
+
+                            <ImageView
+                                android:id="@+id/img_yhorse1"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_yellow_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_yhorse2"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_yellow_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_yhorse3"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_yellow_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <ImageView
+                                android:id="@+id/img_yhorse4"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_yellow_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <FrameLayout
+                                android:id="@+id/frg_dice_yellow"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="140"
+                                android:background="@drawable/ic_background_yellow_team"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </FrameLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="102" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="140">
+
+                            <ImageView
+                                android:id="@+id/img_rhorse1"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_red_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_rhorse2"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_red_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_rhorse3"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_red_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <ImageView
+                                android:id="@+id/img_rhorse4"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_red_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <FrameLayout
+                                android:id="@+id/frg_dice_red"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_background_red_team"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </FrameLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4">
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="102">
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="140"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4">
+
+                        </FrameLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="140">
+
+                            <ImageView
+                                android:id="@+id/img_ghorse1"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_green_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_ghorse2"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_green_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_ghorse3"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_green_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <ImageView
+                                android:id="@+id/img_ghorse4"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_green_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <FrameLayout
+                                android:id="@+id/frg_dice_green"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_background_green_team"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </FrameLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="102" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="140">
+
+                            <ImageView
+                                android:id="@+id/img_bhorse1"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_blue_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_bhorse2"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_blue_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.25" />
+
+                            <ImageView
+                                android:id="@+id/img_bhorse3"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_blue_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.3"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <ImageView
+                                android:id="@+id/img_bhorse4"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_blue_chessman"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.7"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.75" />
+
+                            <FrameLayout
+                                android:id="@+id/frg_dice_blue"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_background_blue_team"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </FrameLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="4">
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4">
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="5"
+            android:gravity="bottom"
+            android:visibility="invisible">
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_roll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/view_result_roll_dice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/img_background_roll_dice"
+        android:visibility="invisible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/frg_dice_result"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
     <FrameLayout
         android:id="@+id/frameSetting"
         android:layout_width="0dp"

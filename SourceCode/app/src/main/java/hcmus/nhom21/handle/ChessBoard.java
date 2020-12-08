@@ -1,6 +1,7 @@
 package hcmus.nhom21.handle;
 
 import android.database.Cursor;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -19,12 +20,15 @@ public class ChessBoard {
 
     private ArrayList<User> listUser;
     private ArrayList<Tuple> listIdHorse;// Luu ngua voi status =1 dang duoc chay voi x la idUser va y là idHorse
+    int[] arrSetupPlayer;
 
     private int userTurn;
     private int horseTurn;
     private int step;
+    private boolean isRepeat;
 
-    public ChessBoard(Tuple LOCATE_BOARD, Tuple SIZE_BOARD, Tuple SIZE_HORSE, Database database){
+    public ChessBoard(int[] arrSetupPlayer, Tuple LOCATE_BOARD, Tuple SIZE_BOARD, Tuple SIZE_HORSE, Database database){
+        this.arrSetupPlayer=arrSetupPlayer;
         this.LOCATE_BOARD=LOCATE_BOARD;
         this.SIZE_BOARD=SIZE_BOARD;
         this.SIZE_HORSE=SIZE_HORSE;
@@ -42,13 +46,19 @@ public class ChessBoard {
 
         //Khởi tạo User và những con ngựa nó quản lý
         for (int idUser = 0; idUser < NUM_USER; idUser++) {
-            User user = new User(idUser, LOCATE_BOARD, SIZE_BOARD, SIZE_HORSE);
+            User user = new User(idUser,arrSetupPlayer[idUser], LOCATE_BOARD, SIZE_BOARD, SIZE_HORSE);
             listUser.add(idUser, user);
-
-            for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
-                user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
-                user.setInitialHorseCoord(idHorse);
-                //user.setHorseCoordByPosition(idHorse);
+            if(arrSetupPlayer[idUser]!=User.MODE_NONE) {
+                for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                    user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
+                    user.setInitialHorseCoord(idHorse);
+                }
+            }
+            else{
+                for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                    imgHorse.get(idUser * NUM_HORSE + idHorse).setVisibility(View.VISIBLE);
+                    imgHorse.get(idUser * NUM_HORSE + idHorse).setSelected(true);
+                }
             }
         }
 
@@ -56,7 +66,7 @@ public class ChessBoard {
 
     public void loadChessBoard(){
         Cursor dataHorse = database.getData("SELECT * FROM Horse");
-        Cursor dataUser = database.getData("SELECT * FROM User");
+        Cursor dataChessBoard = database.getData("SELECT * FROM ChessBoard");
 
         int idHorse, idUser, position, level, stepped;
         while (dataHorse.moveToNext()) {
@@ -74,13 +84,15 @@ public class ChessBoard {
             horse.setStatus(1);
             horse.setLevel(level);
             horse.setStatus(stepped);
+            User user=listUser.get(idUser);
+            user.setHorseCoordByPosition(idHorse);
         }
 
-        while (dataUser.moveToNext()) {
-            idUser = dataUser.getInt(0);
-            int step = dataUser.getInt(1);
-            User user = listUser.get(idUser);
-            user.setStep(step);
+        while (dataChessBoard.moveToNext()) {
+            userTurn = dataChessBoard.getInt(0);
+            horseTurn = dataChessBoard.getInt(1);
+            step = dataChessBoard.getInt(2);
+            isRepeat= (dataChessBoard.getInt(3)==1);
         }
 
         database.queryData("DROP TABLE Horse");
@@ -90,7 +102,7 @@ public class ChessBoard {
     public void saveChessBoard(){
         //Tạo bảng
         database.queryData("CREATE TABLE IF NOT EXISTS Horse(id INTEGER PRIMARY KEY, position INTEGER, level INTEGER, stepped INTEGER)");
-        database.queryData("CREATE TABLE IF NOT EXISTS User(id INTEGER PRIMARY KEY, step INTEGER)");
+        database.queryData("CREATE TABLE IF NOT EXISTS ChessBoard(userTurn INTEGER, horseTURN Integer, step Integer, isRepeat INTEGER)");
         //Insert data horse đang di chuyển
         Horse horse;
         int idLogic;
@@ -100,36 +112,64 @@ public class ChessBoard {
             database.queryData("INSERT INTO Horse VALUES (" + idLogic + "," + horse.getPosition() + "," + horse.getLevel() + "," + horse.getStepped() + ")");
         }
 
-        //Insert data user
-        User user;
-        for (int idUser = 0; idUser < listUser.size(); idUser++) {
-            user = listUser.get(idUser);
-            if (user.getFlag() == 1) {
-                database.queryData("INSERT INTO User VALUES (" + idUser + "," + user.getStep() + ")");
-                break;
-            }
-        }
+        //Insert turn sleeped
+        database.queryData("INSERT INTO ChessBoard VALUES (" + userTurn + "," + horseTurn + "," + step + "," + (isRepeat?1:0) + ")");
 
     }
 
-    public ArrayList<Integer> Turn() {
-        Tuple errorConflict = new Tuple(0,0);
+    public Tuple rollDice(){
+        User user= listUser.get(userTurn);
         Dice dice = new Dice(1, 1);
-        Horse horse = null;
-        step = dice.rollDice();
+        boolean isLucky=false;
 
-        System.out.println("Buoc nhay: "+ dice.getNumDice1() +"----"+dice.getNumDice2() +"\n");
-        User user = listUser.get(userTurn);
-        boolean isRepeat = false;//Mặc định gán false
-
+        if(isRepeat){
+            do {
+                step = dice.rollDice();
+            }
+            while(dice.getNumDice1() == dice.getNumDice2());
+        }
+        else {
+            for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                if (user.getHorse(idHorse).getStatus() == 1)
+                    break;
+                if (idHorse == NUM_HORSE - 1)
+                    isLucky = true;
+            }
+            do {
+                step = dice.rollDice();
+            }
+            while (isLucky && dice.getNumDice1() != dice.getNumDice2());
+        }
+        isRepeat = false;//Mặc định gán false
         if (dice.getNumDice1() == dice.getNumDice2() || (step == 7 && (dice.getNumDice1() == 1 || dice.getNumDice1() == 6)))
             isRepeat = true;
+        System.out.println("Buoc nhay: "+ dice.getNumDice1() +"----"+dice.getNumDice2() +"\n");
+        return new Tuple(dice.getNumDice1(),dice.getNumDice2());
+    }
+
+    public ArrayList<Integer> generateHorseValid() {
+        Tuple errorConflict = new Tuple(0,0);
+        Horse horse = null;
+        User user = listUser.get(userTurn);
+        //System.out.println("Buoc nhay: "+ dice.getNumDice1() +"----"+dice.getNumDice2() +"\n");
 
         //Khởi tạo mảng ngụa có thể chạy
         ArrayList<Integer> horseValid = new ArrayList<Integer>();
         for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
             horse = user.getHorse(idHorse);
-            errorConflict = checkConflict(horse, step);
+            int tmp=-1;
+            if(horse.getStepped()+step >Horse.TARGET){
+                tmp=Horse.TARGET-horse.getStepped()-step;
+            }
+            else if(horse.getStatus()==1)
+            {
+                tmp=step;
+            }
+            else if(horse.getStatus()==0 && isRepeat==true)
+            {
+                tmp=0;
+            }
+            errorConflict = checkConflict(horse, tmp);
 
             Tuple idPair = new Tuple();
             try {
@@ -137,23 +177,22 @@ public class ChessBoard {
             }catch (Exception e){};
 
             int conflictCode=errorConflict.y;
-            if (horse.getStatus() == 1 && errorConflict.y != -1 && idPair.x != userTurn) {
-                horseValid.add(idHorse);
+            if (horse.getStatus() == 1 && horse.getStepped()+step <= Horse.TARGET + Horse.NUM_LEVEL - user.getHorseWinNum()) {
+                if(conflictCode==0 || (conflictCode==1 && idPair.x != userTurn)){
+                    horseValid.add(idHorse);
+                }
             }
             else if (isRepeat && horse.getStatus() == 0) {
-                errorConflict = checkConflict(horse, 0);
-                try {
-                    idPair = listIdHorse.get(errorConflict.x);
-                }catch (Exception e){};
-                if(errorConflict.y != -1 && idPair.x != userTurn)
+                if(errorConflict.y==0 || (errorConflict.y == 1 && idPair.x != userTurn))
                     horseValid.add(idHorse);
             }
         }
-        if(horseValid.size()<=0) {
+        if(horseValid.size()<=0 && isRepeat==false) {
             userTurn= (userTurn+1)%4;
         }
         return horseValid;
     }
+
     public void moveHorse(int step){
         User user=listUser.get(userTurn);
         Horse horse=user.getHorse(horseTurn);
@@ -166,20 +205,33 @@ public class ChessBoard {
     }
 
     public Tuple checkConflict(Horse horse, int step) { //Trả về 1 cặp biến lỗi vs biến đầu là vị trí ngựa trong listIdHorse và biến sau là mã lỗi
-        //idPair=;
+        Tuple errorConflict=new Tuple(-1,0);
         for (int i = 0; i < listIdHorse.size(); i++) {
+
             Horse otherHorse = getHorse(listIdHorse.get(i));
             int newPosition = (horse.getPosition() + step)%TARGET;
+            int newRound = (horse.getPosition() + step)/TARGET;
+
             if ( newPosition == otherHorse.getPosition()) {
-                //System.out.println("CONFLICT  1 "+ idPair.x + "|||||" +idPair.y +"\n");
-                return new Tuple(i,1);
+                errorConflict = new Tuple(i,1);
             }
-            if (horse.getPosition() < otherHorse.getPosition() && newPosition > otherHorse.getPosition()) {
-                //System.out.println("CONFLICT  -1 "+ idPair.x + "|||||" +idPair.y +"\n");
-                return new Tuple(i,-1);
+
+            if(horse.getPosition() < otherHorse.getPosition() && newPosition > otherHorse.getPosition()) {
+                errorConflict = new Tuple(i, -1);
+                break;
+            }
+            if(newRound>=1) {
+                if (horse.getPosition() < otherHorse.getPosition()){
+                    errorConflict = new Tuple(i, -1);
+                    break;
+                }
+                else if(otherHorse.getPosition()<newPosition) {
+                    errorConflict = new Tuple(i, -1);
+                    break;
+                }
             }
         }
-        return new Tuple(-1,0);
+        return errorConflict;
     }
 
     public void Dangua(int id) {
@@ -205,14 +257,22 @@ public class ChessBoard {
             if(idPair.x != userTurn)
                 Dangua(errorConflict.x);
         }
+        listIdHorse.add(new Tuple(userTurn,horseTurn));
         user.setHorseCoordByPosition(horseTurn);
-        System.out.println("Xuat chuong thanh cong "+ user.getHorse(horseTurn).getStatus());
     }
 
     public Horse getHorse(Tuple idPair) {
         User user = listUser.get(idPair.x);
         Horse horse = user.getHorse(idPair.y);
         return horse;
+    }
+
+    public boolean isRepeat() {
+        return isRepeat;
+    }
+
+    public void setRepeat(boolean repeat) {
+        isRepeat = repeat;
     }
 
     public User getUser(){
