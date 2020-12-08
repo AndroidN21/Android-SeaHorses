@@ -56,8 +56,9 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     Integer arrChatImgs[] = {R.drawable.ic_wow, R.drawable.ic_haha, R.drawable.ic_why_so_serious, R.drawable.ic_oh, R.drawable.ic_like, R.drawable.ic_nope};
     private int lengthArr = arrChatImgs.length;
 
-    final int MESSAGE_DICE = 10001;
+    final int MESSAGE_RESULT_DICE = 10001;
     final int MESSAGE_POSITION_HORSE = 10002;
+    final int MESSAGE_USER_WIN = 10003;
     private int[] LOCATE_BOARD = new int[2];
     private int[] SIZE_BOARD = new int[2];
     private int[] SIZE_HORSE = new int[2];
@@ -66,7 +67,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     Database database;
     private Handler mhandler;
 
-    private ImageView imgDice;
+    //private ImageView imgDice;
     private ArrayList<ImageView> imgHorse;
     boolean flagHide;
     //SettingFragment settingFragment;
@@ -87,8 +88,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
     static private int speed = 2000;
     Handler myHandler = new Handler(Looper.getMainLooper());
-    private int resRollDiceOne = 3;
-    private int resRollDiceTwo = 6;
+    private int resRollDiceOne = 1;
+    private int resRollDiceTwo = 1;
 
     private Button btnRoll;
 
@@ -189,15 +190,6 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         ft.replace(R.id.frg_dice_red, fragRDice);
         ft.addToBackStack(null);
         ft.commit();
-        btnRoll = findViewById(R.id.btn_roll); //btn để test
-        btnRoll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Random generator = new Random();
-                setTurn(generator.nextInt(4)+1);
-                rollDice(getTurn());
-            }
-        });
 
         viewProfile = findViewById(R.id.txtProfile);
         //-------------------------------------1712275-----------------------------------
@@ -235,6 +227,45 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 //        }
 //    }
 
+    public void initView() {
+        btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
+        btnSetting = (Button) findViewById(R.id.btnSetting);
+        imgBoard = (ImageView) findViewById(R.id.imgBoard);
+        btnRoll = findViewById(R.id.btn_roll); //btn để test
+
+        //imgDice = (ImageView) findViewById(R.id.imgDice);
+        imgHorse = new ArrayList<ImageView>(16);
+
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse00));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse01));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse02));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse03));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse10));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse11));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse12));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse13));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse20));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse21));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse22));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse23));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse30));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse31));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse32));
+        imgHorse.add((ImageView) findViewById(R.id.imgHorse33));
+
+    }
+
+    public void initOnClick(){
+        btnTypePlayer.setOnClickListener(this);
+        btnSetting.setOnClickListener(this);
+        imgBoard.setOnClickListener(this);
+        btnRoll.setOnClickListener(this);
+
+        for(int i=0;i<16;i++){
+            imgHorse.get(i).setOnClickListener(this);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int idLogic=-1;
@@ -263,6 +294,10 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_person_24);
                     Toast.makeText(hcmus.nhom21.parcheesigame.RunningGameActivity.this, "Tắt tự động chơi", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.btn_roll:
+                btnRoll.setClickable(false);
+                //btnRoll.setEnabled(false);
                 break;
             case R.id.imgHorse00:
                 idLogic = 0;
@@ -343,9 +378,25 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             @Override
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
+                    case MESSAGE_RESULT_DICE:
+                        rollDice();
+
+                        break;
                     case MESSAGE_POSITION_HORSE:
                         //System.out.println("OK DI CHUYEN THANH CONG \n");
                         chessBoard.updateChessBoard();
+                        break;
+                    case MESSAGE_USER_WIN:
+                        int UserWin= msg.arg1;
+                        User user = chessBoard.getUser(UserWin);
+                        if(user.getMode()==User.MODE_BOOT){
+                            Intent intentRunningGame = new Intent(RunningGameActivity.this,LoseGameActivity.class);
+                            startActivity(intentRunningGame);
+                        }
+                        else{
+                            Intent intentRunningGame = new Intent(RunningGameActivity.this,WinGameActivity.class);
+                            startActivity(intentRunningGame);
+                        }
                         break;
                     default:
                         break;
@@ -357,8 +408,11 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        //Lấy tọa độ bàn cờ
+        //Lấy dữ liệu setup bàn cờ
+        Intent intent = getIntent();
+        int[] arrSetupPlayer=intent.getIntArrayExtra("arrSetupPlayer");
 
+        //Lấy tọa độ bàn cờ
         imgBoard.getLocationOnScreen(LOCATE_BOARD);
 
         //System.out.println("Tọa độ:   " + LOCATE_BOARD[0] + "&&&&" +LOCATE_BOARD[1] + "/n");
@@ -376,7 +430,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         SIZE_HORSE[1] = imgHorse.get(0).getMeasuredHeight();
 
         //System.out.println("SIZEHORSE:   " + SIZE_HORSE[0] + "&&&&" +SIZE_HORSE[1] + "\n");
-        chessBoard = new ChessBoard(new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]), new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]),
+        chessBoard = new ChessBoard(arrSetupPlayer, new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]), new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]),
                 new Tuple(SIZE_HORSE[0], SIZE_HORSE[1]), database);
         horseValid=new ArrayList<Integer>();
 
@@ -393,11 +447,21 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 while (true) {
                     if (horseValid.size()<=0) {
                         User user = chessBoard.getUser();
-                        if(user.getMode()!= User.MODE_NONE) {
-                            Tuple dice = chessBoard.rollDice();
+                        System.out.println("3000\n");
+                        if(user.getMode()== User.MODE_BOOT || (user.getMode()==User.MODE_USER & !btnRoll.isClickable())) {
+                        //if(user.getMode()!=User.MODE_NONE){
+                            Tuple dice= chessBoard.rollDice();
+                            resRollDiceOne=dice.x;
+                            resRollDiceTwo=dice.y;
+
+                            Message message=new Message();
+                            message.what=MESSAGE_RESULT_DICE;
+                            mhandler.sendMessage(message);
+
                             horseValid = chessBoard.generateHorseValid();
-                            System.out.println("Turn: " + chessBoard.getUserTurn() + " " + horseValid.size() + " " + chessBoard.isRepeat() + "\n");
-                            if(user.getMode()==User.MODE_ROBOT){
+                            System.out.println("Turn: " + chessBoard.getUserTurn() + " " + horseValid.size() + "\n");
+                            System.out.println("---------------------------------------------------\n");
+                            if(user.getMode()==User.MODE_BOOT){
                                 for(int i=0; i<horseValid.size();i++){
                                     chessBoard.setHorseTurn(horseValid.get(i));
                                     try {
@@ -409,7 +473,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                                 }
                             }
                         }
-                        else{
+                        else if(user.getMode()==User.MODE_NONE){
                             chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                         }
                     }
@@ -434,43 +498,6 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 //        return super.onKeyDown(keyCode, event);
 //    }
 
-
-    public void initView() {
-        btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
-        btnSetting = (Button) findViewById(R.id.btnSetting);
-        imgBoard = (ImageView) findViewById(R.id.imgBoard);
-        imgDice = (ImageView) findViewById(R.id.imgDice);
-        imgHorse = new ArrayList<ImageView>(16);
-
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse00));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse01));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse02));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse03));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse10));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse11));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse12));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse13));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse20));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse21));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse22));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse23));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse30));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse31));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse32));
-        imgHorse.add((ImageView) findViewById(R.id.imgHorse33));
-
-    }
-    public void initOnClick(){
-        btnTypePlayer.setOnClickListener(this);
-        btnSetting.setOnClickListener(this);
-        imgBoard.setOnClickListener(this);
-
-        for(int i=0;i<16;i++){
-            imgHorse.get(i).setOnClickListener(this);
-        }
-    }
-
-
     public void HandleMove() throws InterruptedException {
         Thread thread=new Thread(new Runnable() {
             @Override
@@ -487,6 +514,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     chessBoard.XuatChuong();
 
                     horseValid.clear();
+                    btnRoll.setClickable(true);
                     if(!chessBoard.isRepeat())
                         chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                 } else {
@@ -513,8 +541,15 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                                 }
                                 chessBoard.setStep(i);
                             }
+                            if(user.checkWin()){
+                                Message message = new Message();
+                                message.arg1=user.getIdUser();
+                                message.what = MESSAGE_USER_WIN;
+                                mhandler.sendMessage(message);
+                            }
 
                             horseValid.clear();
+                            btnRoll.setClickable(true);
                             if(!chessBoard.isRepeat())
                                 chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                         }
@@ -528,13 +563,20 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         thread.join();
     }
 
-    //--------------------------------------------------------------------------1712275
-    private void rollDice(int turn){
-        switch (turn){
+
+    private void rollDice(){
+        int turn = chessBoard.getUserTurn();
+        User user = chessBoard.getUser();
+        for(int idHorse=0;idHorse<4;idHorse++) {
+            if(user.getHorse(idHorse).getStatus()==0)
+                imgHorse.get(turn * 4 + idHorse).setVisibility(View.INVISIBLE);
+        }
+        switch (turn+1){
             case 1: findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);break;
-            case 2: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
-            case 3: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
-            case 4: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
+            case 2: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
+            case 3: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
+            case 4: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
+
         }
         Thread myBackgroundThread = new Thread(backgroundRollDice, "rollDice");
         myBackgroundThread.start();
@@ -545,19 +587,20 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         public void run() {
             try {
                 Random generator = new Random();
-                switch (getTurn()){
+                switch (chessBoard.getUserTurn()+1){
                     case 1: fragYDice.setImgDice1(generator.nextInt(18)+1);
                         fragYDice.setImgDice2(generator.nextInt(18)+1);
                         break;
-                    case 2: fragBDice.setImgDice1(generator.nextInt(18)+1);
-                        fragBDice.setImgDice2(generator.nextInt(18)+1);
-                        break;
-                    case 3: fragGDice.setImgDice1(generator.nextInt(18)+1);
-                        fragGDice.setImgDice2(generator.nextInt(18)+1);
-                        break;
-                    case 4: fragRDice.setImgDice1(generator.nextInt(18)+1);
+                    case 2: fragRDice.setImgDice1(generator.nextInt(18)+1);
                         fragRDice.setImgDice2(generator.nextInt(18)+1);
                         break;
+                    case 3: fragBDice.setImgDice1(generator.nextInt(18)+1);
+                        fragBDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+                    case 4: fragGDice.setImgDice1(generator.nextInt(18)+1);
+                        fragGDice.setImgDice2(generator.nextInt(18)+1);
+                        break;
+
                     default:
                 }
             }
@@ -568,21 +611,26 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         @Override
         public void run() {
             try {
-                switch (getTurn()){
-                    case 1: fragYDice.setImgDice1(resRollDiceOne); fragYDice.setImgDice2(resRollDiceTwo); break;
-                    case 2: fragBDice.setImgDice1(resRollDiceOne); fragBDice.setImgDice2(resRollDiceTwo); break;
-                    case 3: fragGDice.setImgDice1(resRollDiceOne); fragGDice.setImgDice2(resRollDiceTwo); break;
-                    case 4: fragRDice.setImgDice1(resRollDiceOne); fragRDice.setImgDice2(resRollDiceTwo); break;
+                int turn =chessBoard.getUserTurn();
+                switch (turn+1){
+                    case 1: fragYDice.setImgDice1(13); fragYDice.setImgDice2(1); break;
+                    case 2: fragRDice.setImgDice1(14); fragRDice.setImgDice2(2); break;
+                    case 3: fragBDice.setImgDice1(15); fragBDice.setImgDice2(3); break;
+                    case 4: fragGDice.setImgDice1(16); fragGDice.setImgDice2(4); break;
                 }
                 //đi quân
 
 
+                Thread.sleep(1000);
 
-                //
                 findViewById(R.id.frg_dice_yellow).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_blue).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_green).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_red).setVisibility(View.INVISIBLE);
+
+                for(int idHorse=0;idHorse<4;idHorse++) {
+                    imgHorse.get(turn * 4 + idHorse).setVisibility(View.VISIBLE);
+                }
             }
             catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
@@ -596,17 +644,18 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 int jumb = 300;
                 while (loop<=speed){
                     Thread.sleep(jumb);
-                    if(loop<=speed/2){
+                    if(loop<=speed){
                         jumb = Math.max((jumb / 2), speed / 100);
                     }else {
                         jumb = (jumb*2);
                     }
                     loop += jumb;
-                    myHandler.post(foregroundRollDice);
+                   myHandler.post(foregroundRollDice);
                 }
                 myHandler.post(resultRollDice);
             }
             catch (InterruptedException e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
     };
+
 }

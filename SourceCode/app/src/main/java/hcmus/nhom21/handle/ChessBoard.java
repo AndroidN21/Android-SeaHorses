@@ -1,6 +1,7 @@
 package hcmus.nhom21.handle;
 
 import android.database.Cursor;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -19,13 +20,15 @@ public class ChessBoard {
 
     private ArrayList<User> listUser;
     private ArrayList<Tuple> listIdHorse;// Luu ngua voi status =1 dang duoc chay voi x la idUser va y là idHorse
+    int[] arrSetupPlayer;
 
     private int userTurn;
     private int horseTurn;
     private int step;
     private boolean isRepeat;
 
-    public ChessBoard(Tuple LOCATE_BOARD, Tuple SIZE_BOARD, Tuple SIZE_HORSE, Database database){
+    public ChessBoard(int[] arrSetupPlayer, Tuple LOCATE_BOARD, Tuple SIZE_BOARD, Tuple SIZE_HORSE, Database database){
+        this.arrSetupPlayer=arrSetupPlayer;
         this.LOCATE_BOARD=LOCATE_BOARD;
         this.SIZE_BOARD=SIZE_BOARD;
         this.SIZE_HORSE=SIZE_HORSE;
@@ -43,13 +46,19 @@ public class ChessBoard {
 
         //Khởi tạo User và những con ngựa nó quản lý
         for (int idUser = 0; idUser < NUM_USER; idUser++) {
-            User user = new User(idUser, LOCATE_BOARD, SIZE_BOARD, SIZE_HORSE);
+            User user = new User(idUser,arrSetupPlayer[idUser], LOCATE_BOARD, SIZE_BOARD, SIZE_HORSE);
             listUser.add(idUser, user);
-
-            for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
-                user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
-                user.setInitialHorseCoord(idHorse);
-                //user.setHorseCoordByPosition(idHorse);
+            if(arrSetupPlayer[idUser]!=User.MODE_NONE) {
+                for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                    user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));
+                    user.setInitialHorseCoord(idHorse);
+                }
+            }
+            else{
+                for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
+                    imgHorse.get(idUser * NUM_HORSE + idHorse).setVisibility(View.VISIBLE);
+                    imgHorse.get(idUser * NUM_HORSE + idHorse).setSelected(true);
+                }
             }
         }
 
@@ -148,7 +157,19 @@ public class ChessBoard {
         ArrayList<Integer> horseValid = new ArrayList<Integer>();
         for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
             horse = user.getHorse(idHorse);
-            errorConflict = checkConflict(horse, step);
+            int tmp=-1;
+            if(horse.getStepped()+step >Horse.TARGET){
+                tmp=Horse.TARGET-horse.getStepped()-step;
+            }
+            else if(horse.getStatus()==1)
+            {
+                tmp=step;
+            }
+            else if(horse.getStatus()==0 && isRepeat==true)
+            {
+                tmp=0;
+            }
+            errorConflict = checkConflict(horse, tmp);
 
             Tuple idPair = new Tuple();
             try {
@@ -162,11 +183,6 @@ public class ChessBoard {
                 }
             }
             else if (isRepeat && horse.getStatus() == 0) {
-                errorConflict = checkConflict(horse, 0);
-                try {
-                    idPair = listIdHorse.get(errorConflict.x);
-                }catch (Exception e){};
-
                 if(errorConflict.y==0 || (errorConflict.y == 1 && idPair.x != userTurn))
                     horseValid.add(idHorse);
             }
@@ -243,8 +259,6 @@ public class ChessBoard {
         }
         listIdHorse.add(new Tuple(userTurn,horseTurn));
         user.setHorseCoordByPosition(horseTurn);
-        //System.out.println("Xuat chuong thanh cong "+ user.getHorse(horseTurn).getStatus());
-        //System.out.println("CONFLICT: "+ listIdHorse.size() +"\n");
     }
 
     public Horse getHorse(Tuple idPair) {

@@ -9,7 +9,7 @@ public class User {
     final int NUM_HORSE = 4;
     public static int MODE_NONE=1;
     public static int MODE_USER=2;
-    public static int MODE_ROBOT=3;
+    public static int MODE_BOOT=3;
 
     final float scaleStableInBoardSize = (float) (140) / 390;
     final float scaleSmallJumpInBoardSize = (float) (24) / 390;
@@ -27,9 +27,9 @@ public class User {
     private Tuple stableSize;//Kích thước mỗi ô user
     private Tuple horseSize;
 
-    public User(int idUser, Tuple chessBoardCoord, Tuple chessBoardSize, Tuple horseSize) {
+    public User(int idUser,int mode, Tuple chessBoardCoord, Tuple chessBoardSize, Tuple horseSize) {
         this.listHorse = new ArrayList<Horse>(4);
-        this.mode = MODE_ROBOT;
+        this.mode = mode;
         this.horseWinNum=0;
         this.flag = 0;
         this.idUser = idUser;
@@ -67,7 +67,7 @@ public class User {
     public void MoveHorse(int idHorse, int step) {
         Horse horse =listHorse.get(idHorse);
         Tuple smallJump =new Tuple();
-        smallJump.x =(int) (chessBoardSize.x * scaleSmallJumpInBoardSize-1);
+        smallJump.x =(int) (chessBoardSize.x * scaleSmallJumpInBoardSize);
         smallJump.y =(int) (chessBoardSize.y * scaleSmallJumpInBoardSize+1);
         Tuple bigJump =new Tuple();
         bigJump.x =(int) (chessBoardSize.x * scaleBigJumpInBoardSize);
@@ -153,8 +153,8 @@ public class User {
         int deviation = 5;
         //Tính điểm giữa của mỗi ô(nếu các có thêm hằng số bất kỳ là do bị lệch sẽ tìm khắc phục sau)
         Tuple middle = new Tuple(); //Đây là điểm tọa độ ở giữa ô user
-        middle.x = (2 * userCoord.x + this.stableSize.x) / 2;
-        middle.y = (2 * userCoord.y + this.stableSize.y) / 2;
+        middle.x = (2 * userCoord.x + this.stableSize.x) / 2+deviation;
+        middle.y = (2 * userCoord.y + this.stableSize.y) / 2-deviation;
 
         //System.out.println("Middle " + idUser + ":  " + middle.x + "&&&" + middle.y + "/n");
         Tuple initialCoord = new Tuple(middle.x, middle.y);
