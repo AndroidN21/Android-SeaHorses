@@ -130,6 +130,10 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         }
     }
 
+    private int index0 = 0;
+    private int index1 = 0;
+    private int index2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,6 +197,15 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
         viewProfile = findViewById(R.id.txtProfile);
         //-------------------------------------1712275-----------------------------------
+
+        //Chat animation
+        imgChat0 = (ImageView) findViewById(R.id.imgChat0);
+        imgChat1 = (ImageView) findViewById(R.id.imgChat1);
+        imgChat2 = (ImageView) findViewById(R.id.imgChat2);
+
+        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
+        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
+        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat1);
     }
 
     @Override
@@ -453,6 +466,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                             Tuple dice= chessBoard.rollDice();
                             resRollDiceOne=dice.x;
                             resRollDiceTwo=dice.y;
+                            Log.e("dice", resRollDiceOne + " " + resRollDiceTwo);
 
                             Message message=new Message();
                             message.what=MESSAGE_RESULT_DICE;
@@ -620,7 +634,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 }
                 //đi quân
 
-
+                Thread chatAnimThread = new Thread(backgroundChatAnim, "chatAnim");
+                chatAnimThread.start();
                 Thread.sleep(1000);
 
                 findViewById(R.id.frg_dice_yellow).setVisibility(View.INVISIBLE);
@@ -655,6 +670,37 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 myHandler.post(resultRollDice);
             }
             catch (InterruptedException e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+        }
+    };
+
+    private Runnable foregroundChatAnim = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                imgChat0.setImageResource(arrChatImgs[index0]);
+                imgChat1.setImageResource(arrChatImgs[index1]);
+                imgChat2.setImageResource(arrChatImgs[index2]);
+
+                imgChat0.startAnimation(chatAnim0);
+                imgChat1.startAnimation(chatAnim1);
+                imgChat2.startAnimation(chatAnim2);
+            }
+            catch (Exception e) { Log.e("<<foregroundChatAnim>>", e.getMessage()); }
+        }
+    };
+
+    private Runnable backgroundChatAnim = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Random random = new Random();
+                index0 = random.nextInt(lengthArr);
+                index1 = random.nextInt(lengthArr);
+                index2 = random.nextInt(lengthArr);
+
+                myHandler.post(foregroundChatAnim);
+            }
+            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
     };
 

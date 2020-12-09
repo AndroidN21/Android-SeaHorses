@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "hcmus.nhom21.parcheesigame"
-        minSdkVersion 28
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

@@ -15,10 +15,13 @@
     <string name="greenTeam">Đội Lục</string>
 
     <string name="title_copyright_info">Thông tin bản quyền</string>
-    <string name="info0"> - Hình ảnh trong game được cung cấp bởi các trang web sau:\n
-        \t\t\t+ Vecteezy\n
-        \t\t\t+ Freepik
-    </string>
+    <string name="info0"> - Hình ảnh trong game được cung cấp bởi các trang web sau:</string>
+    <string name="link_vecteezy">\t\t\t+ Vecteezy</string>
+    <string name="link_freepik">\t\t\t+ Freepik</string>
+    <string name="intro0_vecteezy">Download free vector art, stock photos &amp; videos.</string>
+    <string name="intro1_vecteezy">Professional quality creative resources to get your projects done faster.</string>
+    <string name="intro0_freepik">Graphic resources for everyone</string>
+    <string name="intro1_freepik">Find Free Vectors, Stock Photos and PSD</string>
     <string name="info1"> - Nhóm có thực hiện việc chỉnh sửa trên một số hình ảnh để phù hợp với đồ án.</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

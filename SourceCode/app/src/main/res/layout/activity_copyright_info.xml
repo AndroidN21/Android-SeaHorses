@@ -25,10 +25,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:layout_weight="1"
+                android:text="@string/info0"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtVecteezy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/link_vecteezy"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/txtFreepik"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:layout_weight="1"
-                android:textSize="20dp"
-                android:text="@string/info0" />
+                android:text="@string/link_freepik"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/txtLine1"
@@ -36,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:textSize="20dp"
+                android:layout_weight="1"
                 android:text="@string/info1" />
 
 
