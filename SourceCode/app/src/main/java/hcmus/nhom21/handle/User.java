@@ -179,6 +179,7 @@ public class User {
 
         horse.setCoord(initialCoord);
         horse.setPosition(idUser*14);
+        horse.setStepped(0);
         horse.resetImgHorse();
         horse.setStatus(0);
     }

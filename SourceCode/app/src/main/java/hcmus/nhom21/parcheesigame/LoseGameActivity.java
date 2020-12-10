@@ -24,7 +24,7 @@ public class LoseGameActivity extends Activity {
         btnExit = (Button) findViewById(R.id.btnExit);
         btnPlayAgain = (Button) findViewById(R.id.btnPlayAgain);
 
-        Intent runningGameIntent = getIntent();
+        Intent intentLosingGame = getIntent();
 
 //        switch (strTeamName){
 //            case "redTeam":
@@ -54,7 +54,8 @@ public class LoseGameActivity extends Activity {
         btnPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intentSetingGame = new Intent(LoseGameActivity.this,SetUpNewGameActivity.class);
+                startActivity(intentSetingGame);
             }
         });
     }
@@ -64,5 +65,7 @@ public class LoseGameActivity extends Activity {
         super.onStart();
     }
 
+    @Override
+    public void onBackPressed() { }
 
 }

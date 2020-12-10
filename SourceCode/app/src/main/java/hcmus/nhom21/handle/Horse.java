@@ -32,7 +32,6 @@ public class Horse {
                 stepped += 1;
                 if (stepped >= TARGET)
                     break;
-
                 if (position >= 12 && position <= 13) {
                     coord.y += bigJump.y;
                 }else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
