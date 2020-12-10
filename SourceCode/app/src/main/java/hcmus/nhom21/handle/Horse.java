@@ -1,7 +1,11 @@
 package hcmus.nhom21.handle;
 
 
+
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import androidx.constraintlayout.widget.Constraints;
 
 import static java.lang.Thread.sleep;
 
@@ -18,7 +22,7 @@ public class Horse {
     private int idHorse;
     private ImageView imgHorse;
 
-    public boolean Move(int step,int smallJump,int bigJump) {
+    public boolean Move(int step,Tuple smallJump,Tuple bigJump) {
         //do something
 
         int i = 0;
@@ -26,33 +30,25 @@ public class Horse {
             //Xu ly di tren ban co
             while (i < step) {
                 stepped += 1;
-
-                if (position >= 12 && position <= 13) {
-                    coord.y += bigJump;
-                }else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
-                    coord.y += smallJump;
-                } else if (position >= 54 && position <= 55) {
-                    coord.x -= bigJump;
-                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47)) {
-                    coord.x -= smallJump;
-                } else if (position >= 26 && position <= 27) {
-                    coord.x += bigJump;
-                } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
-                    coord.x += smallJump;
-                } else if (position >= 40 && position <= 41) {
-                    coord.y -= bigJump;
-                } else coord.y -= smallJump;
-
-                //this.resetImgHorse();
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-
-
                 if (stepped >= TARGET)
                     break;
+
+                if (position >= 12 && position <= 13) {
+                    coord.y += bigJump.y;
+                }else if ((position >= 0 && position <= 5) || (position >= 20 && position <= 25)) {
+                    coord.y += smallJump.y;
+                } else if (position >= 54 && position <= 55) {
+                    coord.x -= bigJump.x;
+                } else if ((position >= 6 && position <= 11) || (position >= 42 && position <= 47)) {
+                    coord.x -= smallJump.x;
+                } else if (position >= 26 && position <= 27) {
+                    coord.x += bigJump.x;
+                } else if ((position >= 14 && position <= 19) || (position >= 34 && position <= 39)) {
+                    coord.x += smallJump.x;
+                } else if (position >= 40 && position <= 41) {
+                    coord.y -= bigJump.y;
+                } else coord.y -= smallJump.y;
+
                 position = (position + 1) % TARGET;
                 i++;
             }
@@ -60,26 +56,17 @@ public class Horse {
 
         //Xu ly di tren buc
         if (stepped >= TARGET) {
-            while (i < step) {
+            while (i < step && level < NUM_LEVEL) {
                 if (position == 13) {
-                    coord.x += smallJump;
+                    coord.x += smallJump.x;
                 } else if (position == 27) {
-                    coord.y -= smallJump;
+                    coord.y -= smallJump.y;
                 } else if (position == 41) {
-                    coord.x -= smallJump;
+                    coord.x -= smallJump.x;
                 } else if (position == 55) {
-                    coord.y += smallJump;
-                }
-                if (level >= NUM_LEVEL) {
-                    break;
+                    coord.y += smallJump.y;
                 }
 
-//                this.resetImgHorse();
-//                try {
-//                    Thread.sleep(100);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
                 level++;
                 stepped++;
                 i++;

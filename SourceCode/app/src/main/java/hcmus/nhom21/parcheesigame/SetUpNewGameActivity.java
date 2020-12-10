@@ -10,7 +10,10 @@ import android.widget.RadioButton;
 
 import androidx.annotation.Nullable;
 
-public class SetUpNewGameActivity extends Activity  {
+import hcmus.nhom21.handle.ChessBoard;
+import hcmus.nhom21.handle.User;
+
+public class SetUpNewGameActivity extends Activity {
     private Button btnStart;
     private RadioButton radYPlayer;
     private RadioButton radYBoot;
@@ -24,6 +27,7 @@ public class SetUpNewGameActivity extends Activity  {
     private RadioButton radRPlayer;
     private RadioButton radRBoot;
     private RadioButton radRNone;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,24 +169,40 @@ public class SetUpNewGameActivity extends Activity  {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String setupPlayer="";
-                 if(radYPlayer.isChecked())setupPlayer+="#radYPlayer";
-                 if(radYBoot.isChecked())setupPlayer+="#radYBoot";
-                 if(radYNone.isChecked())setupPlayer+="#radYNone";
-                 if(radBPlayer.isChecked())setupPlayer+="#radBPlayer";
-                 if(radBBoot.isChecked())setupPlayer+="#radBBoot";
-                 if(radBNone.isChecked())setupPlayer+="#radBNone";
-                 if(radGPlayer.isChecked())setupPlayer+="#radGPlayer";
-                 if(radGBoot.isChecked())setupPlayer+="#radGBoot";
-                 if(radGNone.isChecked())setupPlayer+="#radGNone";
-                 if(radRPlayer.isChecked())setupPlayer+="#radRPlayer";
-                 if(radRBoot.isChecked())setupPlayer+="#radRBoot";
-                 if(radRNone.isChecked())setupPlayer+="#radRNone";
-                 Log.e("mylog",setupPlayer);
-                 Intent intentRunningGame = new Intent();
-                 intentRunningGame.setClass(v.getContext(), RunningGameActivity.class);
-                 intentRunningGame.putExtra("setupPlayer",setupPlayer);
-                 startActivity(intentRunningGame);
+                //String setupPlayer = "";
+                int[] arrSetupPlayer=new int[4];
+//                if (radYPlayer.isChecked() == true) setupPlayer += "#radYPlayer";
+//                if (radYBoot.isChecked() == true) setupPlayer += "#radYBoot";
+//                if (radYNone.isChecked() == true) setupPlayer += "#radYNone";
+//                if (radBPlayer.isChecked() == true) setupPlayer += "#radBPlayer";
+//                if (radBBoot.isChecked() == true) setupPlayer += "#radBBoot";
+//                if (radBNone.isChecked() == true) setupPlayer += "#radBNone";
+//                if (radGPlayer.isChecked() == true) setupPlayer += "#radGPlayer";
+//                if (radGBoot.isChecked() == true) setupPlayer += "#radGBoot";
+//                if (radGNone.isChecked() == true) setupPlayer += "#radGNone";
+//                if (radRPlayer.isChecked() == true) setupPlayer += "#radRPlayer";
+//                if (radRBoot.isChecked() == true) setupPlayer += "#radRBoot";
+//                if (radRNone.isChecked() == true) setupPlayer += "#radRNone";
+
+                if (radYPlayer.isChecked() == true) arrSetupPlayer[0] = User.MODE_USER;
+                if (radYBoot.isChecked() == true) arrSetupPlayer[0] = User.MODE_BOOT;
+                if (radYNone.isChecked() == true) arrSetupPlayer[0] = User.MODE_NONE;
+                if (radRPlayer.isChecked() == true) arrSetupPlayer[1] +=User.MODE_USER;
+                if (radRBoot.isChecked() == true) arrSetupPlayer[1] += User.MODE_BOOT;
+                if (radRNone.isChecked() == true) arrSetupPlayer[1] += User.MODE_NONE;
+                if (radBPlayer.isChecked() == true) arrSetupPlayer[2] += User.MODE_USER;
+                if (radBBoot.isChecked() == true) arrSetupPlayer[2] += User.MODE_BOOT;
+                if (radBNone.isChecked() == true) arrSetupPlayer[2] += User.MODE_NONE;
+                if (radGPlayer.isChecked() == true) arrSetupPlayer[3] += User.MODE_USER;
+                if (radGBoot.isChecked() == true) arrSetupPlayer[3] += User.MODE_BOOT;
+                if (radGNone.isChecked() == true) arrSetupPlayer[3] += User.MODE_NONE;
+
+                //Log.e("mylog", setupPlayer);
+                Intent intentRunningGame = new Intent();
+                intentRunningGame.setClass(v.getContext(), RunningGameActivity.class);
+                //intentRunningGame.putExtra("setupPlayer", setupPlayer);
+                intentRunningGame.putExtra("arrSetupPlayer",arrSetupPlayer);
+                startActivity(intentRunningGame);
             }
         });
     }
