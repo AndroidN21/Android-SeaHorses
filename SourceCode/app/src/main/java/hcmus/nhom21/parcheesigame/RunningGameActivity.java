@@ -326,19 +326,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 break;
             case R.id.view_result_roll_dice:
                 findViewById(R.id.view_result_roll_dice).setVisibility(View.INVISIBLE);
-                if (chessBoard.getUser().getMode() == User.MODE_BOOT) {
-                    for (int i = 0; i < horseValid.size(); i++) {
-                        chessBoard.setHorseTurn(horseValid.get(i));
-                        try {
-                            HandleMove();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
-                }
                 findViewById(R.id.view_result_roll_dice).setClickable(false);
-                //findViewById(R.id.view_result_roll_dice).setSelected(false);
                 break;
             case R.id.btn_roll:
                 btnRoll.setClickable(false);
@@ -525,7 +513,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                while (!isPause) {
                     if (horseValid.size() <= 0) {
                         User user = chessBoard.getUser();
                         if (user.getMode() == User.MODE_BOOT || (user.getMode() == User.MODE_USER & !btnRoll.isClickable())) {
@@ -640,7 +628,6 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         });
         thread.start();
         thread.join();
-        //
     }
 
 
@@ -743,6 +730,15 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 }
                 else if (chessBoard.getUser().getMode() == User.MODE_BOOT){
                     findViewById(R.id.view_result_roll_dice).performClick();
+                    for (int i = 0; i < horseValid.size(); i++) {
+                        chessBoard.setHorseTurn(horseValid.get(i));
+                        try {
+                            HandleMove();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
                 }
             } catch (Exception e) {
                 Log.e("<<foregroundTask>>", e.getMessage());
@@ -797,7 +793,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         if(isOpacity){
             for(int i=0;i<4;i++){
                 if(horseValid.indexOf(i)==-1) {
-                    imgHorse.get(turn * 4 + i).setAlpha((float) 0.75);
+                    imgHorse.get(turn * 4 + i).setAlpha((float) 0.7);
                 }
             }
         }

@@ -106,9 +106,6 @@ public class ChessBoard {
         step = dataChessBoard.getInt(2);
         isRepeat= (dataChessBoard.getInt(3)==1);
         System.out.println("CHESSBOAR" + userTurn + " " + horseTurn + " "+ step +" " + isRepeat);
-        database.queryData("DROP TABLE Horse");
-        database.queryData("DROP TABLE User");
-        database.queryData("DROP TABLE ChessBoard");
     }
 
     public void saveChessBoard(){
