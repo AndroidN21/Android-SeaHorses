@@ -45,6 +45,7 @@ public class ChessBoard {
         for (int idUser = 0; idUser < NUM_USER; idUser++) {
             User user = new User(idUser,arrSetupPlayer[idUser], LOCATE_BOARD, SIZE_BOARD, SIZE_HORSE);
             listUser.add(idUser, user);
+
             if(arrSetupPlayer[idUser]!=User.MODE_NONE) {
                 for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
                     user.getListHorse().add(idHorse, new Horse(imgHorse.get(idUser * NUM_HORSE + idHorse), idUser * 14, idUser, idHorse));

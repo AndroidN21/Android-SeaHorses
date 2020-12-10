@@ -362,6 +362,19 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 idLogic = 9;
                 break;
             case R.id.imgHorse22:
+                SharedPreferences.Editor editor= sharedPreferences.edit();
+                editor.putBoolean("hasLoadGame",false);
+                editor.apply();
+
+                String teamName = "Yellow";
+                if (false) {
+                    Intent intentLosingGame = new Intent(RunningGameActivity.this, LoseGameActivity.class);
+                    startActivity(intentLosingGame);
+                } else {
+                    Intent intentWinningGame = new Intent(RunningGameActivity.this, WinGameActivity.class);
+                    intentWinningGame.putExtra("teamName", teamName);
+                    startActivity(intentWinningGame);
+                }
                 idLogic = 10;
                 break;
             case R.id.imgHorse23:
@@ -423,6 +436,11 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                         int userWin = msg.arg1;
                         User user = chessBoard.getUser(userWin);
                         String teamName = "";
+
+                        SharedPreferences.Editor editor= sharedPreferences.edit();
+                        editor.putBoolean("hasLoadGame",false);
+                        editor.apply();
+
                         if (user.getMode() == User.MODE_BOOT) {
                             Intent intentLosingGame = new Intent(RunningGameActivity.this, LoseGameActivity.class);
                             startActivity(intentLosingGame);
@@ -689,6 +707,22 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             }
         }
     };
+
+    private Runnable handleBoot= new Runnable() {
+        @Override
+        public void run() {
+            findViewById(R.id.view_result_roll_dice).performClick();
+            for (int i = 0; i < horseValid.size(); i++) {
+                chessBoard.setHorseTurn(horseValid.get(i));
+                try {
+                    HandleMove();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    };
     private Runnable resultRollDice = new Runnable() {
         @Override
         public void run() {
@@ -729,16 +763,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     btnRoll.setClickable(true);
                 }
                 else if (chessBoard.getUser().getMode() == User.MODE_BOOT){
-                    findViewById(R.id.view_result_roll_dice).performClick();
-                    for (int i = 0; i < horseValid.size(); i++) {
-                        chessBoard.setHorseTurn(horseValid.get(i));
-                        try {
-                            HandleMove();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
+                    myHandler.postDelayed(handleBoot,2000);
                 }
             } catch (Exception e) {
                 Log.e("<<foregroundTask>>", e.getMessage());

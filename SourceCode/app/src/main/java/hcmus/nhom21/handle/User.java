@@ -59,9 +59,6 @@ public class User {
             this.userCoord.x = this.chessBoardCoord.x + this.chessBoardSize.x - this.stableSize.x -16;
             this.userCoord.y = this.chessBoardCoord.y;
         }
-//        System.out.println("UserStable " + idUser + ":  " + stableSize.x + "&&&" + stableSize.y + "/n");
-//        System.out.println("UserChessboard " + idUser + ":  " + chessBoardSize.x + "&&&" + chessBoardSize.y + "/n");
-//        System.out.println("User " + idUser + ":  " + userCoord.x + "&&&" + userCoord.y + "/n");
     }
 
     public void MoveHorse(int idHorse, int step) {
