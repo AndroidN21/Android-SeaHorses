@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,20 +12,14 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
@@ -37,8 +30,6 @@ import hcmus.nhom21.handle.Database;
 import hcmus.nhom21.handle.Horse;
 import hcmus.nhom21.handle.Tuple;
 import hcmus.nhom21.handle.User;
-
-import static java.lang.String.valueOf;
 
 public class RunningGameActivity extends FragmentActivity implements View.OnClickListener {
     private Button btnTypePlayer;
@@ -362,6 +353,19 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 idLogic = 9;
                 break;
             case R.id.imgHorse22:
+                SharedPreferences.Editor editor= sharedPreferences.edit();
+                editor.putBoolean("hasLoadGame",false);
+                editor.apply();
+
+                String teamName = "Yellow";
+                if (false) {
+                    Intent intentLosingGame = new Intent(RunningGameActivity.this, LoseGameActivity.class);
+                    startActivity(intentLosingGame);
+                } else {
+                    Intent intentWinningGame = new Intent(RunningGameActivity.this, WinGameActivity.class);
+                    intentWinningGame.putExtra("teamName", teamName);
+                    startActivity(intentWinningGame);
+                }
                 idLogic = 10;
                 break;
             case R.id.imgHorse23:
