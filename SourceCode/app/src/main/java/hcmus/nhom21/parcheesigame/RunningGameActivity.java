@@ -151,6 +151,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 ft = getSupportFragmentManager().beginTransaction();
                 btnSetting.setVisibility(View.INVISIBLE);
 
@@ -193,6 +194,12 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
         viewProfile = findViewById(R.id.txtProfile);
         //-------------------------------------1712275-----------------------------------
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        MusicThread.PlaySong("ingame_muzi_tetris",getApplicationContext());
     }
 
     @Override
@@ -527,6 +534,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                             for (int i = step - 1; i >= 0; i--) {
                                 //.MoveHorse(horse.getIdHorse(), 1);
                                 if (finalErrorConflict.y == 1 && i==0) {
+                                    VibrateThread.run(getApplicationContext());
+                                    SFXThread.PlaySound("sfx_kick",getApplicationContext());
                                     chessBoard.Dangua(finalErrorConflict.x);
                                 }
                                 chessBoard.moveHorse(1);

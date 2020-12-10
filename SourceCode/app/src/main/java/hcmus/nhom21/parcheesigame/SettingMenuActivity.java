@@ -80,6 +80,7 @@ public class SettingMenuActivity extends Activity {
         imgVolumeDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 MusicThread.SetVolume(0);
                 volumeBar.setProgress(0);
             }
@@ -88,6 +89,7 @@ public class SettingMenuActivity extends Activity {
         imgVolumeUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 MusicThread.SetVolume(100);
                 volumeBar.setProgress(100);
             }
@@ -96,6 +98,7 @@ public class SettingMenuActivity extends Activity {
         imgSFXDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 SFXThread.SetVolume(0);
                 sfxBar.setProgress(0);
             }
@@ -104,6 +107,7 @@ public class SettingMenuActivity extends Activity {
         imgSFXUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 SFXThread.SetVolume(100);
                 sfxBar.setProgress(100);
             }
@@ -112,6 +116,7 @@ public class SettingMenuActivity extends Activity {
         btnVibrate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 if (btnVibrate.isChecked()){
                     VibrateThread.Off();
                 }else {

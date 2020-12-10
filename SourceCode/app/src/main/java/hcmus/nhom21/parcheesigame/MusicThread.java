@@ -58,22 +58,20 @@ public class MusicThread {
         MusicThread.context = context;
         if (mediaPlayer != null) {
             if (mediaPlayer.isPlaying()) {
+                if(MusicThread.filename == filename) return;
                 mediaPlayer.stop();
             }
             mediaPlayer.release();
 
-            Uri uri = GetUri(filename);
-            mediaPlayer = MediaPlayer.create(context, uri);
-            SetVolume(volume);
-            mediaPlayer.start();
-        }else {
+        } else {
             volume = 50;
-
-            Uri uri = GetUri(filename);
-            mediaPlayer = MediaPlayer.create(context, uri);
-            SetVolume(volume);
-            mediaPlayer.setLooping(true);
-            mediaPlayer.start();
         }
+
+        MusicThread.filename = filename;
+        Uri uri = GetUri(filename);
+        mediaPlayer = MediaPlayer.create(context, uri);
+        SetVolume(volume);
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
     }
 }

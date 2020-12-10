@@ -48,6 +48,7 @@ public class SetUpNewGameActivity extends Activity {
         radYPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 radYPlayer.setChecked(true);
                 radYBoot.setChecked(false);
                 radYNone.setChecked(false);
@@ -57,6 +58,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(countPlayer()>1||!radYPlayer.isChecked()){
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radYPlayer.setChecked(false);
                     radYBoot.setChecked(true);
                     radYNone.setChecked(false);
@@ -68,6 +70,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if((countPlayer()>1||!radYPlayer.isChecked())&&countNone()<2){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radYPlayer.setChecked(false);
                     radYBoot.setChecked(false);
                     radYNone.setChecked(true);
@@ -78,6 +81,7 @@ public class SetUpNewGameActivity extends Activity {
         radBPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 radBPlayer.setChecked(true);
                 radBBoot.setChecked(false);
                 radBNone.setChecked(false);
@@ -87,6 +91,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(countPlayer()>1||!radBPlayer.isChecked()){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radBPlayer.setChecked(false);
                     radBBoot.setChecked(true);
                     radBNone.setChecked(false);
@@ -98,6 +103,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if((countPlayer()>1||!radBPlayer.isChecked())&&countNone()<2){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radBPlayer.setChecked(false);
                     radBBoot.setChecked(false);
                     radBNone.setChecked(true);
@@ -108,6 +114,7 @@ public class SetUpNewGameActivity extends Activity {
         radGPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 radGPlayer.setChecked(true);
                 radGBoot.setChecked(false);
                 radGNone.setChecked(false);
@@ -117,6 +124,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(countPlayer()>1||!radGPlayer.isChecked()){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radGPlayer.setChecked(false);
                     radGBoot.setChecked(true);
                     radGNone.setChecked(false);
@@ -128,6 +136,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if((countPlayer()>1||!radGPlayer.isChecked())&&countNone()<2){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radGPlayer.setChecked(false);
                     radGBoot.setChecked(false);
                     radGNone.setChecked(true);
@@ -138,6 +147,7 @@ public class SetUpNewGameActivity extends Activity {
         radRPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 radRPlayer.setChecked(true);
                 radRBoot.setChecked(false);
                 radRNone.setChecked(false);
@@ -147,6 +157,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(countPlayer()>1||!radRPlayer.isChecked()){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radRPlayer.setChecked(false);
                     radRBoot.setChecked(true);
                     radRNone.setChecked(false);
@@ -158,6 +169,7 @@ public class SetUpNewGameActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if((countPlayer()>1||!radRPlayer.isChecked())&&countNone()<2){
+                    SFXThread.PlaySound("sfx_button",getApplicationContext());
                     radRPlayer.setChecked(false);
                     radRBoot.setChecked(false);
                     radRNone.setChecked(true);
@@ -169,6 +181,7 @@ public class SetUpNewGameActivity extends Activity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 //String setupPlayer = "";
                 int[] arrSetupPlayer=new int[4];
 //                if (radYPlayer.isChecked() == true) setupPlayer += "#radYPlayer";

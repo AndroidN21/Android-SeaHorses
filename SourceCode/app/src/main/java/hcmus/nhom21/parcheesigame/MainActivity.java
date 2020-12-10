@@ -3,7 +3,6 @@ package hcmus.nhom21.parcheesigame;
 import androidx.fragment.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,9 +18,6 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         //Intent intentMain = getIntent();
 
-        MusicThread.PlaySong("a1",getApplicationContext());
-        //SFXThread.PlaySound("a2",getApplicationContext());
-
         btnNewGame = (Button) findViewById(R.id.btnNewGame);
         btnRule = (Button) findViewById(R.id.btnRule);
         btnInfo = (Button) findViewById(R.id.btnInfo);
@@ -30,6 +26,7 @@ public class MainActivity extends FragmentActivity {
         btnNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 Intent intentSetUpNewGame = new Intent();
                 intentSetUpNewGame.setClass(v.getContext(), SetUpNewGameActivity.class);
                 startActivity(intentSetUpNewGame);
@@ -39,6 +36,7 @@ public class MainActivity extends FragmentActivity {
         btnRule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 Intent intentRule = new Intent();
                 intentRule.setClass(v.getContext(), RuleActivity.class);
                 startActivity(intentRule);
@@ -48,6 +46,7 @@ public class MainActivity extends FragmentActivity {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 Intent infoIntent = new Intent();
                 infoIntent.setClass(v.getContext(), CopyRightInfoActivity.class);
                 startActivity(infoIntent);
@@ -57,6 +56,7 @@ public class MainActivity extends FragmentActivity {
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 Intent intentSetting = new Intent();
                 intentSetting.setClass(v.getContext(), SettingMenuActivity.class);
                 startActivity(intentSetting);
@@ -77,5 +77,14 @@ public class MainActivity extends FragmentActivity {
     public void onBackPressed() {
         finishAffinity();
         finish();
+    }
+
+    
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println("onStart");
+        MusicThread.PlaySong("northern_mountains",getApplicationContext());
     }
 }

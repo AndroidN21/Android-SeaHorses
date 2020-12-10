@@ -47,6 +47,7 @@ public class LoseGameActivity extends Activity {
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 finish();
             }
         });
@@ -55,6 +56,7 @@ public class LoseGameActivity extends Activity {
             @Override
             public void onClick(View v) {
 
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
             }
         });
     }
@@ -62,6 +64,7 @@ public class LoseGameActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        MusicThread.PlaySong("defeat",getApplicationContext());
     }
 
 

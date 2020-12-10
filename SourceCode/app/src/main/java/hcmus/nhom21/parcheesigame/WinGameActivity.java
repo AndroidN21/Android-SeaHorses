@@ -98,6 +98,7 @@ public class WinGameActivity extends Activity {
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
                 finish();
             }
         });
@@ -105,6 +106,7 @@ public class WinGameActivity extends Activity {
         btnPlayAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",getApplicationContext());
 
             }
         });
@@ -113,6 +115,7 @@ public class WinGameActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        MusicThread.PlaySong("victory",getApplicationContext());
         fireworkAnim0.start();
         fireworkAnim1.start();
         fireworkAnim2.start();

@@ -55,6 +55,7 @@ public class SettingFragment extends Fragment{
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 main.findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
 
                 //Delete fragment
@@ -85,6 +86,7 @@ public class SettingFragment extends Fragment{
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
                 if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
@@ -100,6 +102,7 @@ public class SettingFragment extends Fragment{
         item2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 if (flagVibrate) {
                     flagVibrate = false;
                     imgVibrate.setImageResource(R.drawable.ic_vibrate_off_24);
@@ -116,6 +119,7 @@ public class SettingFragment extends Fragment{
         item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 Intent ruleIntent = new Intent();
                 ruleIntent.setClass(v.getContext(), RuleActivity.class);
                 startActivity(ruleIntent);
@@ -125,6 +129,7 @@ public class SettingFragment extends Fragment{
         bkd_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 main.findViewById(R.id.btnSetting).setVisibility(View.VISIBLE);
                 fragmentSetting = getFragmentManager().findFragmentById(R.id.frameSetting);
 
@@ -139,6 +144,7 @@ public class SettingFragment extends Fragment{
         menu_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SFXThread.PlaySound("sfx_button",context);
                 v.setEnabled(false);
             }
         });
