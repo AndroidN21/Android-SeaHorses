@@ -42,14 +42,12 @@ public class RuleActivity extends Activity {
         btn_GGvoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-         
                 SFXThread.PlaySound("google_voice",getApplicationContext());
                 MusicThread.PlaySong("reviewphim",getApplicationContext());
             }
         });
 
     }
-
     @Override
     public void onBackPressed() {
         finish();

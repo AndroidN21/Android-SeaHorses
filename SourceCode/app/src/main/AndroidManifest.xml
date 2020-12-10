@@ -9,37 +9,37 @@
         android:roundIcon="@mipmap/ic_logo_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="hcmus.nhom21.parcheesigame.MainActivity" android:screenOrientation="portrait">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-        <activity android:name="hcmus.nhom21.parcheesigame.BootActivity" android:screenOrientation="portrait">
+        <activity android:name="hcmus.nhom21.parcheesigame.WinGameActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="hcmus.nhom21.parcheesigame.RunningGameActivity" android:screenOrientation="portrait">
+
+        <activity android:name="hcmus.nhom21.parcheesigame.MainActivity" android:screenOrientation="portrait"></activity>
+
+        <activity android:name="hcmus.nhom21.parcheesigame.BootActivity" android:screenOrientation="portrait">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
-
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name="hcmus.nhom21.parcheesigame.RuleActivity" android:screenOrientation="portrait">
 
-        </activity>
+        <activity android:name="hcmus.nhom21.parcheesigame.RunningGameActivity" android:screenOrientation="portrait"></activity>
+
+        <activity android:name="hcmus.nhom21.parcheesigame.RuleActivity" android:screenOrientation="portrait"></activity>
+
         <activity android:name="hcmus.nhom21.parcheesigame.SetUpNewGameActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name="hcmus.nhom21.parcheesigame.WinGameActivity" android:screenOrientation="portrait">
 
-        </activity>
         <activity android:name="hcmus.nhom21.parcheesigame.CopyRightInfoActivity" android:screenOrientation="portrait"></activity>
 
-        <activity android:name="hcmus.nhom21.parcheesigame.LoseGameActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="hcmus.nhom21.parcheesigame.LoseGameActivity" android:screenOrientation="portrait">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity android:name="hcmus.nhom21.parcheesigame.SettingMenuActivity" android:screenOrientation="portrait"></activity>
 
         <meta-data

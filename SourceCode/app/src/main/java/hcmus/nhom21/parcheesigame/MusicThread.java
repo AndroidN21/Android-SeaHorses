@@ -63,15 +63,15 @@ public class MusicThread {
             }
             mediaPlayer.release();
 
-        } else {
+        }else {
             volume = 50;
         }
 
         MusicThread.filename = filename;
-        Uri uri = GetUri(filename);
-        mediaPlayer = MediaPlayer.create(context, uri);
-        SetVolume(volume);
-        mediaPlayer.start();
-        mediaPlayer.setLooping(true);
+            Uri uri = GetUri(filename);
+            mediaPlayer = MediaPlayer.create(context, uri);
+            SetVolume(volume);
+            mediaPlayer.start();
+            mediaPlayer.setLooping(true);
     }
 }
