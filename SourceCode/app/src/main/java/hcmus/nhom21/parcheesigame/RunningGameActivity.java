@@ -1,6 +1,8 @@
 package hcmus.nhom21.parcheesigame;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.Image;
 import android.media.MediaPlayer;
@@ -59,6 +61,10 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     final int MESSAGE_RESULT_DICE = 10001;
     final int MESSAGE_POSITION_HORSE = 10002;
     final int MESSAGE_USER_WIN = 10003;
+    final int MESSAGE_CHANGE_BUTTON_ROLL = 10004;
+    final int MESSAGE_OPACITY_HORSE = 10005;
+    final int MESSAGE_START_GAME = 10006;
+
     private int[] LOCATE_BOARD = new int[2];
     private int[] SIZE_BOARD = new int[2];
     private int[] SIZE_HORSE = new int[2];
@@ -66,24 +72,21 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     private ArrayList<Integer> horseValid;
     Database database;
     private Handler mhandler;
+    Boolean isPause;
 
     //private ImageView imgDice;
+    private int[][] locHorseDefault = new int[16][2];
     private ArrayList<ImageView> imgHorse;
+    SharedPreferences sharedPreferences;
     boolean flagHide;
     //SettingFragment settingFragment;
-
-    private int index0 = 0;
-    private int index1 = 0;
-    private int index2 = 0;
-
-    final int NUM_USER = 4;
-    final int NUM_HORSE=4;
 
     //-------------------------------------1712275-----------------------------------
     FragmentDice fragYDice = new FragmentDice();
     FragmentDice fragRDice = new FragmentDice();
     FragmentDice fragBDice = new FragmentDice();
     FragmentDice fragGDice = new FragmentDice();
+    FragmentDice fragResultRollDice = new FragmentDice();
 
     private int turn = 1;
     //1 yellow
@@ -129,11 +132,19 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 //        else btnTypePlayer.setBackgroundResource(R.drawable.ic_baseline_android_24);
         // gỡ cmt sau khi merge. Bỏ cmt => error
 
-        switch (turn){
-            case 1: viewProfile.setBackgroundResource(R.drawable.ic_profile_yellow);break;
-            case 2: viewProfile.setBackgroundResource(R.drawable.ic_profile_red);break;
-            case 3: viewProfile.setBackgroundResource(R.drawable.ic_profile_blue);break;
-            case 4: viewProfile.setBackgroundResource(R.drawable.ic_profile_green);break;
+        switch (turn) {
+            case 1:
+                viewProfile.setBackgroundResource(R.drawable.ic_profile_yellow);
+                break;
+            case 2:
+                viewProfile.setBackgroundResource(R.drawable.ic_profile_blue);
+                break;
+            case 3:
+                viewProfile.setBackgroundResource(R.drawable.ic_profile_green);
+                break;
+            case 4:
+                viewProfile.setBackgroundResource(R.drawable.ic_profile_red);
+                break;
         }
     }
 
@@ -148,6 +159,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         initHandler();
         //Tạo database trò chơi
         database = new Database(this, "parchessi.sqlite", null, 1);
+        sharedPreferences = getSharedPreferences("dataLoadGame", MODE_PRIVATE);
+        isPause=false;
 
         btnTypePlayer = (Button) findViewById(R.id.btnTypePlayer);
         btnSetting = (Button) findViewById(R.id.btnSetting);
@@ -155,61 +168,45 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         imgChat1 = (ImageView) findViewById(R.id.imgChat1);
         imgChat2 = (ImageView) findViewById(R.id.imgChat2);
 
-        btnSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ft = getSupportFragmentManager().beginTransaction();
-                btnSetting.setVisibility(View.INVISIBLE);
 
-                newSettingFragment = new SettingFragment();
-                ft.replace(R.id.frameSetting, newSettingFragment, "settingFragment");
-                ft.addToBackStack(null);
-                ft.commit();
-
-                getSupportFragmentManager().executePendingTransactions();
-                final SettingFragment settingFragment = (SettingFragment) getSupportFragmentManager().findFragmentByTag("settingFragment");
-
-                //Volume
-                if (settingFragment != null) {
-
-                    if (settingFragment.view.findViewById(R.id.item1) != null) {
-                        final AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
-                        final ImageView imgVolume = (ImageView) settingFragment.view.findViewById(R.id.imgVolume);
-
-                        if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
-                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_up_24);
-                        } else {
-                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_off_24);
-                        }
-
-                    }
-
-                }
-
-            }
-        });
-
-        //-------------------------------------1712275-----------------------------------
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frg_dice_yellow, fragYDice);
         ft.replace(R.id.frg_dice_blue, fragBDice);
         ft.replace(R.id.frg_dice_green, fragGDice);
         ft.replace(R.id.frg_dice_red, fragRDice);
+        ft.replace(R.id.frg_dice_result, fragResultRollDice);
         ft.addToBackStack(null);
         ft.commit();
 
         viewProfile = findViewById(R.id.txtProfile);
-        //-------------------------------------1712275-----------------------------------
-
-        //Chat animation
-        imgChat0 = (ImageView) findViewById(R.id.imgChat0);
-        imgChat1 = (ImageView) findViewById(R.id.imgChat1);
-        imgChat2 = (ImageView) findViewById(R.id.imgChat2);
-
-        chatAnim0 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
-        chatAnim1 = AnimationUtils.loadAnimation(this, R.anim.anim_chat0);
-        chatAnim2 = AnimationUtils.loadAnimation(this, R.anim.anim_chat1);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isPause=true;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("hasLoadGame", true);
+        editor.apply();
+        chessBoard.saveChessBoard();
+        System.out.println("PauseGame");
+        mhandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isPause=false;
+    }
+
+    @Override
+    public void onBackPressed() { }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -271,34 +268,50 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
     }
 
-    public void initOnClick(){
+    public void initOnClick() {
         btnTypePlayer.setOnClickListener(this);
         btnSetting.setOnClickListener(this);
         imgBoard.setOnClickListener(this);
         btnRoll.setOnClickListener(this);
+        findViewById(R.id.view_result_roll_dice).setOnClickListener(this);
 
-        for(int i=0;i<16;i++){
+        for (int i = 0; i < 16; i++) {
             imgHorse.get(i).setOnClickListener(this);
         }
     }
 
     @Override
     public void onClick(View v) {
-        int idLogic=-1;
+        int idLogic = -1;
         switch (v.getId()) {
             case R.id.btnSetting:
                 ft = getSupportFragmentManager().beginTransaction();
                 btnSetting.setVisibility(View.INVISIBLE);
 
-                SettingFragment settingFragment = new SettingFragment();
-                ft.replace(R.id.frameSetting, settingFragment);
+                newSettingFragment = new SettingFragment();
+                ft.replace(R.id.frameSetting, newSettingFragment, "settingFragment");
                 ft.addToBackStack(null);
                 ft.commit();
 
-                //Ẩn/Vô hiệu hóa/Chèn fragment lên trên cùng của activiy hiện tại
-                //findViewById(R.id.imgBoard).setVisibility(View.INVISIBLE);
-                //findViewById(R.id.txtProfile).setVisibility(View.INVISIBLE);
-                flagHide = true;
+                getSupportFragmentManager().executePendingTransactions();
+                final SettingFragment settingFragment = (SettingFragment) getSupportFragmentManager().findFragmentByTag("settingFragment");
+
+                //Volume
+                if (settingFragment != null) {
+
+                    if (settingFragment.view.findViewById(R.id.item1) != null) {
+                        final AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(AUDIO_SERVICE);
+                        final ImageView imgVolume = (ImageView) settingFragment.view.findViewById(R.id.imgVolume);
+
+                        if (!audioManager.isStreamMute(AudioManager.STREAM_MUSIC)) {
+                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_up_24);
+                        } else {
+                            imgVolume.setImageResource(R.drawable.ic_baseline_volume_off_24);
+                        }
+
+                    }
+
+                }
                 break;
             case R.id.btnTypePlayer:
                 if (!flagTypePlayer) {
@@ -311,9 +324,12 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                     Toast.makeText(hcmus.nhom21.parcheesigame.RunningGameActivity.this, "Tắt tự động chơi", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.view_result_roll_dice:
+                findViewById(R.id.view_result_roll_dice).setVisibility(View.INVISIBLE);
+                findViewById(R.id.view_result_roll_dice).setClickable(false);
+                break;
             case R.id.btn_roll:
                 btnRoll.setClickable(false);
-                //btnRoll.setEnabled(false);
                 break;
             case R.id.imgHorse00:
                 idLogic = 0;
@@ -367,8 +383,8 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 break;
         }
         //System.out.println("Horse (idLogic): "+idLogic+"\n");
-        if(idLogic!=-1) {
-            int userTurn=chessBoard.getUserTurn();
+        if (idLogic != -1) {
+            int userTurn = chessBoard.getUserTurn();
             for (int idHorse = 0; idHorse < horseValid.size(); idHorse++) {
                 if (idLogic == (userTurn * 4 + horseValid.get(idHorse))) {
                     chessBoard.setHorseTurn(horseValid.get(idHorse));
@@ -383,36 +399,63 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         }
     }
 
-    @Override
-    protected void onPause() {
-        chessBoard.saveChessBoard();
-        super.onPause();
-    }
 
     public void initHandler() {
         mhandler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
+                    case MESSAGE_START_GAME:
+                        startGame();
+                        break;
                     case MESSAGE_RESULT_DICE:
-                        rollDice();
-
+                        try {
+                            rollDice();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case MESSAGE_POSITION_HORSE:
                         //System.out.println("OK DI CHUYEN THANH CONG \n");
                         chessBoard.updateChessBoard();
                         break;
                     case MESSAGE_USER_WIN:
-                        int UserWin= msg.arg1;
-                        User user = chessBoard.getUser(UserWin);
-                        if(user.getMode()==User.MODE_BOOT){
-                            Intent intentRunningGame = new Intent(RunningGameActivity.this,LoseGameActivity.class);
-                            startActivity(intentRunningGame);
+                        int userWin = msg.arg1;
+                        User user = chessBoard.getUser(userWin);
+                        String teamName = "";
+
+                        SharedPreferences.Editor editor= sharedPreferences.edit();
+                        editor.putBoolean("hasLoadGame",false);
+                        editor.apply();
+
+                        if (user.getMode() == User.MODE_BOOT) {
+                            Intent intentLosingGame = new Intent(RunningGameActivity.this, LoseGameActivity.class);
+                            startActivity(intentLosingGame);
+                        } else {
+                            Intent intentWinningGame = new Intent(RunningGameActivity.this, WinGameActivity.class);
+                            switch (userWin) {
+                                case 0:
+                                    teamName = "Yellow";
+                                    break;
+                                case 1:
+                                    teamName = "Red";
+                                    break;
+                                case 2:
+                                    teamName = "Blue";
+                                    break;
+                                case 3:
+                                    teamName = "Green";
+                                    break;
+                            }
+                            intentWinningGame.putExtra("teamName", teamName);
+                            startActivity(intentWinningGame);
                         }
-                        else{
-                            Intent intentRunningGame = new Intent(RunningGameActivity.this,WinGameActivity.class);
-                            startActivity(intentRunningGame);
-                        }
+                        break;
+                    case MESSAGE_CHANGE_BUTTON_ROLL:
+                        setColorButtonRoll();
+                        break;
+                    case MESSAGE_OPACITY_HORSE:
+                        setOpacityHorse(msg.arg1==1);
                         break;
                     default:
                         break;
@@ -426,20 +469,10 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     public void onWindowFocusChanged(boolean hasFocus) {
         //Lấy dữ liệu setup bàn cờ
         Intent intent = getIntent();
-        int[] arrSetupPlayer=intent.getIntArrayExtra("arrSetupPlayer");
-
-        //Set color for profile
-        for (int idUser = 0; idUser < NUM_USER; idUser++) {
-            if(arrSetupPlayer[idUser]!=User.MODE_NONE) {
-                setTurn(idUser + 1);
-                break;
-            }
-        }
+        int[] arrSetupPlayer = intent.getIntArrayExtra("arrSetupPlayer");
 
         //Lấy tọa độ bàn cờ
         imgBoard.getLocationOnScreen(LOCATE_BOARD);
-
-        //System.out.println("Tọa độ:   " + LOCATE_BOARD[0] + "&&&&" +LOCATE_BOARD[1] + "/n");
 
         //Lấy kích thước bàn cờ
 //        SIZE_BOARD[0] = imgBoard.getDrawable().getIntrinsicWidth();
@@ -447,59 +480,60 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         SIZE_BOARD[0] = imgBoard.getMeasuredWidth();
         SIZE_BOARD[1] = imgBoard.getMeasuredHeight();
 
-        //System.out.println("SIZE BOARD:   " + SIZE_BOARD[0] + "&&&&" +SIZE_BOARD[1] + "/n");
 
         //Lấy kích thước ngựa
         SIZE_HORSE[0] = imgHorse.get(0).getMeasuredWidth();
         SIZE_HORSE[1] = imgHorse.get(0).getMeasuredHeight();
 
-        //System.out.println("SIZEHORSE:   " + SIZE_HORSE[0] + "&&&&" +SIZE_HORSE[1] + "\n");
         chessBoard = new ChessBoard(arrSetupPlayer, new Tuple(LOCATE_BOARD[0], LOCATE_BOARD[1]), new Tuple(SIZE_BOARD[0], SIZE_BOARD[1]),
                 new Tuple(SIZE_HORSE[0], SIZE_HORSE[1]), database);
-        horseValid=new ArrayList<Integer>();
-
+        horseValid = new ArrayList<Integer>();
         chessBoard.initChessBoard(imgHorse);
-        try {
-            chessBoard.loadChessBoard();//Lựa chọn  load game nhận intent từ activity trước
-            Toast.makeText(this, "Load game", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "init game", Toast.LENGTH_SHORT).show();
+        if(!isPause) {
+            Message msgStartGame = new Message();
+            msgStartGame.what = MESSAGE_START_GAME;
+            mhandler.sendMessage(msgStartGame);
         }
+
+    }
+
+    public void startGame(){
+
+
+        if (sharedPreferences.getBoolean("hasLoadGame", false)) {
+            System.out.println("LoadGame");
+            Toast.makeText(this, "Load game", Toast.LENGTH_SHORT).show();
+
+            SharedPreferences.Editor editor= sharedPreferences.edit();
+            editor.putBoolean("hasLoadGame",false);
+            editor.apply();
+
+            chessBoard.loadChessBoard();
+        }
+
+        Message msgChangeButton = new Message();
+        msgChangeButton.what = MESSAGE_CHANGE_BUTTON_ROLL;
+        mhandler.sendMessage( msgChangeButton);
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    if (horseValid.size()<=0) {
+                while (!isPause) {
+                    if (horseValid.size() <= 0) {
                         User user = chessBoard.getUser();
-                        System.out.println("3000\n");
-                        if(user.getMode()== User.MODE_BOOT || (user.getMode()==User.MODE_USER & !btnRoll.isClickable())) {
-                        //if(user.getMode()!=User.MODE_NONE){
-                            setTurn(user.getIdUser() + 1);
-                            Tuple dice= chessBoard.rollDice();
-                            resRollDiceOne=dice.x;
-                            resRollDiceTwo=dice.y;
+                        if (user.getMode() == User.MODE_BOOT || (user.getMode() == User.MODE_USER & !btnRoll.isClickable())) {
+                            //if (user.getMode() != User.MODE_NONE) {
+                            Tuple dice = chessBoard.rollDice();
+                            resRollDiceOne = 2 * 6 + dice.x;
+                            resRollDiceTwo = 1 * 6 + dice.y;
 
-
-                            Message message=new Message();
-                            message.what=MESSAGE_RESULT_DICE;
-                            mhandler.sendMessage(message);
+                            Message msgRollDice = new Message();
+                            msgRollDice.what = MESSAGE_RESULT_DICE;
+                            mhandler.sendMessage(msgRollDice);
 
                             horseValid = chessBoard.generateHorseValid();
-                            System.out.println("Turn: " + chessBoard.getUserTurn() + " " + horseValid.size() + "\n");
-                            System.out.println("---------------------------------------------------\n");
-                            if(user.getMode()==User.MODE_BOOT){
-                                for(int i=0; i<horseValid.size();i++){
-                                    chessBoard.setHorseTurn(horseValid.get(i));
-                                    try {
-                                        HandleMove();
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        else if(user.getMode()==User.MODE_NONE){
+
+                        } else if (user.getMode() == User.MODE_NONE) {
                             chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
                         }
                     }
@@ -507,8 +541,9 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             }
         });
         thread.start();
-    }
 
+        if(isPause) thread.stop();
+    }
 //    @Override
 //    public boolean onKeyDown(int keyCode, KeyEvent event) {
 //        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -525,64 +560,75 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 //    }
 
     public void HandleMove() throws InterruptedException {
-        Thread thread=new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                Message msgOpacityHorse = new Message();
+                msgOpacityHorse.what = MESSAGE_OPACITY_HORSE;
+                msgOpacityHorse.arg1 = 0;
+                mhandler.sendMessage(msgOpacityHorse);
 
-                final Tuple idPair=new Tuple();
-                Tuple errorConflict = new Tuple(0,0);
-                final int step=chessBoard.getStep();
-                final User user=chessBoard.getUser();
+                final Tuple idPair = new Tuple();
+                Tuple errorConflict = new Tuple(0, 0);
+                final int step = chessBoard.getStep();
+                final User user = chessBoard.getUser();
                 final Horse horse = user.getHorse(chessBoard.getHorseTurn());
-                errorConflict=chessBoard.checkConflict( horse, step);
+                errorConflict = chessBoard.checkConflict(horse, step);
                 if (horse.getStatus() == 0) {
-                    //System.out.println("Xuat chuong " + chessBoard.getUserTurn() +"---"+chessBoard.getHorseTurn()+"\n");
                     chessBoard.XuatChuong();
 
-                    horseValid.clear();
                     btnRoll.setClickable(true);
-                    if(!chessBoard.isRepeat())
+
+                    horseValid.clear();
+                    if (!chessBoard.isRepeat()) {
                         chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
+                        Message message = new Message();
+                        message.what = MESSAGE_CHANGE_BUTTON_ROLL;
+                        mhandler.sendMessage(message);
+                    }
                 } else {
-                    //System.out.println("Di chuyen " + chessBoard.getUserTurn() + "---" + chessBoard.getHorseTurn() + "\n");
                     final Tuple finalErrorConflict = errorConflict;
                     Thread thread = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             //Xu ly nguoi dung chon ngua trong mang ngua vua nay
                             for (int i = step - 1; i >= 0; i--) {
-                                //.MoveHorse(horse.getIdHorse(), 1);
-                                if (finalErrorConflict.y == 1 && i==0) {
+                                if (finalErrorConflict.y == 1 && i == 0) {
                                     chessBoard.Dangua(finalErrorConflict.x);
                                 }
                                 chessBoard.moveHorse(1);
-                                //
+
                                 Message message = new Message();
                                 message.what = MESSAGE_POSITION_HORSE;
                                 mhandler.sendMessage(message);
                                 try {
-                                    Thread.sleep(200);
+                                    Thread.sleep(300);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                                 chessBoard.setStep(i);
                             }
-                            if(user.checkWin()){
+                            if (user.checkWin()) {
                                 Message message = new Message();
-                                message.arg1=user.getIdUser();
+                                message.arg1 = user.getIdUser();
                                 message.what = MESSAGE_USER_WIN;
                                 mhandler.sendMessage(message);
                             }
 
-                            horseValid.clear();
                             btnRoll.setClickable(true);
-                            if(!chessBoard.isRepeat())
+                            horseValid.clear();
+                            if (!chessBoard.isRepeat()) {
                                 chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
+
+                                Message message = new Message();
+                                message.what = MESSAGE_CHANGE_BUTTON_ROLL;
+                                mhandler.sendMessage(message);
+
+                            }
                         }
                     });
                     thread.start();
                 }
-
             }
         });
         thread.start();
@@ -590,18 +636,26 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     }
 
 
-    private void rollDice(){
+    private void rollDice() throws InterruptedException {
         int turn = chessBoard.getUserTurn();
-        User user = chessBoard.getUser();
-        for(int idHorse=0;idHorse<4;idHorse++) {
-            if(user.getHorse(idHorse).getStatus()==0)
+        User user = chessBoard.getUser(turn);
+        for (int idHorse = 0; idHorse < 4; idHorse++) {
+            if (user.getHorse(idHorse).getStatus() == 0)
                 imgHorse.get(turn * 4 + idHorse).setVisibility(View.INVISIBLE);
         }
-        switch (turn+1){
-            case 1: findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);break;
-            case 2: findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);break;
-            case 3: findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);break;
-            case 4: findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);break;
+        switch (turn + 1) {
+            case 1:
+                findViewById(R.id.frg_dice_yellow).setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                findViewById(R.id.frg_dice_red).setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                findViewById(R.id.frg_dice_blue).setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                findViewById(R.id.frg_dice_green).setVisibility(View.VISIBLE);
+                break;
 
         }
         Thread myBackgroundThread = new Thread(backgroundRollDice, "rollDice");
@@ -613,53 +667,94 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         public void run() {
             try {
                 Random generator = new Random();
-                switch (chessBoard.getUserTurn()+1){
-                    case 1: fragYDice.setImgDice1(generator.nextInt(18)+1);
-                        fragYDice.setImgDice2(generator.nextInt(18)+1);
+                int num1,num2;
+                num1=generator.nextInt(18) + 1;
+                num2=generator.nextInt(18) + 1;
+                switch (chessBoard.getUserTurn() + 1) {
+                    case 1:
+                        fragYDice.setImgDice1(num1);
+                        fragYDice.setImgDice2(num2);
                         break;
-                    case 2: fragRDice.setImgDice1(generator.nextInt(18)+1);
-                        fragRDice.setImgDice2(generator.nextInt(18)+1);
+                    case 2:
+                        fragRDice.setImgDice1(num1);
+                        fragRDice.setImgDice2(num2);
                         break;
-                    case 3: fragBDice.setImgDice1(generator.nextInt(18)+1);
-                        fragBDice.setImgDice2(generator.nextInt(18)+1);
+                    case 3:
+                        fragBDice.setImgDice1(num1);
+                        fragBDice.setImgDice2(num2);
                         break;
-                    case 4: fragGDice.setImgDice1(generator.nextInt(18)+1);
-                        fragGDice.setImgDice2(generator.nextInt(18)+1);
+                    case 4:
+                        fragGDice.setImgDice1(num1);
+                        fragGDice.setImgDice2(num2);
                         break;
-
                     default:
                 }
+            } catch (Exception e) {
+                Log.e("<<foregroundTask>>", e.getMessage());
             }
-            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+        }
+    };
+
+    private Runnable handleBoot= new Runnable() {
+        @Override
+        public void run() {
+            findViewById(R.id.view_result_roll_dice).performClick();
+            for (int i = 0; i < horseValid.size(); i++) {
+                chessBoard.setHorseTurn(horseValid.get(i));
+                try {
+                    HandleMove();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
         }
     };
     private Runnable resultRollDice = new Runnable() {
         @Override
         public void run() {
+
             try {
-                int turn =chessBoard.getUserTurn();
-                switch (turn+1){
-                    case 1: fragYDice.setImgDice1(13); fragYDice.setImgDice2(1); break;
-                    case 2: fragRDice.setImgDice1(14); fragRDice.setImgDice2(2); break;
-                    case 3: fragBDice.setImgDice1(15); fragBDice.setImgDice2(3); break;
-                    case 4: fragGDice.setImgDice1(16); fragGDice.setImgDice2(4); break;
-                }
+
+                int turn = chessBoard.getUserTurn();
+
+                fragResultRollDice.setImgDice1(resRollDiceOne);
+                fragResultRollDice.setImgDice2(resRollDiceTwo);
+                findViewById(R.id.view_result_roll_dice).setVisibility(View.VISIBLE);
+                findViewById(R.id.view_result_roll_dice).setClickable(true);
                 //đi quân
 
-                Thread chatAnimThread = new Thread(backgroundChatAnim, "chatAnim");
-                chatAnimThread.start();
-                Thread.sleep(1000);
 
                 findViewById(R.id.frg_dice_yellow).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_blue).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_green).setVisibility(View.INVISIBLE);
                 findViewById(R.id.frg_dice_red).setVisibility(View.INVISIBLE);
 
-                for(int idHorse=0;idHorse<4;idHorse++) {
+                //Thread.sleep(500);
+
+                for (int idHorse = 0; idHorse < 4; idHorse++) {
                     imgHorse.get(turn * 4 + idHorse).setVisibility(View.VISIBLE);
                 }
+                setOpacityHorse(true);
+
+                //Thread.sleep(500);
+
+                //if (chessBoard.getUser().getMode() == User.MODE_BOOT) {
+                if (horseValid.size() <= 0 && !chessBoard.isRepeat()) {
+                    chessBoard.setUserTurn((chessBoard.getUserTurn() + 1) % 4);
+
+                    Message message = new Message();
+                    message.what = MESSAGE_CHANGE_BUTTON_ROLL;
+                    mhandler.sendMessage(message);
+
+                    btnRoll.setClickable(true);
+                }
+                else if (chessBoard.getUser().getMode() == User.MODE_BOOT){
+                    myHandler.postDelayed(handleBoot,2000);
+                }
+            } catch (Exception e) {
+                Log.e("<<foregroundTask>>", e.getMessage());
             }
-            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
     };
 
@@ -669,51 +764,55 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             try {
                 int loop = 0;
                 int jumb = 300;
-                while (loop<=speed){
+                while (loop <= speed) {
                     Thread.sleep(jumb);
-                    if(loop<=speed){
-                        jumb = Math.max((jumb / 2), speed / 100);
-                    }else {
-                        jumb = (jumb*2);
+                    if (loop <= speed) {
+                        jumb = Math.max((jumb / 2), speed / 20);
+                    } else {
+                        jumb = (jumb * 2);
                     }
                     loop += jumb;
-                   myHandler.post(foregroundRollDice);
+
+                    myHandler.post(foregroundRollDice);
                 }
                 myHandler.post(resultRollDice);
+
+            } catch (InterruptedException e) {
+                Log.e("<<foregroundTask>>", e.getMessage());
             }
-            catch (InterruptedException e) { Log.e("<<foregroundTask>>", e.getMessage()); }
         }
     };
 
-
-    private Runnable foregroundChatAnim = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                imgChat0.setImageResource(arrChatImgs[index0]);
-                imgChat1.setImageResource(arrChatImgs[index1]);
-                imgChat2.setImageResource(arrChatImgs[index2]);
-
-                imgChat0.startAnimation(chatAnim0);
-                imgChat1.startAnimation(chatAnim1);
-                imgChat2.startAnimation(chatAnim2);
-            }
-            catch (Exception e) { Log.e("<<foregroundChatAnim>>", e.getMessage()); }
+    public void setColorButtonRoll() {
+        switch (chessBoard.getUserTurn()) {
+            case 0:
+                btnRoll.setBackgroundColor(getResources().getColor(R.color.yellowTeamBackground));
+                break;
+            case 1:
+                btnRoll.setBackgroundColor(getResources().getColor(R.color.redTeamBackground));
+                break;
+            case 2:
+                btnRoll.setBackgroundColor(getResources().getColor(R.color.blueTeamBackground));
+                break;
+            case 3:
+                btnRoll.setBackgroundColor(getResources().getColor(R.color.greenTeamBackground));
+                break;
         }
-    };
+    }
 
-    private Runnable backgroundChatAnim = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Random random = new Random();
-                index0 = random.nextInt(lengthArr);
-                index1 = random.nextInt(lengthArr);
-                index2 = random.nextInt(lengthArr);
-
-                myHandler.post(foregroundChatAnim);
+    public void setOpacityHorse(boolean isOpacity){
+        int turn=chessBoard.getUserTurn();
+        if(isOpacity){
+            for(int i=0;i<4;i++){
+                if(horseValid.indexOf(i)==-1) {
+                    imgHorse.get(turn * 4 + i).setAlpha((float) 0.7);
+                }
             }
-            catch (Exception e) { Log.e("<<backgroundChatAnim>>", e.getMessage()); }
         }
-    };
+        else{
+            for(int i=0;i<4;i++){
+                imgHorse.get(turn*4 +i).setAlpha((float) 1);
+            }
+        }
+    }
 }
