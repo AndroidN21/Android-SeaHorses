@@ -25,9 +25,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
                 android:layout_weight="1"
                 android:text="@string/info0"
                 android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/txtLine1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:textSize="20dp"
+                android:text="@string/info1" />
 
             <TextView
                 android:id="@+id/txtVecteezy"
@@ -47,13 +57,13 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/txtLine1"
+                android:id="@+id/txtLine2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
-                android:textSize="20dp"
                 android:layout_weight="1"
-                android:text="@string/info1" />
+                android:text="@string/info2"
+                android:textSize="20dp" />
 
 
 

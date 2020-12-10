@@ -700,7 +700,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
                 myHandler.post(foregroundChatAnim);
             }
-            catch (Exception e) { Log.e("<<foregroundTask>>", e.getMessage()); }
+            catch (Exception e) { Log.e("<<backgroundChatAnim>>", e.getMessage()); }
         }
     };
 
