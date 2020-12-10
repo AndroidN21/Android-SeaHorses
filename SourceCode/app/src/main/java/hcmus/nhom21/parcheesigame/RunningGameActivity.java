@@ -466,7 +466,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                             Tuple dice= chessBoard.rollDice();
                             resRollDiceOne=dice.x;
                             resRollDiceTwo=dice.y;
-                            Log.e("dice", resRollDiceOne + " " + resRollDiceTwo);
+
 
                             Message message=new Message();
                             message.what=MESSAGE_RESULT_DICE;
@@ -673,6 +673,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         }
     };
 
+
     private Runnable foregroundChatAnim = new Runnable() {
         @Override
         public void run() {
@@ -703,5 +704,4 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
             catch (Exception e) { Log.e("<<backgroundChatAnim>>", e.getMessage()); }
         }
     };
-
 }
