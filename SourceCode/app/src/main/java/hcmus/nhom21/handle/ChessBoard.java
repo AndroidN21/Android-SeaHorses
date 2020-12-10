@@ -56,7 +56,7 @@ public class ChessBoard {
             }
             else{
                 for (int idHorse = 0; idHorse < NUM_HORSE; idHorse++) {
-                    imgHorse.get(idUser * NUM_HORSE + idHorse).setVisibility(View.VISIBLE);
+                    imgHorse.get(idUser * NUM_HORSE + idHorse).setVisibility(View.INVISIBLE);
                     imgHorse.get(idUser * NUM_HORSE + idHorse).setSelected(true);
                 }
             }

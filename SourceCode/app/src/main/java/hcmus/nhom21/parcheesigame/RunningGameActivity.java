@@ -72,6 +72,13 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
     boolean flagHide;
     //SettingFragment settingFragment;
 
+    private int index0 = 0;
+    private int index1 = 0;
+    private int index2 = 0;
+
+    final int NUM_USER = 4;
+    final int NUM_HORSE=4;
+
     //-------------------------------------1712275-----------------------------------
     FragmentDice fragYDice = new FragmentDice();
     FragmentDice fragRDice = new FragmentDice();
@@ -124,15 +131,11 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
 
         switch (turn){
             case 1: viewProfile.setBackgroundResource(R.drawable.ic_profile_yellow);break;
-            case 2: viewProfile.setBackgroundResource(R.drawable.ic_profile_blue);break;
-            case 3: viewProfile.setBackgroundResource(R.drawable.ic_profile_green);break;
-            case 4: viewProfile.setBackgroundResource(R.drawable.ic_profile_red);break;
+            case 2: viewProfile.setBackgroundResource(R.drawable.ic_profile_red);break;
+            case 3: viewProfile.setBackgroundResource(R.drawable.ic_profile_blue);break;
+            case 4: viewProfile.setBackgroundResource(R.drawable.ic_profile_green);break;
         }
     }
-
-    private int index0 = 0;
-    private int index1 = 0;
-    private int index2 = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -425,6 +428,14 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
         Intent intent = getIntent();
         int[] arrSetupPlayer=intent.getIntArrayExtra("arrSetupPlayer");
 
+        //Set color for profile
+        for (int idUser = 0; idUser < NUM_USER; idUser++) {
+            if(arrSetupPlayer[idUser]!=User.MODE_NONE) {
+                setTurn(idUser + 1);
+                break;
+            }
+        }
+
         //Lấy tọa độ bàn cờ
         imgBoard.getLocationOnScreen(LOCATE_BOARD);
 
@@ -463,6 +474,7 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                         System.out.println("3000\n");
                         if(user.getMode()== User.MODE_BOOT || (user.getMode()==User.MODE_USER & !btnRoll.isClickable())) {
                         //if(user.getMode()!=User.MODE_NONE){
+                            setTurn(user.getIdUser() + 1);
                             Tuple dice= chessBoard.rollDice();
                             resRollDiceOne=dice.x;
                             resRollDiceTwo=dice.y;
