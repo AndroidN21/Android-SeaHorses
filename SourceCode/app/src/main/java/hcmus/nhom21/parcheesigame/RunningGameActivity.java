@@ -362,19 +362,6 @@ public class RunningGameActivity extends FragmentActivity implements View.OnClic
                 idLogic = 9;
                 break;
             case R.id.imgHorse22:
-                SharedPreferences.Editor editor= sharedPreferences.edit();
-                editor.putBoolean("hasLoadGame",false);
-                editor.apply();
-
-                String teamName = "Yellow";
-                if (false) {
-                    Intent intentLosingGame = new Intent(RunningGameActivity.this, LoseGameActivity.class);
-                    startActivity(intentLosingGame);
-                } else {
-                    Intent intentWinningGame = new Intent(RunningGameActivity.this, WinGameActivity.class);
-                    intentWinningGame.putExtra("teamName", teamName);
-                    startActivity(intentWinningGame);
-                }
                 idLogic = 10;
                 break;
             case R.id.imgHorse23:
